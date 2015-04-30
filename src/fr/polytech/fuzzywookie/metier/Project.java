@@ -21,6 +21,12 @@ public class Project {
 		listImage = new ArrayList<Image>();
 	}
 	
+	public Project()
+	{
+		listPrint = new ArrayList<Print>();
+		listImage = new ArrayList<Image>();
+	}
+	
 	public void init()
 	{	
 		Parser.parserFile(file, this);
