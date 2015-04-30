@@ -14,8 +14,9 @@ public class Project {
 	private String file;
 	private Print initialPrint;
 	
-	public Project()
+	public Project(String file)
 	{
+		this.file = file;
 		listPrint = new ArrayList<Print>();
 		listImage = new ArrayList<Image>();
 	}
