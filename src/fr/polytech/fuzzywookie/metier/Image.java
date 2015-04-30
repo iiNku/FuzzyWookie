@@ -11,6 +11,11 @@ public class Image extends Rectangle {
 		super(width, height);
 		this.name = name;
 	}
+	
+	public int getArea()
+	{
+		return x*y;
+	}
 
 	public int getX() {
 		return x;
