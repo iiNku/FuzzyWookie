@@ -39,6 +39,7 @@ public class Parser {
 				{
 					String[] imageValue = ligne.split(" ");
 					Image img = new Image(Integer.valueOf(imageValue[0]), Integer.valueOf(imageValue[1]), "Image"+(counter-2));
+					print.getListImage().add(img);
 					img.setNbItem(Integer.valueOf(imageValue[2]));
 				}
 				System.out.println(ligne);
