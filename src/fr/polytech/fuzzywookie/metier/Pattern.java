@@ -36,6 +36,11 @@ public class Pattern extends Rectangle {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public void addImage(Image image){
+		
+		imageList.add(image);
+	}
 
 	
 }

@@ -36,7 +36,6 @@ public class QSort {
 				j--;
 			}
 		}
-		// Recursion
 		if (low < j)
 			quicksort(low, j);
 		if (i < high)
