@@ -1,14 +1,15 @@
 package fr.polyteck.fuzzywookie.utils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.polytech.fuzzywookie.metier.Image;
 
 public class QSort {
 
-	private ArrayList<Image> list;
+	private List<Image> list;
 
-	public void sort(ArrayList<Image> list) {
+	public void sort(List<Image> list) {
 
 		if (list == null || list.size() == 0)
 			return;
