@@ -1,26 +1,41 @@
 package fr.polytech.fuzzywookie.metier;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import fr.polyteck.fuzzywookie.utils.Parser;
+import fr.polyteck.fuzzywookie.utils.QSort;
 
 public class Print {
 	private List<Pattern> listPattern;
 	private List<Image> listImage;
-	private int patternX, patternY;
+	private int patternX=0, patternY=0;
 	private int pricePattern;
+	private String file;
 	
-	public Print()
+	public Print(String file)
 	{
-		
+		listPattern = new ArrayList<Pattern>();
+		listImage = new ArrayList<Image>();
+		this.file = file;
 	}
 	
-	public boolean init()
+	public void init()
 	{	
-		return false;
+		Parser.parserFile(file, this);
+		QSort qs = new QSort();
+		qs.sort(listImage);	
 	}
 	
 	public Pattern createPattern()
 	{
-		return new Pattern(patternX, patternY);
+		if(!(patternX == 0) && !(patternY==0))
+		{
+			Pattern pattern = new Pattern(patternX, patternY);
+			listPattern.add(pattern);
+			return new Pattern(patternX, patternY);
+		}
+		return null;	
 	}
 
 	public List<Pattern> getListPattern() {
