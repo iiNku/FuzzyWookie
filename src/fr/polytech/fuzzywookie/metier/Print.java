@@ -8,32 +8,29 @@ import fr.polyteck.fuzzywookie.utils.QSort;
 
 public class Print {
 	private List<Pattern> listPattern;
-	private List<Image> listImage;
-	private int patternX=0, patternY=0;
-	private int pricePattern;
-	private String file;
+	private Project project;
 	
-	public Print(String file)
+	public Print(Project p)
 	{
 		listPattern = new ArrayList<Pattern>();
-		listImage = new ArrayList<Image>();
-		this.file = file;
+		project = p;
 	}
 	
-	public void init()
-	{	
-		Parser.parserFile(file, this);
-		QSort qs = new QSort();
-		qs.sort(listImage);	
+	public Project getProject() {
+		return project;
 	}
-	
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
 	public Pattern createPattern()
 	{
-		if(!(patternX == 0) && !(patternY==0))
+		if(!(project.getPatternX() == 0) && !(project.getPatternY() ==0))
 		{
-			Pattern pattern = new Pattern(patternX, patternY);
+			Pattern pattern = new Pattern(project.getPatternX(), project.getPatternY());
 			listPattern.add(pattern);
-			return new Pattern(patternX, patternY);
+			return pattern;
 		}
 		return null;	
 	}
@@ -44,38 +41,6 @@ public class Print {
 
 	public void setListPattern(List<Pattern> listPattern) {
 		this.listPattern = listPattern;
-	}
-
-	public List<Image> getListImage() {
-		return listImage;
-	}
-
-	public void setListImage(List<Image> listImage) {
-		this.listImage = listImage;
-	}
-
-	public int getPatternX() {
-		return patternX;
-	}
-
-	public void setPatternX(int patternX) {
-		this.patternX = patternX;
-	}
-
-	public int getPatternY() {
-		return patternY;
-	}
-
-	public void setPatternY(int patternY) {
-		this.patternY = patternY;
-	}
-
-	public int getPricePattern() {
-		return pricePattern;
-	}
-
-	public void setPricePattern(int pricePattern) {
-		this.pricePattern = pricePattern;
 	}
 
 }
