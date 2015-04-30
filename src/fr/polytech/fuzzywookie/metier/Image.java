@@ -6,6 +6,7 @@ public class Image {
 	private int height;
 	private int x,y;
 	private String name;
+	int nbItem;
 	
 	public Image(int width, int height, String name)
 	{

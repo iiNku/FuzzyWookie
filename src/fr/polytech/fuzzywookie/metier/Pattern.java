@@ -10,6 +10,12 @@ public class Pattern {
 	private int nbPrint;
 	private String name;
 	
+	public Pattern(int width, int height)
+	{
+		this.width = width;
+		this.height = height;
+	}
+	
 	public int getWidth() {
 		return width;
 	}
@@ -50,9 +56,5 @@ public class Pattern {
 		this.name = name;
 	}
 
-	public Pattern(int width, int height)
-	{
-		this.width = width;
-		this.height = height;
-	}
+	
 }
