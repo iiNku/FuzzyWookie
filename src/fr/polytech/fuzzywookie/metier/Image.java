@@ -6,10 +6,18 @@ public class Image extends Rectangle {
 	private String name;
 	int nbItem;
 	
-	public Image(int width, int height, int nbItem)
+	public Image(int width, int height, String name)
 	{
 		super(width, height);
 		this.name = name;
+	}
+
+	public int getNbItem() {
+		return nbItem;
+	}
+
+	public void setNbItem(int nbItem) {
+		this.nbItem = nbItem;
 	}
 
 	public int getX() {
