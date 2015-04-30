@@ -37,12 +37,12 @@ public class Parser {
 				}
 				else
 				{
-					String[] imageValue = ligne.split(" ");
+					String[] imageValue = ligne.split("\t");
 					Image img = new Image(Integer.valueOf(imageValue[0]), Integer.valueOf(imageValue[1]), "Image"+(counter-2));
 					print.getListImage().add(img);
 					img.setNbItem(Integer.valueOf(imageValue[2]));
 				}
-				System.out.println(ligne);
+				
 				chaine+=ligne+"\n";
 				counter++;
 			}
