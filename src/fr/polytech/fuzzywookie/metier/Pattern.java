@@ -2,34 +2,15 @@ package fr.polytech.fuzzywookie.metier;
 
 import java.util.List;
 
-public class Pattern {
+public class Pattern extends Rectangle {
 
-	private int width;
-	private int height;
 	private List<Image> imageList;
 	private int nbPrint;
 	private String name;
 	
 	public Pattern(int width, int height)
 	{
-		this.width = width;
-		this.height = height;
-	}
-	
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
+		super(width, height);
 	}
 
 	public List<Image> getImageList() {
