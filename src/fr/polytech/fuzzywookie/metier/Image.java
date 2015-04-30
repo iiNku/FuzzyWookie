@@ -11,10 +11,13 @@ public class Image extends Rectangle {
 		super(width, height);
 		this.name = name;
 	}
-	
-	public int getArea()
-	{
-		return x*y;
+
+	public int getNbItem() {
+		return nbItem;
+	}
+
+	public void setNbItem(int nbItem) {
+		this.nbItem = nbItem;
 	}
 
 	public int getX() {

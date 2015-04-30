@@ -24,10 +24,10 @@ public class QSort {
 
 		while (i <= j) {
 
-			while (list.get(i).getArea() < pivot.getArea())
+			while (list.get(i).getArea() > pivot.getArea())
 				i++;
 
-			while (list.get(j).getArea() > pivot.getArea())
+			while (list.get(j).getArea() < pivot.getArea())
 				j--;
 
 			if (i <= j) {
