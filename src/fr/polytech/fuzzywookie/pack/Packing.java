@@ -20,7 +20,7 @@ public class Packing {
 		stack = new Stack<Pattern>();
 
 		ArrayList<Image> list = new ArrayList<Image>();
-		list.addAll(print.getListImage());
+		list.addAll(print.getProject().getListImage());
 		
 		boolean allPresent = false;
 		
@@ -40,7 +40,7 @@ public class Packing {
 						list.remove(i);
 						if(list.isEmpty()){
 							allPresent = true;
-							list.addAll(print.getListImage());
+							list.addAll(print.getProject().getListImage());
 						}
 						
 						insertImage(p, i);
