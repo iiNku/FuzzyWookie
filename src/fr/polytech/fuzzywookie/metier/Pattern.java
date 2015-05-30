@@ -119,6 +119,7 @@ public class Pattern extends Rectangle {
     }
     
     public void addFreeSpace(Pattern pattern){
+    	boolean fusionSuccess = false;
     	if(freeSpace.isEmpty())
     		freeSpace.add(pattern);
     	else
@@ -201,10 +202,13 @@ public class Pattern extends Rectangle {
 	    		if(fusion != null && fusion.getArea()>pattern.getArea() && fusion.getArea() > space.getArea())
 	    		{
 	    			freeSpace.remove(space);
-	    			freeSpace.add(pattern);
+	    			freeSpace.add(fusion);
+	    			fusionSuccess = true;
 	    			break;
 	    		}	
     		}
+    		if(!fusionSuccess)
+    			freeSpace.add(pattern);
     	}
     }
     
