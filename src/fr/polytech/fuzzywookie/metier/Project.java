@@ -3,6 +3,7 @@ package fr.polytech.fuzzywookie.metier;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.polytech.fuzzywookie.pack.Packing;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
 
@@ -90,5 +91,16 @@ public class Project {
 		this.initialPrint = initialPrint;
 	}
 
+	public void launch(){
+		
+		init();
+		int beginMs = (int) System.currentTimeMillis();
+		while(System.currentTimeMillis() < beginMs + 7200000){
+			
+			Packing packing = new Packing();
+			
+			
+		}
+	}
 	
 }

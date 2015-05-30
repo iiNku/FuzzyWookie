@@ -77,12 +77,14 @@ public class PackingTest {
 		assertEquals(0, pattern2.getImageList().get(1).getX());
 		assertEquals(30, pattern2.getImageList().get(1).getY());
 		
-		System.out.println(pattern1.print());
+		assertTrue(print.isValid());
+		
+		packing.packNewPattern(print);
 		
 		assertTrue(print.isValid());
 	}
 	
-	@Test
+	//@Test
 	public void testOnRealData(){
 		
 		Project project = new Project("/Users/iiNku/Documents/workspace/FuzzyWookie/test/data_50Salpha.txt");

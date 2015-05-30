@@ -10,6 +10,7 @@ public class Reproduction {
     private ArrayList<Pattern> fils = new ArrayList<Pattern>();
     
     public ArrayList<Pattern> ReproductionPattern(Print p1,Print p2){
+    	
         List<Pattern> patterns1 = p1.getListPattern();
         List<Pattern> patterns2 = p2.getListPattern();
         int maxPattern1 = patterns1.size();
