@@ -7,6 +7,7 @@ import java.util.Map;
 
 import fr.polytech.fuzzywookie.pack.Packing;
 import fr.polytech.fuzzywookie.simplex.Simplex;
+import fr.polytech.fuzzywookie.simplex.StdOut;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
 
@@ -77,7 +78,11 @@ public class Print {
 		
 		Simplex fitness = new Simplex(matrice, contrainte, minimisation);
 		value = (int) fitness.value();
-		
+		double[] x = fitness.primal();
+        for (int k = 0; k < x.length; k++)
+        {
+        	listPattern.get(k).setNbPrint((int)Math.round(x[k])+1);
+        }
 		return value;
 	}
 	
