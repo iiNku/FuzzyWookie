@@ -56,7 +56,7 @@ public class Packing {
 		p11.setDecoupX(pattern.getDecoupX());
 		p11.setDecoupY(pattern.getDecoupY() + placed.getHeight());
 		
-		Pattern p12 = new Pattern(pattern.getWidth() - placed.getWidth() ,pattern.getHeight() - placed.getHeight());
+		Pattern p12 = new Pattern(pattern.getWidth() - placed.getWidth() , placed.getHeight());
 		p12.setDecoupX(pattern.getDecoupX() + placed.getWidth());
 		p12.setDecoupY(pattern.getDecoupY());
 		
@@ -64,7 +64,7 @@ public class Packing {
 		
 		Pattern p21 = new Pattern(placed.getWidth(), pattern.getHeight() - placed.getHeight());
 		p21.setDecoupX(pattern.getDecoupX());
-		p21.setDecoupY(pattern.getDecoupY() + pattern.getHeight() - placed.getHeight());
+		p21.setDecoupY(pattern.getDecoupY() + placed.getHeight());
 		
 		Pattern p22 = new Pattern(pattern.getWidth() - placed.getWidth(), pattern.getHeight());
 		p22.setDecoupX(pattern.getDecoupX() + placed.getWidth());
@@ -92,11 +92,9 @@ public class Packing {
 
 	private boolean imageFits(Pattern pattern, Image image) {
 		
-		return pattern.getArea() >= image.getArea() 
-				&& pattern.getDecoupX() < main.getWidth()
-				&& pattern.getDecoupX() + image.getWidth() <= main.getWidth()
-				&& pattern.getDecoupY() < main.getHeight()
-				&& pattern.getDecoupY() + image.getHeight() <= main.getHeight();
+		return pattern.getArea() >= image.getArea() 			
+				&& image.getWidth() <= pattern.getWidth()
+				&& image.getHeight() <= pattern.getHeight();
 	}
 	
 	private void placeImage(Pattern main, Image image, Pattern temp) {
