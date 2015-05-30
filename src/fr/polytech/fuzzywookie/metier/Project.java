@@ -109,6 +109,7 @@ public class Project {
 		}
 		return SolutionsFinal;
 	}
+	
 	private static List<Print> triBulleDecroissant(List<Print> tableau) {
 		int longueur = tableau.size();
 		Print tampon;
