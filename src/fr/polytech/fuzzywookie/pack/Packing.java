@@ -31,11 +31,9 @@ public class Packing {
 		stack = new Stack<Pattern>();
 		main = print.createPattern();
 		stack.push(main);
-
-		while (!stack.isEmpty() || !allPlaced) {
-			System.out.println("block");
-			if (stack.isEmpty()) {
-
+		
+		while(!stack.isEmpty() || !allPlaced){
+			if(stack.isEmpty()){
 				main = print.createPattern();
 				stack.push(main);
 			}
