@@ -68,7 +68,7 @@ public class Packing {
 		
 		Pattern p22 = new Pattern(pattern.getWidth() - placed.getWidth(), pattern.getHeight());
 		p22.setDecoupX(pattern.getDecoupX() + placed.getWidth());
-		p22.setDecoupY(pattern.getDecoupY() + pattern.getHeight());
+		p22.setDecoupY(pattern.getDecoupY());
 		
 		PatternCouple couple2 = new PatternCouple(p21, p22);
 		
@@ -93,10 +93,10 @@ public class Packing {
 	private boolean imageFits(Pattern pattern, Image image) {
 		
 		return pattern.getArea() >= image.getArea() 
-				&& pattern.getDecoupX() < pattern.getWidth()
-				&& pattern.getDecoupX() + image.getWidth() <= pattern.getWidth()
-				&& pattern.getDecoupY() < pattern.getHeight()
-				&& pattern.getDecoupY() + image.getHeight() <= pattern.getHeight();
+				&& pattern.getDecoupX() < main.getWidth()
+				&& pattern.getDecoupX() + image.getWidth() <= main.getWidth()
+				&& pattern.getDecoupY() < main.getHeight()
+				&& pattern.getDecoupY() + image.getHeight() <= main.getHeight();
 	}
 	
 	private void placeImage(Pattern main, Image image, Pattern temp) {
