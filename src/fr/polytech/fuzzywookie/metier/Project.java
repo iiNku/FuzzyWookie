@@ -118,7 +118,7 @@ public class Project {
 			fitness.add(Solutions.get(i));
 			i++;
 		}
-		fitness = triBulleDecroissant(fitness);
+		fitness = triFitnessDecroissant(fitness);
 		i = 0;
 		int max = (int) Math.round((fitness.size() * 20 / 100));
 		while (fitness.get(i) != null && max < i) {
@@ -128,18 +128,16 @@ public class Project {
 		return SolutionsFinal;
 	}
 
-	private static List<Print> triBulleDecroissant(List<Print> tableau) {
+	private static List<Print> triFitnessDecroissant(List<Print> tableau) {
 		int longueur = tableau.size();
 		Print tampon;
 		boolean permut;
-
 		do {
 			// hypothèse : le tableau est trié
 			permut = false;
 			for (int i = 0; i < longueur - 1; i++) {
 				// Teste si 2 éléments successifs sont dans le bon ordre ou non
-				if (tableau.get(i).simplexSolution() < tableau.get(i + 1)
-						.simplexSolution()) {
+				if (tableau.get(i).simplexSolution() > tableau.get(i + 1).simplexSolution()) {
 					// s'ils ne le sont pas, on échange leurs positions
 					tampon = tableau.get(i);
 					tableau.add((i), tableau.get(i + 1));
@@ -152,9 +150,7 @@ public class Project {
 	}
 
 	public void launch() {
-
 		init();
-
 		initialPrint = new Print(this);
 		Packing packing = new Packing();
 		packing.packing(initialPrint);
@@ -167,6 +163,19 @@ public class Project {
 			List<Print> reproduction = this.getReproduction();
 
 		}
+	}
+	
+	public Print BestPrint(List<Print> tableau){
+		Print p = null;
+		p = tableau.get(0);
+		int i=1;
+		while(tableau.get(i)!=null){
+			if(tableau.get(i).simplexSolution()<p.simplexSolution()){
+				p = tableau.get(i);
+			}
+			i++;
+		}
+		return p;
 	}
 
 }
