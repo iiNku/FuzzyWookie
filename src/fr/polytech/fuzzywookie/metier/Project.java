@@ -1,5 +1,6 @@
 package fr.polytech.fuzzywookie.metier;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,5 +102,46 @@ public class Project {
 			
 			
 		}
+	}
+	
+	public List<Print> getReproduction(){
+		List<Print> Solutions = this.getListPrint();
+		int i=0;
+		List<Print> fitness = null;
+		List<Print> SolutionsFinal = null;
+		while(Solutions.get(i)!=null){
+			fitness.add(Solutions.get(i));
+			i++;
+		}
+		fitness = triBulleDecroissant(fitness);
+		i=0;
+		int max = (int) Math.round((fitness.size()*20/100));
+		while(fitness.get(i)!=null && max<i){
+			SolutionsFinal.add(fitness.get(i));
+			i++;
+		}
+		return SolutionsFinal;
+	}
+	
+	private static List<Print> triBulleDecroissant(List<Print> tableau) {
+		int longueur = tableau.size();
+		Print tampon;
+		boolean permut;
+ 
+		do {
+			// hypothèse : le tableau est trié
+			permut = false;
+			for (int i = 0; i < longueur - 1; i++) {
+				// Teste si 2 éléments successifs sont dans le bon ordre ou non
+				if (tableau.get(i).simplexSolution() < tableau.get(i + 1).simplexSolution()) {
+					// s'ils ne le sont pas, on échange leurs positions
+					tampon = tableau.get(i);
+					tableau.add((i),tableau.get(i + 1));
+					tableau.add((i + 1), tampon);
+					permut = true;
+				}
+			}
+		} while (permut);
+		return tableau;
 	}
 }
