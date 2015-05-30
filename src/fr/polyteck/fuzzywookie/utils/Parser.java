@@ -41,7 +41,7 @@ public class Parser {
 					String[] imageValue = ligne.split("\t");
 					Image img = new Image(Integer.valueOf(imageValue[0].substring(0,imageValue[0].indexOf("."))), 
 							Integer.valueOf(imageValue[1].substring(0,imageValue[1].indexOf("."))),
-							"Image"+(counter-2));
+							String.valueOf(counter-3));
 					project.getListImage().add(img);
 					img.setNbItem(Integer.valueOf(imageValue[2]));
 				}

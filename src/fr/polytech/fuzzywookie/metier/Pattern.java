@@ -9,13 +9,37 @@ public class Pattern extends Rectangle {
 	private int nbPrint;
 	private String name;
 	private int decoupX, decoupY;
-	
-	public Pattern(int width, int height)
-	{
+	private int nbImage;
+
+	public Pattern(int width, int height) {
 		super(width, height);
 		imageList = new ArrayList<Image>();
 		this.decoupX = 0;
 		this.decoupY = height;
+		nbImage = 0;
+	}
+
+	public Pattern(int width, int height, int nbImage) {
+		super(width, height);
+		imageList = new ArrayList<Image>();
+		this.decoupX = 0;
+		this.decoupY = height;
+		this.nbImage = nbImage;
+	}
+
+	public double[] getVecteur() {
+		if (!(nbImage == 0)) {
+			double[] vector = new double[nbImage];
+			for(int i=0; i<vector.length;i++)
+			{
+				vector[i]=0;
+			}
+			for (Image i : imageList) {
+				vector[Integer.valueOf(i.getName())] = vector[Integer.valueOf(i.getName())] +1;
+			}
+			return vector;
+		} else
+			return null;
 	}
 
 	public int getDecoupX() {
@@ -57,11 +81,10 @@ public class Pattern extends Rectangle {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public void addImage(Image image){
-		
+
+	public void addImage(Image image) {
+
 		imageList.add(image);
 	}
 
-	
 }
