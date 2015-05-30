@@ -2,6 +2,7 @@ package fr.polytech.fuzzywookie.metier;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import fr.polytech.fuzzywookie.pack.Packing;
@@ -92,36 +93,30 @@ public class Project {
 	}
 
 	public List<Print> getReproduction() {
-		List<Print> Solutions = getBestSolution();
+		List<Print> solutions = getBestSolution();
 		Reproduction repro = new Reproduction();
+		List<Print> toReturn = new ArrayList<Print>();
 
-		int i = 1;
-		int y;
-		while (Solutions.get(i) != null) {
-			y = 0;
-			while (i != y && Solutions.get(y) != null) {
-				Solutions.add(repro.ReproductionPattern(Solutions.get(i),
-						Solutions.get(y)));
-				y++;
-			}
-			i++;
+		for (Print print : solutions) {
+			int rng = (int) Math.random() * solutions.size();
+			Print child = repro.ReproductionPattern(print, solutions.get(rng));
+			toReturn.add(child);
 		}
-		return Solutions;
+		return toReturn;
 	}
 
 	public List<Print> getBestSolution() {
 		List<Print> Solutions = this.getListPrint();
 		int i = 0;
-		List<Print> fitness = null;
-		List<Print> SolutionsFinal = null;
-		while (Solutions.get(i) != null) {
-			fitness.add(Solutions.get(i));
-			i++;
+		List<Print> fitness = new ArrayList<Print>();
+		List<Print> SolutionsFinal = new ArrayList<Print>();
+		for (Print print : Solutions) {
+			fitness.add(print);
 		}
 		fitness = triFitnessDecroissant(fitness);
 		i = 0;
 		int max = (int) Math.round((fitness.size() * 20 / 100));
-		while (fitness.get(i) != null && max < i) {
+		while (fitness.get(i) != null && i < max) {
 			SolutionsFinal.add(fitness.get(i));
 			i++;
 		}
@@ -157,9 +152,11 @@ public class Project {
 
 		this.listPrint.addAll(Voisinnage.generate(initialPrint));
 
-		int beginMs = (int) System.currentTimeMillis();
-		while (System.currentTimeMillis() < beginMs + 7200000) {
-
+		System.out.println("Voisin cree");
+		
+		long beginMs = Calendar.getInstance().getTimeInMillis();
+		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
+			System.out.println("Boucle");
 			List<Print> reproduction = this.getReproduction();
 			System.out.println(BestPrint(reproduction));
 
