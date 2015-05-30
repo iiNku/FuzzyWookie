@@ -93,8 +93,10 @@ public class Packing {
 	private boolean imageFits(Pattern pattern, Image image) {
 		
 		return pattern.getArea() >= image.getArea() 
-				&& pattern.getWidth() >= image.getWidth()
-				&& pattern.getHeight() >= image.getHeight();
+				&& pattern.getDecoupX() < pattern.getWidth()
+				&& pattern.getDecoupX() + image.getWidth() <= pattern.getWidth()
+				&& pattern.getDecoupY() < pattern.getHeight()
+				&& pattern.getDecoupY() + image.getHeight() <= pattern.getHeight();
 	}
 	
 	private void placeImage(Pattern main, Image image, Pattern temp) {

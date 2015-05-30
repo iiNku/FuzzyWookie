@@ -15,7 +15,7 @@ public class Pattern extends Rectangle {
 		super(width, height);
 		imageList = new ArrayList<Image>();
 		this.decoupX = 0;
-		this.decoupY = height;
+		this.decoupY = 0;
 		nbImage = 0;
 	}
 
@@ -23,7 +23,7 @@ public class Pattern extends Rectangle {
 		super(width, height);
 		imageList = new ArrayList<Image>();
 		this.decoupX = 0;
-		this.decoupY = height;
+		this.decoupY = 0;
 		this.nbImage = nbImage;
 	}
 
