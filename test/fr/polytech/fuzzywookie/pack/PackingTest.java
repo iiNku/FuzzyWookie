@@ -20,8 +20,14 @@ public class PackingTest {
 		ArrayList<Image> images = new ArrayList<Image>();
 		images.add(new Image(20, 20, "Image1"));
 		images.add(new Image(40, 50, "Image2"));
-		images.add(new Image(15, 30, "Image3"));
-		images.add(new Image(30, 10, "Image4"));
+		images.add(new Image(20, 30, "Image3"));
+		images.add(new Image(20, 10, "Image4"));
+		images.add(new Image(60, 20, "Image5"));
+		images.add(new Image(10, 30, "Image6"));
+		images.add(new Image(50, 30, "Image7"));
+		images.add(new Image(30, 40, "Image8"));
+		images.add(new Image(10, 10, "Image9"));
+		images.add(new Image(30, 40, "Image10"));
 		
 		QSort qsort = new QSort();
 		qsort.sort(images);
