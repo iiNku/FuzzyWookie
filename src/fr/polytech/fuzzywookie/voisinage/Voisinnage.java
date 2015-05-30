@@ -15,14 +15,14 @@ public class Voisinnage {
 		Print neighbor = initialPrint;
 		neighbors.add(neighbor);
 
-		while (neighbors.size() < 1000) {
+		while (neighbors.size() < 10) {
 
 			int rng = (int) (Math.random() * 3);
-			if (rng == 1)
+			if (rng == 0)
 				neighbor = addPattern(neighbor);
+			//else if (rng == 1)
+				//neighbor = changeImage(neighbor);
 			else if (rng == 2)
-				neighbor = changeImage(neighbor);
-			else if (rng == 3)
 				neighbor = removeImage(neighbor);
 		}
 
@@ -36,12 +36,12 @@ public class Voisinnage {
 
 		List<Pattern> patterns = print.getListPattern();
 		
-		int rng = (int) (Math.random() * patterns.size()) - 1;
+		int rng = (int) (Math.random() * patterns.size());
 		
 		Pattern neo = patterns.get(rng);
 		
 		List<Image> images = neo.getImageList();
-		rng = (int) (Math.random() * images.size()) - 1;
+		rng = (int) (Math.random() * images.size());
 		
 		images.remove(rng);
 		

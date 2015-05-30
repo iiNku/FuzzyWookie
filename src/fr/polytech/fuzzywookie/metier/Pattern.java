@@ -234,4 +234,19 @@ public class Pattern extends Rectangle {
     	}
 		return p;
     }
+    
+    @Override
+    public String toString(){
+    	
+    	String toReturn = "";
+    	
+    	toReturn += "Nombre d'image : " + imageList.size() + "\n";
+    	toReturn += "Nombre d'impression :" + "" + "\n";
+    	for(Image image : imageList){
+    		toReturn += image;
+    	}
+    	
+    	return toReturn;
+    	
+    }
 }

@@ -93,4 +93,16 @@ public class Image extends Rectangle {
     	
     	return toReturn;
     }
+	
+	@Override
+	public String toString(){
+		
+		String toReturn = "";
+		
+		toReturn += "Image " + this.name + "\n";
+		toReturn += "X=" + this.x + " et Y=" + this.y + "\n";
+		toReturn += "Width=" + this.width + " et Height=" + this.height + "\n";
+		
+		return toReturn;
+	}
 }

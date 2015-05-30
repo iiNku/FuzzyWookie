@@ -92,5 +92,22 @@ public class Print {
 		}
 		return (placed.size() == project.getListImage().size());
 	}
+	
+	@Override
+	public String toString(){
+		
+		String toReturn = "";
+		toReturn += "Print : ";
+		
+		toReturn += "Nombre pattern : " + listPattern.size() + "\n";
+		int i = 0;
+		for(Pattern pattern : listPattern){
+			toReturn += "Pattern " + i + " : \n" + pattern;
+		}
+			
+		
+		return toReturn;
+		
+	}
 
 }

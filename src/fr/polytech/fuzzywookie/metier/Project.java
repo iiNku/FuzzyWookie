@@ -161,6 +161,7 @@ public class Project {
 		while (System.currentTimeMillis() < beginMs + 7200000) {
 
 			List<Print> reproduction = this.getReproduction();
+			System.out.println(BestPrint(reproduction));
 
 		}
 	}
