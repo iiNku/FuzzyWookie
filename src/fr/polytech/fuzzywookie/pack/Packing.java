@@ -21,6 +21,7 @@ public class Packing {
 	public void packing(Print print) {
 
 		List<Image> images = print.getProject().getListImage();
+		List<Image> imagesPlaced = print.getProject().getListImage();
 		QSort qsort = new QSort();
 		qsort.sort(images);
 		
@@ -28,7 +29,7 @@ public class Packing {
 		main = print.createPattern();
 		stack.push(main);
 		
-		while(!stack.isEmpty() && !images.isEmpty()){
+		while(!stack.isEmpty() || !images.isEmpty()){
 			
 			if(stack.isEmpty()){
 				
@@ -40,24 +41,34 @@ public class Packing {
 			for(Image image : images){
 				
 				if(imageFits(pattern, image)){
-					images.remove(image);
-					placeImage(main, image);
+					imagesPlaced.remove(image);
+					placeImage(main, image, pattern);
 					splitPattern(pattern, image);
+					break;
 				}
 			}
-			
 		}
 	}
 
 	private void splitPattern(Pattern pattern, Image placed) {
 		
 		Pattern p11 = new Pattern(pattern.getWidth(), pattern.getHeight() - placed.getHeight());
+		p11.setDecoupX(main.getDecoupX());
+		p11.setDecoupY(main.getDecoupY() + placed.getHeight());
+		
 		Pattern p12 = new Pattern(pattern.getWidth() - placed.getWidth() ,pattern.getHeight() - placed.getHeight());
-
+		p12.setDecoupX(main.getDecoupX() + placed.getWidth());
+		p12.setDecoupY(main.getDecoupY());
+		
 		PatternCouple couple1 = new PatternCouple(p11, p12);
 		
 		Pattern p21 = new Pattern(placed.getWidth(), pattern.getHeight() - placed.getHeight());
+		p21.setDecoupX(main.getDecoupX() + 0);
+		p21.setDecoupY(main.getDecoupY() + pattern.getHeight() - placed.getHeight());
+		
 		Pattern p22 = new Pattern(pattern.getWidth() - placed.getWidth(), pattern.getHeight());
+		p22.setDecoupX(main.getDecoupX() + placed.getWidth());
+		p22.setDecoupY(main.getDecoupY() + pattern.getHeight());
 		
 		PatternCouple couple2 = new PatternCouple(p21, p22);
 		
@@ -86,11 +97,11 @@ public class Packing {
 				&& pattern.getHeight() >= image.getHeight();
 	}
 	
-	private void placeImage(Pattern main, Image image) {
+	private void placeImage(Pattern main, Image image, Pattern temp) {
 		
 		Image placed = new Image(image.getWidth(), image.getHeight(), image.getName());
-		placed.setX(main.getDecoupX());
-		placed.setY(main.getDecoupY());
+		placed.setX(temp.getDecoupX());
+		placed.setY(temp.getDecoupY());
 		
 		main.addImage(placed);
 	}
