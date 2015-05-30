@@ -8,6 +8,7 @@ import org.junit.Test;
 import fr.polytech.fuzzywookie.metier.Image;
 import fr.polytech.fuzzywookie.metier.Print;
 import fr.polytech.fuzzywookie.metier.Project;
+import fr.polyteck.fuzzywookie.utils.QSort;
 
 public class PackingTest {
 
@@ -22,9 +23,14 @@ public class PackingTest {
 		images.add(new Image(15, 30, "Image3"));
 		images.add(new Image(30, 10, "Image4"));
 		
+		QSort qsort = new QSort();
+		qsort.sort(images);
+		
 		p.setListImage(images);
 		p.setPatternX(80);
 		p.setPatternY(100);
+		
+		
 		
 		Packing packing = new Packing();
 		packing.packing(print);

@@ -62,6 +62,11 @@ public class Pattern extends Rectangle {
 		
 		imageList.add(image);
 	}
+	
+	public int getHigherSide(){
+		
+		return width > height ? width : height;
+	}
 
 	
 }

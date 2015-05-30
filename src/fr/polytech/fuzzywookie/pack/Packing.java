@@ -7,111 +7,87 @@ import java.util.Stack;
 
 import fr.polytech.fuzzywookie.metier.Image;
 import fr.polytech.fuzzywookie.metier.Pattern;
+import fr.polytech.fuzzywookie.metier.PatternCouple;
 import fr.polytech.fuzzywookie.metier.Print;
+import fr.polytech.fuzzywookie.metier.Project;
 import fr.polytech.fuzzywookie.metier.Rectangle;
+import fr.polyteck.fuzzywookie.utils.QSort;
 
 public class Packing {
 	
 	private Stack<Pattern> stack;
+	private Pattern main;
 
 	public void packing(Print print) {
 
-		Pattern pattern = null;
+		List<Image> images = print.getProject().getListImage();
+		QSort qsort = new QSort();
+		qsort.sort(images);
+		
 		stack = new Stack<Pattern>();
-
-		ArrayList<Image> list = new ArrayList<Image>();
-		list.addAll(print.getProject().getListImage());
 		
-		boolean allPresent = false;
-		
-		while (!allPresent || !stack.empty()) {
-
-			if(stack.empty()){
-				System.out.println("Création nouveau pattern");
-				pattern = print.createPattern();
-				stack.add(pattern);
+		while(!stack.isEmpty() || !images.isEmpty()){
+			
+			if(stack.isEmpty() && !images.isEmpty()){
+				
+				main = print.createPattern();
+				stack.push(main);
 			}
 			
-			while (!stack.empty()) {
-				Pattern p = stack.pop();
-				System.out.println("Pattern utilisé : " + p.getWidth() + "*" + p.getHeight());
-				for (Image i : list) {
-					if (p.getArea() > i.getArea() && p.getWidth() >= i.getWidth() && p.getHeight() >= i.getHeight()) { // Testez la largeur et hauteur
-						list.remove(i);
-						if(list.isEmpty()){
-							allPresent = true;
-							list.addAll(print.getProject().getListImage());
-						}
-						
-						insertImage(p, i);
-						cutPattern(p, i);
-						
-						break;
-					}
+			Pattern pattern = stack.pop();
+			for(Image image : images){
+				
+				if(imageFits(main, image)){
+					placeImage(main, image);
+					splitPattern(pattern, image);
 				}
 			}
+			
 		}
+		
 	}
 
-	private void cutPattern(Pattern p, Image i) {
+	private void splitPattern(Pattern pattern, Image placed) {
 		
-		Pattern p11 = new Pattern(p.getWidth(), p.getHeight() - i.getHeight());
-		Pattern p12 = new Pattern(p.getWidth() - i.getWidth(), i.getHeight());
-		
-		Pattern p21 = new Pattern(i.getWidth(), p.getHeight() - i.getHeight());
-		Pattern p22 = new Pattern(p.getWidth() - i.getWidth(), p.getHeight());
-		
-		Pattern pMax1 = p11.getArea() > p12.getArea() ? p11 : p12;
-		Pattern pMax2 = p21.getArea() > p22.getArea() ? p21 : p22;
-		
-		int max = pMax1.getWidth() > pMax1.getHeight() ? pMax1.getWidth() : pMax1.getHeight();
-		int max2 = pMax1.getWidth() > pMax1.getHeight() ? pMax1.getWidth() : pMax1.getHeight();
-		
-		if(max > max2){
-			p11.setDecoupX(0);
-			p11.setDecoupY(p.getHeight() - i.getHeight());
+		Pattern p11 = new Pattern(pattern.getWidth(), pattern.getHeight() - placed.getHeight());
+		Pattern p12 = new Pattern(pattern.getWidth() - placed.getWidth() ,pattern.getHeight() - placed.getHeight());
 
-			p12.setDecoupX(i.getWidth());
-			p12.setDecoupY(p.getHeight());
-			
-			System.out.println("New pattern : " + p12.getWidth() + "*" + p12.getHeight());
-			System.out.println("DecoupX : " + p12.getDecoupX() + " DecoupY" + p12.getDecoupY());
-			
-			System.out.println("New pattern : " + p11.getWidth() + "*" + p11.getHeight());
-			System.out.println("DecoupX : " + p11.getDecoupX() + " DecoupY" + p11.getDecoupY());
-			
-			System.out.println("________");
-			
-			stack.add(p11);
-			stack.add(p12);
-		}
-		else{
-			
-			p21.setDecoupX(0);
-			p21.setDecoupY(p.getHeight() - i.getHeight());
-
-			p22.setDecoupX(i.getWidth());
-			p22.setDecoupY(p.getHeight());
-			
-			System.out.println("New pattern : " + p21.getWidth() + "*" + p21.getHeight());
-			System.out.println("DecoupX : " + p21.getDecoupX() + " DecoupY" + p21.getDecoupY());
-			
-			System.out.println("New pattern : " + p22.getWidth() + "*" + p22.getHeight());
-			System.out.println("DecoupX : " + p22.getDecoupX() + " DecoupY" + p22.getDecoupY());
-			
-			System.out.println("________");
-			
-			stack.add(p21);
-			stack.add(p22);
-		}
+		PatternCouple couple1 = new PatternCouple(p11, p12);
+		
+		Pattern p21 = new Pattern(placed.getWidth(), pattern.getHeight() - placed.getHeight());
+		Pattern p22 = new Pattern(pattern.getWidth() - placed.getWidth(), pattern.getHeight());
+		
+		PatternCouple couple2 = new PatternCouple(p21, p22);
+		
+		PatternCouple selected = getSelectedCouple(couple1, couple2);
 	}
 
-	private void insertImage(Pattern pattern, Image image) {
+	private PatternCouple getSelectedCouple(PatternCouple couple1, PatternCouple couple2) {
 		
-		Image i = new Image(pattern.getDecoupX(), pattern.getDecoupY(), image.getName());
-		pattern.addImage(i);
-		pattern.setDecoupX(i.getWidth());
+
+		Pattern max1 = couple1.getLarger();
+		Pattern max2 = couple2.getLarger();
 		
-		System.out.println(i.getName() + "x=" + i.getX() + " et y=" + i.getY());
+		int side1 = max1.getHigherSide();
+		int side2 = max2.getHigherSide();
+		
+		return side1 > side2 ? couple1 : couple2;
+	}
+
+
+	private boolean imageFits(Pattern pattern, Image image) {
+		
+		return pattern.getArea() >= image.getArea() 
+				&& pattern.getWidth() >= image.getWidth()
+				&& pattern.getHeight() >= image.getHeight();
+	}
+	
+	private void placeImage(Pattern main, Image image) {
+		
+		Image placed = new Image(image.getWidth(), image.getHeight(), image.getName());
+		placed.setX(main.getDecoupX());
+		placed.setY(main.getDecoupY());
+		
+		main.addImage(placed);
 	}
 }
