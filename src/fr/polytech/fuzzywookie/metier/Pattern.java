@@ -119,8 +119,93 @@ public class Pattern extends Rectangle {
     }
     
     public void addFreeSpace(Pattern pattern){
-    	
-    	freeSpace.add(pattern);
+    	if(freeSpace.isEmpty())
+    		freeSpace.add(pattern);
+    	else
+    	{ 		
+    		for(Pattern space : freeSpace)
+    		{
+    			Pattern fusion = null;
+	    		if(space.getDecoupX() <= pattern.getDecoupX() &&
+	    				pattern.getDecoupX() <= space.getDecoupX() + space.getWidth())
+	    		{
+	    			if(space.getDecoupY()<= pattern.getDecoupY() &&
+	    					pattern.getDecoupY() <= space.getDecoupY() + space.getHeight())
+	    			{
+	    				if(space.getDecoupX() + space.getWidth() - pattern.getDecoupX() > space.getDecoupY()+ space.getHeight() - pattern.decoupY)
+	    				{
+	    					fusion = new Pattern(space.getDecoupX() + space.getWidth() - pattern.getDecoupX(), space.getHeight() + pattern.getHeight());
+	    					fusion.setDecoupX(pattern.decoupX);
+	    					fusion.setDecoupY(space.decoupY);
+	    				}
+	    				else
+	    				{
+		    				fusion = new Pattern(pattern.width+space.width, space.height + space.decoupY - pattern.getDecoupY());
+		    				fusion.setDecoupX(space.decoupX);
+		    				fusion.setDecoupY(pattern.decoupY);
+	    				}
+	    			}
+	    			else if(space.getDecoupY() <= pattern.getDecoupY() + pattern.getHeight() &&
+	    					pattern.getDecoupY() + pattern.getHeight() <= space.getDecoupY() + space.getHeight())
+	    			{
+	    				if(space.getDecoupX() + space.getWidth() - pattern.getDecoupX() > pattern.getDecoupY()+ pattern.getHeight() - space.decoupY)
+	    				{
+	    					fusion = new Pattern(space.getDecoupX() + space.getWidth() - pattern.decoupX, space.getHeight() + pattern.getHeight());
+	    					fusion.setDecoupX(pattern.decoupX);
+	    					fusion.setDecoupY(pattern.decoupY);
+	    				}
+	    				else
+	    				{
+	    					fusion = new Pattern(space.getWidth() + pattern.getWidth(), pattern.getDecoupY() + pattern.getHeight() - space.getDecoupY());
+	    					fusion.setDecoupX(space.decoupX);
+	    					fusion.setDecoupY(space.decoupY);
+	    				}
+	    			}
+	    		}
+	    		else if(space.getDecoupX() <= pattern.getDecoupX() + pattern.width &&
+	    				pattern.getDecoupX()+pattern.width <= space.getDecoupX() + pattern.width)
+	    		{
+	    			if(space.getDecoupY()<= pattern.getDecoupY() &&
+	    					pattern.getDecoupY() <= space.getDecoupY() + space.getHeight())
+	    			{
+	    				if(pattern.getDecoupX() + pattern.width - space.getDecoupX() > space.decoupY + space.height - pattern.decoupY)
+	    				{
+	    					fusion = new Pattern( pattern.decoupX +pattern.width - space.decoupX , space.height + pattern.height);
+	    					fusion.setDecoupX(space.decoupX);
+	    					fusion.setDecoupY(space.decoupY);
+	    				}
+	    				else
+	    				{
+	    					fusion = new Pattern(pattern.width + space.width, space.decoupY + space.height - pattern.decoupY);
+	    					fusion.setDecoupX(pattern.decoupX);
+	    					fusion.setDecoupY(pattern.decoupY);
+	    				}
+	    			}
+	    			else if(space.getDecoupY() <= pattern.getDecoupY() + pattern.getHeight() &&
+	    					pattern.getDecoupY() + pattern.getHeight() <= space.getDecoupY() + space.getHeight())
+	    			{
+	    				if(pattern.getDecoupX() + pattern.width - space.getDecoupX() > pattern.getDecoupY() + pattern.getHeight() - space.getDecoupY())
+	    				{
+	    					fusion = new Pattern(pattern.getDecoupX() + pattern.width - space.getDecoupX(), pattern.getHeight() + space.getHeight());
+	    					fusion.setDecoupX(space.decoupX);
+	    					fusion.setDecoupY(pattern.decoupY);
+	    				}
+	    				else
+	    				{
+	    					fusion = new Pattern(pattern.width + space.width, pattern.getDecoupY()+pattern.height - space.decoupY);
+	    					fusion.setDecoupX(pattern.decoupX);
+	    					fusion.setDecoupY(pattern.decoupY);
+	    				}
+	    			}	
+	    		}
+	    		if(fusion != null && fusion.getArea()>pattern.getArea() && fusion.getArea() > space.getArea())
+	    		{
+	    			freeSpace.remove(space);
+	    			freeSpace.add(pattern);
+	    			break;
+	    		}	
+    		}
+    	}
     }
     
     public ArrayList<Pattern> getFreeSpace(){
