@@ -114,30 +114,5 @@ public class Pattern extends Rectangle {
             return false;
         }
     }
-    
-    public boolean patternTest(Pattern p){
-        p.getImageList();
-        int i=0;
-        int total=0;
-        while(p.getImageList().get(i)!=null){
-            Image img = p.getImageList().get(i);
-            int width = img.getWidth();
-            int height = img.getHeight();
-            if(img.getX()+img.getWidth()>p.getWidth()){
-                return false;
-            }
-            if(img.getY()+img.getHeight()>p.getWidth()){
-                return false;
-            }
-            total += width*height;
-        }
-        if(p.getArea()<=total){
-            return true;
-        }else{
-            return false;
-        }
-    }
-
-
 
 }
