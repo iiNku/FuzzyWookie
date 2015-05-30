@@ -138,29 +138,9 @@ public class Pattern extends Rectangle {
 		}
 		return true;
     }
-    
-    public String print(){
-    	
-    	String toReturn = "";
-    	for(int i = 0; i < this.width; i++){
-    		toReturn += "_";
-    	}
-    	toReturn += "\n";
-    	for(int j = 0; j < this.height; j++){
-    		toReturn += "|";
-    		for(int i = 1; i < this.width -1; i++){
-    			toReturn += " ";
-    		}
-    		toReturn += "|\n";
-    	}
-    	for(int i = 0; i < this.width; i++){
-    		toReturn += "_";
-    	}
-    	
-    	return toReturn;
-    }
  
     public Pattern changeImage(Pattern p, Image imgold,Image imgnew){
+    	java.awt.Rectangle rectangle;
     	Pattern newp = p;
     	newp.getImageList().remove(imgold);
     	newp.addImage(imgnew);

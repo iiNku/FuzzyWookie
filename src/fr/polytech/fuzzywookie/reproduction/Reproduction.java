@@ -9,6 +9,7 @@ import fr.polytech.fuzzywookie.pack.PackingTest;
 public class Reproduction {
     
     public Print ReproductionPattern(Print p1,Print p2){
+    	
     	Print fils = new Print(p1.getProject());
         List<Pattern> patterns1 = p1.getListPattern();
         List<Pattern> patterns2 = p2.getListPattern();
