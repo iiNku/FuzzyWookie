@@ -72,4 +72,25 @@ public class Image extends Rectangle {
 				&& this.y < pattern.getHeight()
 				&& this.y + this.height <= pattern.getHeight();
 	}
+	
+	public String print(){
+    	
+    	String toReturn = "";
+    	for(int i = 0; i < this.width; i++){
+    		toReturn += "*";
+    	}
+    	toReturn += "\n";
+    	for(int j = 0; j < this.height; j++){
+    		toReturn += "*";
+    		for(int i = 1; i < this.width -1; i++){
+    			toReturn += " ";
+    		}
+    		toReturn += "*\n";
+    	}
+    	for(int i = 0; i < this.width; i++){
+    		toReturn += "*";
+    	}
+    	
+    	return toReturn;
+    }
 }

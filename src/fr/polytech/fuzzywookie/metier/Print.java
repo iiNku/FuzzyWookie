@@ -85,11 +85,12 @@ public class Print {
 		
 		Map<String, Boolean> placed = new HashMap<String, Boolean>();
 		for(Pattern pattern : listPattern){
+			if(! pattern.isValid()) return false;
 			for(Image image : pattern.getImageList()){
 				placed.put(image.getName(), true);
 			}
 		}
-		return (placed.size() == project.getListImage().size()) && Packing.isValid(listPattern);
+		return (placed.size() == project.getListImage().size());
 	}
 
 }
