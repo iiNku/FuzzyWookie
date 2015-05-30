@@ -49,10 +49,16 @@ public class Voisinnage {
 		
 		List<Image> images = neo.getImageList();
 		rng = (int) (Math.random() * images.size());
+		if(images.size()==0)
+		{
+			patterns.remove(neo);
+		}
+		else
+		{
 		Image removeImg = images.get(rng);
 		if(print.getNbImage(removeImg)>1)
 			images.remove(rng);
-		
+		}
 		return print;
 	}
 
