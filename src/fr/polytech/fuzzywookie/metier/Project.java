@@ -167,7 +167,7 @@ public class Project {
 		
 		Print best = tableau.get(0);
 		for(Print print : tableau){
-			if(print.simplexSolution() > best.simplexSolution()){
+			if(print.simplexSolution() < best.simplexSolution()){
 				best = print;
 			}
 		}

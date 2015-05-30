@@ -16,19 +16,17 @@ public class Voisinnage {
 		neighbors.add(neighbor);
 
 		while (neighbors.size() < 10) {
-
+			System.out.println(neighbors.size());
 			int rng = (int) (Math.random() * 3);
 			if (rng == 0)
 				neighbor = addPattern(neighbor);
 			//else if (rng == 1)
 				//neighbor = changeImage(neighbor);
-			else if (rng == 2)
-				neighbor = removeImage(neighbor);
+			//else if (rng == 2)
+				//neighbor = removeImage(neighbor);
+			if (neighbor.isValid())
+				neighbors.add(neighbor);
 		}
-
-		if (neighbor.isValid())
-			neighbors.add(neighbor);
-
 		return neighbors;
 	}
 
