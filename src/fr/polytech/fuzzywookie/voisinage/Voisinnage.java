@@ -15,19 +15,20 @@ public class Voisinnage {
 		Print neighbor = initialPrint;
 		neighbors.add(neighbor);
 
-		while (neighbors.size() <= 10) {
-			System.out.println("Génération voisin : " + neighbors.size());
+		while (neighbors.size() < 10) {
+
 			int rng = (int) (Math.random() * 3);
 			if (rng == 0)
 				neighbor = addPattern(neighbor);
 			//else if (rng == 1)
 				//neighbor = changeImage(neighbor);
-			//else if (rng == 2)
-				//neighbor = removeImage(neighbor);
-			
-			if (neighbor.isValid())
-				neighbors.add(neighbor);
+			else if (rng == 2)
+				neighbor = removeImage(neighbor);
 		}
+
+		if (neighbor.isValid())
+			neighbors.add(neighbor);
+
 		return neighbors;
 	}
 
@@ -41,8 +42,9 @@ public class Voisinnage {
 		
 		List<Image> images = neo.getImageList();
 		rng = (int) (Math.random() * images.size());
-		
-		if(images.size() > 0 && images.get(rng) != null) images.remove(rng);
+		Image removeImg = images.get(rng);
+		if(print.getNbImage(removeImg)>1)
+			images.remove(rng);
 		
 		return print;
 	}
