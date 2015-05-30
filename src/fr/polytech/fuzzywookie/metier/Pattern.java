@@ -127,7 +127,7 @@ public class Pattern extends Rectangle {
     	
     	return (ArrayList<Pattern>) freeSpace;
     }
-    
+   
     public boolean isValid(){
     	
     	List<Image> images = this.getImageList();
@@ -158,5 +158,15 @@ public class Pattern extends Rectangle {
     	}
     	
     	return toReturn;
+    }
+ 
+    public Pattern changeImage(Pattern p, Image imgold,Image imgnew){
+    	Pattern newp = p;
+    	newp.getImageList().remove(imgold);
+    	newp.addImage(imgnew);
+    	if(newp.isValid()){
+    		return newp;
+    	}
+		return p;
     }
 }
