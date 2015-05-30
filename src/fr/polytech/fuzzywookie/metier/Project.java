@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.polytech.fuzzywookie.pack.Packing;
+import fr.polytech.fuzzywookie.voisinage.Voisinnage;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
 
@@ -95,11 +96,15 @@ public class Project {
 	public void launch(){
 		
 		init();
+		
+		initialPrint = new Print(this);
+		Packing packing = new Packing();
+		packing.packing(initialPrint);
+		
+		this.listPrint.addAll(Voisinnage.generate(initialPrint));
+		
 		int beginMs = (int) System.currentTimeMillis();
 		while(System.currentTimeMillis() < beginMs + 7200000){
-			
-			Packing packing = new Packing();
-			
 			
 		}
 	}

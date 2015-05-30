@@ -57,7 +57,6 @@ public class Voisinnage {
 
 		Packing packing = new Packing();
 		packing.packNewPattern(print);
-		
 		return print;
 	}
 
