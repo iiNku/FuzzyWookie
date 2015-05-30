@@ -100,7 +100,8 @@ public class Project {
 		while (Solutions.get(i) != null) {
 			y = 0;
 			while (i != y && Solutions.get(y) != null) {
-				Solutions.add(repro.ReproductionPattern(Solutions.get(i),Solutions.get(y)));
+				Solutions.add(repro.ReproductionPattern(Solutions.get(i),
+						Solutions.get(y)));
 				y++;
 			}
 			i++;
@@ -111,8 +112,8 @@ public class Project {
 	public List<Print> getBestSolution() {
 		List<Print> Solutions = this.getListPrint();
 		int i = 0;
-		List<Print> fitness = new ArrayList<>();
-		List<Print> SolutionsFinal = new ArrayList<>();
+		List<Print> fitness = null;
+		List<Print> SolutionsFinal = null;
 		while (Solutions.get(i) != null) {
 			fitness.add(Solutions.get(i));
 			i++;
