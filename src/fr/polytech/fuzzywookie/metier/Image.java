@@ -64,4 +64,12 @@ public class Image extends Rectangle {
 		return ((rw < rx || rw > tx) && (rh < ry || rh > ty)
 				&& (tw < tx || tw > rx) && (th < ty || th > ry));
 	}
+
+	public boolean isInside(Pattern pattern) {
+		
+		return this.x < pattern.getWidth()
+				&& this.x + this.width <= pattern.getWidth()
+				&& this.y < pattern.getHeight()
+				&& this.y + this.height <= pattern.getHeight();
+	}
 }
