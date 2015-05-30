@@ -6,7 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Project project = new Project("/Users/iiNku/Documents/workspace/FuzzyWookie/test/data_50Lalpha.txt");
+		Project project = new Project("test/data_50Lalpha.txt");
 		project.launch();
 
 	}
