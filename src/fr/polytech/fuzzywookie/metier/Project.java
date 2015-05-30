@@ -158,22 +158,20 @@ public class Project {
 		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
 			System.out.println("Boucle");
 			List<Print> reproduction = this.getReproduction();
-			System.out.println(BestPrint(reproduction));
+			System.out.println(bestPrint(reproduction));
 
 		}
 	}
 	
-	public Print BestPrint(List<Print> tableau){
-		Print p = null;
-		p = tableau.get(0);
-		int i=1;
-		while(tableau.get(i)!=null){
-			if(tableau.get(i).simplexSolution()<p.simplexSolution()){
-				p = tableau.get(i);
+	public Print bestPrint(List<Print> tableau){
+		
+		Print best = tableau.get(0);
+		for(Print print : tableau){
+			if(print.simplexSolution() > best.simplexSolution()){
+				best = print;
 			}
-			i++;
 		}
-		return p;
+		return best;
 	}
 
 }

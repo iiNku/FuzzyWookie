@@ -20,8 +20,8 @@ public class Reproduction {
     	ArrayList<Pattern> father = (ArrayList<Pattern>) p1.getListPattern();
     	ArrayList<Pattern> mother = (ArrayList<Pattern>) p2.getListPattern();
     	
-    	int minSize = (father.size() /2) > (mother.size() / 2) ? mother.size() / 2 : father.size() /2;   	
-    	int pat = 1 + (int) Math.random() * ((minSize-1) + 1);
+    	int minSize = (father.size() /2) > (mother.size() / 2) ? mother.size() / 2 : father.size() /2;
+    	int pat = 1 + (int) (Math.random() * ((minSize - 1) + 1));
 
     	while(child.getListPattern().size() < meanPattern){
     		

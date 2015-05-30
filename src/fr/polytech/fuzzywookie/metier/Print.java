@@ -119,10 +119,7 @@ public class Print {
 		for(Pattern pattern : listPattern){
 			toReturn += "Pattern " + i + " : \n" + pattern;
 		}
-			
-		
 		return toReturn;
-		
 	}
 
 }
