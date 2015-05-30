@@ -10,8 +10,6 @@ public class Reproduction {
     
     public Print ReproductionPattern(Print p1,Print p2){
     	
-    	int pat = 3;
-    	
     	Print child = new Print(p1.getProject());
     	int meanPattern = Math.round((p1.getListPattern().size()+p2.getListPattern().size())/2);
     	
@@ -22,6 +20,9 @@ public class Reproduction {
     	ArrayList<Pattern> father = (ArrayList<Pattern>) p1.getListPattern();
     	ArrayList<Pattern> mother = (ArrayList<Pattern>) p2.getListPattern();
     	
+    	int minSize = (father.size() /2) > (mother.size() / 2) ? mother.size() / 2 : father.size() /2;   	
+    	int pat = 1 + (int) Math.random() * ((minSize-1) + 1);
+
     	while(child.getListPattern().size() < meanPattern){
     		
     		if(occurence % 2 == 0){
