@@ -25,10 +25,12 @@ public class Packing {
 		qsort.sort(images);
 		
 		stack = new Stack<Pattern>();
+		main = print.createPattern();
+		stack.push(main);
 		
-		while(!stack.isEmpty() || !images.isEmpty()){
+		while(!stack.isEmpty() && !images.isEmpty()){
 			
-			if(stack.isEmpty() && !images.isEmpty()){
+			if(stack.isEmpty()){
 				
 				main = print.createPattern();
 				stack.push(main);
@@ -37,14 +39,14 @@ public class Packing {
 			Pattern pattern = stack.pop();
 			for(Image image : images){
 				
-				if(imageFits(main, image)){
+				if(imageFits(pattern, image)){
+					images.remove(image);
 					placeImage(main, image);
 					splitPattern(pattern, image);
 				}
 			}
 			
 		}
-		
 	}
 
 	private void splitPattern(Pattern pattern, Image placed) {
@@ -60,6 +62,8 @@ public class Packing {
 		PatternCouple couple2 = new PatternCouple(p21, p22);
 		
 		PatternCouple selected = getSelectedCouple(couple1, couple2);
+		stack.push(selected.getPattern1());
+		stack.push(selected.getPattern2());
 	}
 
 	private PatternCouple getSelectedCouple(PatternCouple couple1, PatternCouple couple2) {
