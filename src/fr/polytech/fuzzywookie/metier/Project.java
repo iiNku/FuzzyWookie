@@ -4,6 +4,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.polytech.fuzzywookie.reproduction.Reproduction;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
 
@@ -92,6 +93,23 @@ public class Project {
 	}
 	
 	public List<Print> getReproduction(){
+		List<Print> Solutions = getBestSolution();
+		Reproduction repro = new Reproduction();
+		
+		int i=1;
+		int y;
+		while(Solutions.get(i)!=null){
+			y=0;
+			while(i!=y && Solutions.get(y)!=null){
+				Solutions.add(repro.ReproductionPattern(Solutions.get(i),Solutions.get(y)));
+				y++;
+			}
+			i++;
+		}
+				return Solutions;
+	}
+	
+	public List<Print> getBestSolution(){
 		List<Print> Solutions = this.getListPrint();
 		int i=0;
 		List<Print> fitness = null;
