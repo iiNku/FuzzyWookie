@@ -15,7 +15,7 @@ public class Voisinnage {
 		Print neighbor = initialPrint;
 		neighbors.add(neighbor);
 
-		while (neighbors.size() < 10) {
+		while (neighbors.size() < 1000) {
 			System.out.println(neighbors.size());
 			int rng = (int) (Math.random() * 3);
 			if (rng == 0)

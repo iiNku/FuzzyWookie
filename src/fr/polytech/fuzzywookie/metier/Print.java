@@ -115,10 +115,10 @@ public class Print {
 		toReturn += "Print : ";
 		
 		toReturn += "Nombre pattern : " + listPattern.size() + "\n";
-		int i = 0;
+		/*int i = 0;
 		for(Pattern pattern : listPattern){
 			toReturn += "Pattern " + i + " : \n" + pattern;
-		}
+		}*/
 		return toReturn;
 	}
 
