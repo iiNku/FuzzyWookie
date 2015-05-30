@@ -33,7 +33,6 @@ public class Packing {
 		stack.push(main);
 		
 		while(!stack.isEmpty() || !allPlaced){
-			System.out.println("block");
 			if(stack.isEmpty()){
 				
 				main = print.createPattern();
@@ -65,7 +64,7 @@ public class Packing {
 			List<Image> images = pattern.getImageList();
 			for(int i = 0; i < images.size(); i++){
 				for(int j = i + 1; j < images.size(); j++){
-					if(images.get(i).intersect(images.get(j))) return false;
+					if(images.get(i).intersect(images.get(j)) || !images.get(i).isInside(pattern)) return false;
 				}
 			}
 		}

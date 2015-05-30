@@ -89,6 +89,4 @@ public class Project {
 	public void setInitialPrint(Print initialPrint) {
 		this.initialPrint = initialPrint;
 	}
-
-	
 }
