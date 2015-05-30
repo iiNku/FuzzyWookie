@@ -3,6 +3,7 @@ package fr.polytech.fuzzywookie.metier;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.polytech.fuzzywookie.pack.Packing;
 import fr.polytech.fuzzywookie.simplex.Simplex;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
@@ -76,6 +77,18 @@ public class Print {
 		value = (int) fitness.value();
 		
 		return value;
+	}
+	
+	public boolean isValid(){
+		
+		ArrayList<Image> placed = new ArrayList<Image>();
+		for(Pattern pattern : listPattern){
+			for(Image image : pattern.getImageList()){
+				if(! placed.contains(image)) placed.add(image);
+			}
+		}
+		
+		return (placed.size() == project.getListImage().size()) && Packing.isValid(listPattern);
 	}
 
 }

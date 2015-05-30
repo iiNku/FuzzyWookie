@@ -10,10 +10,12 @@ public class Pattern extends Rectangle {
 	private String name;
 	private int decoupX, decoupY;
 	private int nbImage;
+	private List<Pattern> freeSpace;
 
 	public Pattern(int width, int height) {
 		super(width, height);
 		imageList = new ArrayList<Image>();
+		freeSpace = new ArrayList<Pattern>();
 		this.decoupX = 0;
 		this.decoupY = 0;
 		nbImage = 0;
@@ -113,6 +115,16 @@ public class Pattern extends Rectangle {
         }else{
             return false;
         }
+    }
+    
+    public void addFreeSpace(Pattern pattern){
+    	
+    	freeSpace.add(pattern);
+    }
+    
+    public ArrayList<Pattern> getFreeSpace(){
+    	
+    	return (ArrayList<Pattern>) freeSpace;
     }
 
 }

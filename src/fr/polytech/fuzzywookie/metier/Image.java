@@ -2,12 +2,11 @@ package fr.polytech.fuzzywookie.metier;
 
 public class Image extends Rectangle {
 
-	private int x,y;
+	private int x, y;
 	private String name;
 	int nbItem;
-	
-	public Image(int width, int height, String name)
-	{
+
+	public Image(int width, int height, String name) {
 		super(width, height);
 		this.name = name;
 	}
@@ -42,5 +41,27 @@ public class Image extends Rectangle {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean intersect(Image i) {
+
+		int tw = this.width;
+		int th = this.height;
+		int rw = i.width;
+		int rh = i.height;
+		if (rw <= 0 || rh <= 0 || tw <= 0 || th <= 0) {
+			return false;
+		}
+		int tx = this.x;
+		int ty = this.y;
+		int rx = i.x;
+		int ry = i.y;
+		rw += rx;
+		rh += ry;
+		tw += tx;
+		th += ty;
+
+		return ((rw < rx || rw > tx) && (rh < ry || rh > ty)
+				&& (tw < tx || tw > rx) && (th < ty || th > ry));
 	}
 }
