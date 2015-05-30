@@ -57,19 +57,6 @@ public class Packing {
 			main.addFreeSpace(pattern);
 		}
 	}
-	
-	public static boolean isValid(List<Pattern> patterns){
-		
-		for(Pattern pattern : patterns){
-			List<Image> images = pattern.getImageList();
-			for(int i = 0; i < images.size(); i++){
-				for(int j = i + 1; j < images.size(); j++){
-					if(images.get(i).intersect(images.get(j)) || !images.get(i).isInside(pattern)) return false;
-				}
-			}
-		}
-		return true;
-	}
 
 	private void splitPattern(Pattern pattern, Image placed) {
 		
