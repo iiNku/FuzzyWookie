@@ -1,7 +1,9 @@
 package fr.polytech.fuzzywookie.metier;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.polytech.fuzzywookie.pack.Packing;
 import fr.polytech.fuzzywookie.simplex.Simplex;
@@ -81,13 +83,12 @@ public class Print {
 	
 	public boolean isValid(){
 		
-		ArrayList<Image> placed = new ArrayList<Image>();
+		Map<String, Boolean> placed = new HashMap<String, Boolean>();
 		for(Pattern pattern : listPattern){
 			for(Image image : pattern.getImageList()){
-				if(! placed.contains(image)) placed.add(image);
+				placed.put(image.getName(), true);
 			}
 		}
-		
 		return (placed.size() == project.getListImage().size()) && Packing.isValid(listPattern);
 	}
 

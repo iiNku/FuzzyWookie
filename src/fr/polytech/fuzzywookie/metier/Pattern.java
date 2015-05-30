@@ -24,6 +24,7 @@ public class Pattern extends Rectangle {
 	public Pattern(int width, int height, int nbImage) {
 		super(width, height);
 		imageList = new ArrayList<Image>();
+		freeSpace = new ArrayList<Pattern>();
 		this.decoupX = 0;
 		this.decoupY = 0;
 		this.nbImage = nbImage;

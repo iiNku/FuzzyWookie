@@ -1,11 +1,14 @@
 package fr.polytech.fuzzywookie.pack;
 
+import static org.junit.Assert.*;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import org.junit.Test;
 
 import fr.polytech.fuzzywookie.metier.Image;
+import fr.polytech.fuzzywookie.metier.Pattern;
 import fr.polytech.fuzzywookie.metier.Print;
 import fr.polytech.fuzzywookie.metier.Project;
 import fr.polyteck.fuzzywookie.utils.QSort;
@@ -41,6 +44,40 @@ public class PackingTest {
 		Packing packing = new Packing();
 		packing.packing(print);
 		
-		System.out.println("fds");
+		assertEquals(2, print.getListPattern().size());
+		Pattern pattern1 = print.getListPattern().get(0);
+		assertEquals(0, pattern1.getImageList().get(0).getX());
+		assertEquals(0, pattern1.getImageList().get(0).getY());
+		
+		assertEquals(40, pattern1.getImageList().get(1).getX());
+		assertEquals(0, pattern1.getImageList().get(1).getY());
+		
+		assertEquals(70, pattern1.getImageList().get(2).getX());
+		assertEquals(0, pattern1.getImageList().get(2).getY());
+		
+		assertEquals(70, pattern1.getImageList().get(3).getX());
+		assertEquals(30, pattern1.getImageList().get(3).getY());
+		
+		assertEquals(40, pattern1.getImageList().get(4).getX());
+		assertEquals(40, pattern1.getImageList().get(4).getY());
+		
+		assertEquals(40, pattern1.getImageList().get(5).getX());
+		assertEquals(80, pattern1.getImageList().get(5).getY());
+		
+		assertEquals(0, pattern1.getImageList().get(6).getX());
+		assertEquals(50, pattern1.getImageList().get(6).getY());
+		
+		assertEquals(20, pattern1.getImageList().get(7).getX());
+		assertEquals(50, pattern1.getImageList().get(7).getY());
+		
+		Pattern pattern2 = print.getListPattern().get(1);
+		assertEquals(0, pattern2.getImageList().get(0).getX());
+		assertEquals(0, pattern2.getImageList().get(0).getY());
+		
+		assertEquals(0, pattern2.getImageList().get(1).getX());
+		assertEquals(30, pattern2.getImageList().get(1).getY());
+		
+		
+		assertTrue(print.isValid());
 	}
 }

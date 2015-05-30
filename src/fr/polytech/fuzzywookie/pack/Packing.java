@@ -20,8 +20,11 @@ public class Packing {
 
 	public void packing(Print print) {
 
-		List<Image> images = print.getProject().getListImage();
-		List<Image> imagesPlaced = print.getProject().getListImage();
+		List<Image> images = new ArrayList<Image>();
+		images.addAll(print.getProject().getListImage());
+		
+		boolean allPlaced = false;
+		
 		QSort qsort = new QSort();
 		qsort.sort(images);
 		
@@ -29,8 +32,8 @@ public class Packing {
 		main = print.createPattern();
 		stack.push(main);
 		
-		while(!stack.isEmpty() || !imagesPlaced.isEmpty()){
-			
+		while(!stack.isEmpty() || !allPlaced){
+			System.out.println("block");
 			if(stack.isEmpty()){
 				
 				main = print.createPattern();
@@ -41,7 +44,12 @@ public class Packing {
 			for(Image image : images){
 				
 				if(imageFits(pattern, image)){
-					imagesPlaced.remove(image);
+					
+					images.remove(image);
+					if(images.size() == 0) {
+						allPlaced = true;
+						images.addAll(print.getProject().getListImage());
+					}
 					placeImage(main, image, pattern);
 					splitPattern(pattern, image);
 					break;
