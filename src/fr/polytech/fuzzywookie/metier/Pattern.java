@@ -127,5 +127,15 @@ public class Pattern extends Rectangle {
     	
     	return (ArrayList<Pattern>) freeSpace;
     }
+    
+    public Pattern changeImage(Pattern p, Image imgold,Image imgnew){
+    	Pattern newp = p;
+    	newp.getImageList().remove(imgold);
+    	newp.addImage(imgnew);
+    	if(patternTest(newp)){
+    		return newp;
+    	}
+		return p;
+    }
 
 }
