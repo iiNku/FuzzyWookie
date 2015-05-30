@@ -29,7 +29,7 @@ public class Packing {
 		main = print.createPattern();
 		stack.push(main);
 		
-		while(!stack.isEmpty() || !images.isEmpty()){
+		while(!stack.isEmpty() || !imagesPlaced.isEmpty()){
 			
 			if(stack.isEmpty()){
 				
