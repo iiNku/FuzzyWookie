@@ -239,6 +239,19 @@ public class Pattern extends Rectangle {
 		return p;
     }
     
+    public int getNbImage(Image img)
+    {
+    	int counter = 0;
+    	for(Image i : imageList)
+    	{
+    		if(img.getName() == i.getName())
+    		{
+    			counter++;
+    		}
+    	}
+    	return counter;
+    }
+    
     @Override
     public String toString(){
     	

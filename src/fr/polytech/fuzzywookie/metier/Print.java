@@ -98,6 +98,16 @@ public class Print {
 		return (placed.size() == project.getListImage().size());
 	}
 	
+	public int getNbImage(Image img)
+	{
+		int counterImg = 0;
+		for(Pattern p : listPattern)
+		{
+			counterImg += p.getNbImage(img);
+		}
+		return counterImg;
+	}
+	
 	@Override
 	public String toString(){
 		
