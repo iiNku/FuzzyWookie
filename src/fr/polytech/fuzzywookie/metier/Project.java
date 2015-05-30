@@ -164,8 +164,7 @@ public class Project {
 	}
 	
 	public Print BestPrint(List<Print> tableau){
-		Print p = null;
-		p = tableau.get(0);
+		Print p = tableau.get(0);
 		int i=1;
 		while(tableau.get(i)!=null){
 			if(tableau.get(i).simplexSolution()<p.simplexSolution()){
