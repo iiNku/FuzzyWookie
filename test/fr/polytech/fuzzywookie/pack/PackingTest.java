@@ -77,6 +77,8 @@ public class PackingTest {
 		assertEquals(0, pattern2.getImageList().get(1).getX());
 		assertEquals(30, pattern2.getImageList().get(1).getY());
 		
+		System.out.println(pattern1.print());
+		
 		assertTrue(print.isValid());
 	}
 	
