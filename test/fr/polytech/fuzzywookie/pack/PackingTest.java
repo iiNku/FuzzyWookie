@@ -34,5 +34,7 @@ public class PackingTest {
 		
 		Packing packing = new Packing();
 		packing.packing(print);
+		
+		System.out.println("fds");
 	}
 }

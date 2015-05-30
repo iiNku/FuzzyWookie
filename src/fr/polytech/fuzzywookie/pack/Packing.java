@@ -53,22 +53,22 @@ public class Packing {
 	private void splitPattern(Pattern pattern, Image placed) {
 		
 		Pattern p11 = new Pattern(pattern.getWidth(), pattern.getHeight() - placed.getHeight());
-		p11.setDecoupX(main.getDecoupX());
-		p11.setDecoupY(main.getDecoupY() + placed.getHeight());
+		p11.setDecoupX(pattern.getDecoupX());
+		p11.setDecoupY(pattern.getDecoupY() + placed.getHeight());
 		
 		Pattern p12 = new Pattern(pattern.getWidth() - placed.getWidth() ,pattern.getHeight() - placed.getHeight());
-		p12.setDecoupX(main.getDecoupX() + placed.getWidth());
-		p12.setDecoupY(main.getDecoupY());
+		p12.setDecoupX(pattern.getDecoupX() + placed.getWidth());
+		p12.setDecoupY(pattern.getDecoupY());
 		
 		PatternCouple couple1 = new PatternCouple(p11, p12);
 		
 		Pattern p21 = new Pattern(placed.getWidth(), pattern.getHeight() - placed.getHeight());
-		p21.setDecoupX(main.getDecoupX() + 0);
-		p21.setDecoupY(main.getDecoupY() + pattern.getHeight() - placed.getHeight());
+		p21.setDecoupX(pattern.getDecoupX());
+		p21.setDecoupY(pattern.getDecoupY() + pattern.getHeight() - placed.getHeight());
 		
 		Pattern p22 = new Pattern(pattern.getWidth() - placed.getWidth(), pattern.getHeight());
-		p22.setDecoupX(main.getDecoupX() + placed.getWidth());
-		p22.setDecoupY(main.getDecoupY() + pattern.getHeight());
+		p22.setDecoupX(pattern.getDecoupX() + placed.getWidth());
+		p22.setDecoupY(pattern.getDecoupY() + pattern.getHeight());
 		
 		PatternCouple couple2 = new PatternCouple(p21, p22);
 		
@@ -102,7 +102,7 @@ public class Packing {
 		Image placed = new Image(image.getWidth(), image.getHeight(), image.getName());
 		placed.setX(temp.getDecoupX());
 		placed.setY(temp.getDecoupY());
-		
+
 		main.addImage(placed);
 	}
 }
