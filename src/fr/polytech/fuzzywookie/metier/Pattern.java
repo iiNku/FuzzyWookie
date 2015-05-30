@@ -105,7 +105,7 @@ public class Pattern extends Rectangle {
             if(img.getX()+img.getWidth()>p.getWidth()){
                 return false;
             }
-            if(img.getY()+img.getHeight()>p.getWidth()){
+            if(img.getY()+img.getHeight()>p.getHeight()){
                 return false;
             }
             total += width*height;
