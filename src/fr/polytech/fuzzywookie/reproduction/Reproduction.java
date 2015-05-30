@@ -27,23 +27,23 @@ public class Reproduction {
     		
     		if(occurence % 2 == 0){
     			for(int i = 0; i < pat; i++){
-    				if(father.size() < offsetFather + i){
+    				if(father.size() <= offsetFather + i){
     					occurence++;
     					break;
     				}
     				addPattern(child, meanPattern, father.get(offsetFather + i));
     			}
-    			offsetFather+=3;
+    			offsetFather+=pat;
     		}
     		else{
     			for(int i = 0; i < pat; i++){
-    				if(mother.size() < offsetMother + i){
+    				if(mother.size() <= offsetMother + i){
     					occurence++;
     					break;
     				}
     				addPattern(child, meanPattern, mother.get(offsetMother + i));
     			}
-    			offsetMother+=3;
+    			offsetMother+=pat;
     		}
     		occurence++;
     	}
