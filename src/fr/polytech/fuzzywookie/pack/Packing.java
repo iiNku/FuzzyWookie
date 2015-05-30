@@ -49,7 +49,9 @@ public class Packing {
 						images.addAll(print.getProject().getListImage());
 					}
 					placeImage(main, image, pattern);
-					splitPattern(pattern, image);
+					List<Pattern> splitPatterns = splitPattern(pattern, image);
+					stack.push(splitPatterns.get(0));
+					stack.push(splitPatterns.get(1));
 					break;
 				}
 			}
@@ -76,15 +78,17 @@ public class Packing {
 				if (imageFits(pattern, image)) {
 					imageAdded = true;
 					placeImage(main, image, pattern);
-					splitPattern(pattern, image);
+					List<Pattern> splitPatterns = splitPattern(pattern, image);
+					stack.push(splitPatterns.get(0));
+					stack.push(splitPatterns.get(1));
 					break;
 				}
 			}
 		}
 	}
 
-	private void splitPattern(Pattern pattern, Image placed) {
-
+	 public static List<Pattern> splitPattern(Pattern pattern, Image placed) {
+		List<Pattern> splitPatterns = new ArrayList<Pattern>();
 		Pattern p11 = new Pattern(pattern.getWidth(), pattern.getHeight()
 				- placed.getHeight());
 		p11.setDecoupX(pattern.getDecoupX());
@@ -110,11 +114,12 @@ public class Packing {
 		PatternCouple couple2 = new PatternCouple(p21, p22);
 
 		PatternCouple selected = getSelectedCouple(couple1, couple2);
-		stack.push(selected.getPattern1());
-		stack.push(selected.getPattern2());
+		splitPatterns.add(selected.getPattern1());
+		splitPatterns.add(selected.getPattern2());
+		return splitPatterns;
 	}
 
-	private PatternCouple getSelectedCouple(PatternCouple couple1,
+	private static PatternCouple getSelectedCouple(PatternCouple couple1,
 			PatternCouple couple2) {
 
 		Pattern max1 = couple1.getLarger();
