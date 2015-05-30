@@ -18,11 +18,12 @@ public class Voisinnage {
 
 		while (neighbors.size() < 10) {
 
+
 			int rng = (int) (Math.random() * 4);
 			if (rng == 0)
 				neighbor = addPattern(neighbor);
-			//else if (rng == 1)
-				//neighbor = changeImage(neighbor);
+			else if (rng == 1)
+				neighbor = changeImage(neighbor);
 			else if (rng == 2)
 				neighbor = removeImage(neighbor);
 			else if(rng == 3)
@@ -31,11 +32,10 @@ public class Voisinnage {
 				if(addPrint != null)
 					neighbor = addPrint;
 			}
+
+			if (neighbor.isValid())
+				neighbors.add(neighbor);
 		}
-
-		if (neighbor.isValid())
-			neighbors.add(neighbor);
-
 		return neighbors;
 	}
 
