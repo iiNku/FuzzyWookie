@@ -26,12 +26,20 @@ public class Reproduction {
     		
     		if(occurence % 2 == 0){
     			for(int i = 0; i < pat; i++){
+    				if(father.size() < offsetFather + i){
+    					occurence++;
+    					break;
+    				}
     				addPattern(child, meanPattern, father.get(offsetFather + i));
     			}
     			offsetFather+=3;
     		}
     		else{
     			for(int i = 0; i < pat; i++){
+    				if(mother.size() < offsetMother + i){
+    					occurence++;
+    					break;
+    				}
     				addPattern(child, meanPattern, mother.get(offsetMother + i));
     			}
     			offsetMother+=3;
@@ -45,7 +53,6 @@ public class Reproduction {
 		
 		if(child.getListPattern().size() < meanPattern)
 			child.getListPattern().add(pattern);
-		
 	}
     
 }
