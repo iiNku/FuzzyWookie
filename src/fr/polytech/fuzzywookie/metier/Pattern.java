@@ -3,6 +3,8 @@ package fr.polytech.fuzzywookie.metier;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.polytech.fuzzywookie.pack.Packing;
+
 public class Pattern extends Rectangle {
 
 	private List<Image> imageList;
@@ -250,6 +252,25 @@ public class Pattern extends Rectangle {
     		}
     	}
     	return counter;
+    }
+    
+    public boolean addImageInFreeSpace(Image img)
+    {
+    	for(Pattern space : this.getFreeSpace())
+		{
+			if(img.getArea() < space.getArea() && img.getWidth() < space.getWidth() && img.getHeight() < space.getHeight())
+			{
+				this.addImage(img);
+				List<Pattern> splitpatterns = Packing.splitPattern(space, img);
+				img.setX(space.getDecoupX());
+				img.setY(space.getDecoupY());
+				this.getFreeSpace().remove(space);
+				this.addFreeSpace(splitpatterns.get(0));
+				this.addFreeSpace(splitpatterns.get(1));
+				return true;
+			}
+		}
+    	return false;
     }
     
     @Override
