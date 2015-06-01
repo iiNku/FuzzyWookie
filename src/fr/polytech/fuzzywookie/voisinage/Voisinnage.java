@@ -16,24 +16,25 @@ public class Voisinnage {
 		List<Print> neighbors = new ArrayList<Print>();
 		Print neighbor = initialPrint;
 		neighbors.add(neighbor);
-		while (neighbors.size() < 10) {
-			
+		Print tmp = neighbor;
+		
+		while (neighbors.size() < 1000) {
 			int rng = (int) ((Math.random() * 100)%4);
 			if (rng == 0)
-				neighbor = addPattern(neighbor);
+				tmp = addPattern(neighbor);
 			else if (rng == 1)
-				neighbor = changeImage(neighbor);
+				tmp = changeImage(neighbor);
 			else if (rng == 2)
-				neighbor = removeImage(neighbor);
-			else if(rng == 3)
-			{
-				Print addPrint = addImage(neighbor);
-				if(addPrint != null)
-					neighbor = addPrint;
+				tmp = removeImage(neighbor);
+			else {
+				Print tmp2 = addImage(neighbor);
+				if(tmp2 != null) tmp = tmp2;
 			}
-
-			if (neighbor.isValid())
+			System.out.println(tmp);
+			if (tmp.isValid()){
+				neighbor = tmp;
 				neighbors.add(neighbor);
+			}
 		}
 		return neighbors;
 	}
