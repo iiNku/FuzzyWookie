@@ -12,14 +12,13 @@ import fr.polytech.fuzzywookie.pack.Packing;
 public class Voisinnage {
 
 	public static List<Print> generate(Print initialPrint) {
+		
 		List<Print> neighbors = new ArrayList<Print>();
 		Print neighbor = initialPrint;
 		neighbors.add(neighbor);
-
 		while (neighbors.size() < 10) {
-
-
-			int rng = (int) (Math.random() * 4);
+			
+			int rng = (int) ((Math.random() * 100)%4);
 			if (rng == 0)
 				neighbor = addPattern(neighbor);
 			else if (rng == 1)
@@ -70,6 +69,8 @@ public class Voisinnage {
 		Pattern neo = patterns.get(rng);
 		
 		List<Image> images = neo.getImageList();
+		if(!images.isEmpty())
+		{
 		rng = (int) (Math.random() * images.size());
 		Image removeImg = images.get(rng);
 		if(print.getNbImage(removeImg)>1)
@@ -85,6 +86,7 @@ public class Voisinnage {
 			if(neo.addImageInFreeSpace(i))
 				return print;
 		}	
+		}
 		return print;
 	}
 
@@ -108,6 +110,7 @@ public class Voisinnage {
 						return print;
 					}
 				}
+				
 			}
 		}
 		return null;

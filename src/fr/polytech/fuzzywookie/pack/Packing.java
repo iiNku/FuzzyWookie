@@ -33,6 +33,7 @@ public class Packing {
 		stack.push(main);
 		
 		while(!stack.isEmpty() || !allPlaced){
+			boolean ImagePlace = false;
 			if(stack.isEmpty()){
 				main = print.createPattern();
 				stack.push(main);
@@ -52,10 +53,12 @@ public class Packing {
 					List<Pattern> splitPatterns = splitPattern(pattern, image);
 					stack.push(splitPatterns.get(0));
 					stack.push(splitPatterns.get(1));
+					ImagePlace = true;
 					break;
 				}
 			}
-			main.addFreeSpace(pattern);
+			if(!ImagePlace)
+				main.addFreeSpace(pattern);
 		}
 	}
 
