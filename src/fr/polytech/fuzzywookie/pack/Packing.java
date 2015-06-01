@@ -64,13 +64,13 @@ public class Packing {
 		List<Image> images = new ArrayList<Image>();
 		images.addAll(print.getProject().getListImage());
 
-		stack = new Stack<Pattern>();
-		main = print.createPattern();
+		Stack<Pattern> stack = new Stack<Pattern>();
+		Pattern main = print.createPattern();
 		stack.push(main);
 
 		boolean imageAdded = true;
 
-		while (imageAdded) {
+		while (imageAdded && !stack.empty()) {
 
 			imageAdded = false;
 			Pattern pattern = stack.pop();

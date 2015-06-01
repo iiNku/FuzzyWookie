@@ -24,7 +24,7 @@ public class Reproduction {
     	int pat = 1 + (int) (Math.random() * ((minSize - 1) + 1));
 
     	while(child.getListPattern().size() < meanPattern){
-    		
+    		System.out.println("Creation child : " + child.getListPattern().size());
     		if(occurence % 2 == 0){
     			for(int i = 0; i < pat; i++){
     				if(father.size() <= offsetFather + i){
