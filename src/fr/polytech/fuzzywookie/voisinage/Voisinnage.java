@@ -19,22 +19,23 @@ public class Voisinnage {
 		Print tmp = neighbor;
 		
 		while (neighbors.size() < 1000) {
-			int rng = (int) ((Math.random() * 100)%4);
+			int rng = (int)(Math.random()*100)%3;
 			if (rng == 0)
 				tmp = addPattern(neighbor);
 			else if (rng == 1)
-				tmp = changeImage(neighbor);
-			else if (rng == 2)
-				tmp = removeImage(neighbor);
-			else {
+			{
 				Print tmp2 = addImage(neighbor);
 				if(tmp2 != null) tmp = tmp2;
 			}
-			System.out.println(tmp);
+			else if (rng == 2)
+				tmp = removeImage(neighbor);
+			
+			//System.out.println(tmp);
 			if (tmp.isValid()){
 				neighbor = tmp;
 				neighbors.add(neighbor);
 			}
+			System.out.println(neighbors.size());
 		}
 		return neighbors;
 	}
@@ -101,13 +102,12 @@ public class Voisinnage {
 				{
 					if(i.getArea() < space.getArea() && i.getWidth() < space.getWidth() && i.getHeight() < space.getHeight())
 					{
-						p.addImage(i);
+						Packing.placeImage(p, i, space);
 						List<Pattern> splitpatterns = Packing.splitPattern(space, i);
-						i.setX(space.getDecoupX());
-						i.setY(space.getDecoupY());
 						p.getFreeSpace().remove(space);
 						p.addFreeSpace(splitpatterns.get(0));
 						p.addFreeSpace(splitpatterns.get(1));
+						
 						return print;
 					}
 				}

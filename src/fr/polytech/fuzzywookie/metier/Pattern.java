@@ -97,6 +97,20 @@ public class Pattern extends Rectangle {
 		return width > height ? width : height;
 	}
     
+	public void setPattern(Pattern p)
+	{
+		this.decoupX = p.decoupX;
+		this.decoupY = p.decoupY;
+		this.freeSpace.addAll(p.getFreeSpace());
+		this.height = p.getHeight();
+		this.imageList.addAll(p.getImageList());
+		this.name = p.name;
+		this.nbImage = p.nbImage;
+		this.nbPrint = p.nbPrint;
+		this.width = p.getWidth();
+		
+	}
+	
     public boolean patternTest(Pattern p){
         p.getImageList();
         int i=0;
@@ -197,7 +211,8 @@ public class Pattern extends Rectangle {
 	    				{
 	    					fusion = new Pattern(pattern.width + space.width, pattern.getDecoupY()+pattern.height - space.decoupY);
 	    					fusion.setDecoupX(pattern.decoupX);
-	    					fusion.setDecoupY(pattern.decoupY);
+	    					//TODO : DEBUG HERE AVEC JOCE MAUVAIS DECOUP X Y
+	    					fusion.setDecoupY(space.decoupY);
 	    				}
 	    			}	
 	    		}
@@ -224,14 +239,16 @@ public class Pattern extends Rectangle {
     	List<Image> images = this.getImageList();
 		for(int i = 0; i < images.size(); i++){
 			for(int j = i + 1; j < images.size(); j++){
-				if(images.get(i).intersect(images.get(j)) || !images.get(i).isInside(this)) return false;
+				if(images.get(i).intersect(images.get(j)) || !images.get(i).isInside(this)) 
+					{
+						return false;
+					}
 			}
 		}
 		return true;
     }
  
     public Pattern changeImage(Pattern p, Image imgold,Image imgnew){
-    	java.awt.Rectangle rectangle;
     	Pattern newp = p;
     	newp.getImageList().remove(imgold);
     	newp.addImage(imgnew);

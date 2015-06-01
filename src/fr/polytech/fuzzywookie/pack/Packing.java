@@ -87,6 +87,8 @@ public class Packing {
 					break;
 				}
 			}
+			if(imageAdded == false)
+				main.addFreeSpace(pattern);
 		}
 	}
 
@@ -141,7 +143,7 @@ public class Packing {
 				&& image.getHeight() <= pattern.getHeight();
 	}
 
-	private void placeImage(Pattern main, Image image, Pattern temp) {
+	public static void placeImage(Pattern main, Image image, Pattern temp) {
 
 		Image placed = new Image(image.getWidth(), image.getHeight(),
 				image.getName());
