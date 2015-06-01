@@ -93,19 +93,26 @@ public class Project {
 	}
 
 	public List<Print> getReproduction() {
+
 		List<Print> solutions = getBestSolution();
 		Reproduction repro = new Reproduction();
 		List<Print> toReturn = new ArrayList<Print>();
-		
-		for (Print print : solutions) {
-			int rng = (int) Math.random() * solutions.size();
-			Print child = repro.ReproductionPattern(print, solutions.get(rng));
-			toReturn.add(child);
+
+		toReturn.addAll(solutions);
+		while (toReturn.size() < this.listPrint.size()) {
+
+			for (Print print : solutions) {
+				int rng = (int) Math.random() * solutions.size();
+				Print child = repro.ReproductionPattern(print,solutions.get(rng));
+				if (child.isValid())
+					toReturn.add(child);
+			}
 		}
 		return toReturn;
 	}
 
 	public List<Print> getBestSolution() {
+		
 		List<Print> Solutions = this.getListPrint();
 		int i = 0;
 		List<Print> fitness = new ArrayList<Print>();
@@ -132,7 +139,8 @@ public class Project {
 			permut = false;
 			for (int i = 0; i < longueur - 1; i++) {
 				// Teste si 2 éléments successifs sont dans le bon ordre ou non
-				if (tableau.get(i).simplexSolution() > tableau.get(i + 1).simplexSolution()) {
+				if (tableau.get(i).simplexSolution() > tableau.get(i + 1)
+						.simplexSolution()) {
 					// s'ils ne le sont pas, on échange leurs positions
 					tampon = tableau.get(i);
 					tableau.add((i), tableau.get(i + 1));
@@ -153,22 +161,22 @@ public class Project {
 		this.listPrint.addAll(Voisinnage.generate(initialPrint));
 
 		System.out.println("Voisin cree");
-		
+
 		long beginMs = Calendar.getInstance().getTimeInMillis();
 		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
 			System.out.println("Boucle");
 			List<Print> reproduction = this.getReproduction();
-			
+			listPrint = reproduction;
 			System.out.println(bestPrint(reproduction));
 
 		}
 	}
-	
-	public Print bestPrint(List<Print> tableau){
-		
+
+	public Print bestPrint(List<Print> tableau) {
+
 		Print best = tableau.get(0);
-		for(Print print : tableau){
-			if(print.simplexSolution() < best.simplexSolution()){
+		for (Print print : tableau) {
+			if (print.simplexSolution() < best.simplexSolution()) {
 				best = print;
 			}
 		}
