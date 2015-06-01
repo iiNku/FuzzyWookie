@@ -15,9 +15,6 @@ import fr.polyteck.fuzzywookie.utils.QSort;
 
 public class Packing {
 
-	private Stack<Pattern> stack;
-	private Pattern main;
-
 	public void packing(Print print) {
 
 		List<Image> images = new ArrayList<Image>();
@@ -25,11 +22,8 @@ public class Packing {
 
 		boolean allPlaced = false;
 
-		QSort qsort = new QSort();
-		qsort.sort(images);
-
-		stack = new Stack<Pattern>();
-		main = print.createPattern();
+		Stack<Pattern> stack = new Stack<Pattern>();
+		Pattern main = print.createPattern();
 		stack.push(main);
 		
 		while(!stack.isEmpty() || !allPlaced){
@@ -92,7 +86,7 @@ public class Packing {
 		}
 	}
 
-	 public static List<Pattern> splitPattern(Pattern pattern, Image placed) {
+	 public List<Pattern> splitPattern(Pattern pattern, Image placed) {
 		List<Pattern> splitPatterns = new ArrayList<Pattern>();
 		Pattern p11 = new Pattern(pattern.getWidth(), pattern.getHeight()
 				- placed.getHeight());
@@ -121,10 +115,11 @@ public class Packing {
 		PatternCouple selected = getSelectedCouple(couple1, couple2);
 		splitPatterns.add(selected.getPattern1());
 		splitPatterns.add(selected.getPattern2());
+		
 		return splitPatterns;
 	}
 
-	private static PatternCouple getSelectedCouple(PatternCouple couple1,
+	private PatternCouple getSelectedCouple(PatternCouple couple1,
 			PatternCouple couple2) {
 
 		Pattern max1 = couple1.getLarger();
@@ -143,7 +138,7 @@ public class Packing {
 				&& image.getHeight() <= pattern.getHeight();
 	}
 
-	public static void placeImage(Pattern main, Image image, Pattern temp) {
+	public void placeImage(Pattern main, Image image, Pattern temp) {
 
 		Image placed = new Image(image.getWidth(), image.getHeight(),
 				image.getName());

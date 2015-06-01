@@ -11,7 +11,11 @@ import fr.polytech.fuzzywookie.pack.Packing;
 
 public class Voisinnage {
 
-	public static List<Print> generate(Print initialPrint) {
+	private Packing packing;
+	
+	public List<Print> generate(Print initialPrint) {
+		
+		packing = new Packing();
 		
 		List<Print> neighbors = new ArrayList<Print>();
 		Print neighbor = initialPrint;
@@ -40,7 +44,7 @@ public class Voisinnage {
 		return neighbors;
 	}
 
-	private static Print removeImage(Print print) {
+	private Print removeImage(Print print) {
 
 		List<Pattern> patterns = print.getListPattern();
 		
@@ -63,7 +67,7 @@ public class Voisinnage {
 		return print;
 	}
 
-	private static Print changeImage(Print print) {
+	private Print changeImage(Print print) {
 		List<Pattern> patterns = print.getListPattern();
 		
 		int rng = (int) (Math.random() * patterns.size());
@@ -92,7 +96,7 @@ public class Voisinnage {
 		return print;
 	}
 
-	private static Print addImage(Print print)
+	private Print addImage(Print print)
 	{
 		for(Pattern p : print.getListPattern())
 		{
@@ -102,8 +106,8 @@ public class Voisinnage {
 				{
 					if(i.getArea() < space.getArea() && i.getWidth() < space.getWidth() && i.getHeight() < space.getHeight())
 					{
-						Packing.placeImage(p, i, space);
-						List<Pattern> splitpatterns = Packing.splitPattern(space, i);
+						packing.placeImage(p, i, space);
+						List<Pattern> splitpatterns = packing.splitPattern(space, i);
 						p.getFreeSpace().remove(space);
 						p.addFreeSpace(splitpatterns.get(0));
 						p.addFreeSpace(splitpatterns.get(1));
@@ -117,7 +121,7 @@ public class Voisinnage {
 		return null;
 	}
 	
-	private static Print addPattern(Print print) {
+	private Print addPattern(Print print) {
 
 		Packing packing = new Packing();
 		packing.packNewPattern(print);

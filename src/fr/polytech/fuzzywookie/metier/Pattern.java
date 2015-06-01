@@ -110,29 +110,6 @@ public class Pattern extends Rectangle {
 		this.width = p.getWidth();
 		
 	}
-	
-    public boolean patternTest(Pattern p){
-        p.getImageList();
-        int i=0;
-        int total=0;
-        while(p.getImageList().get(i)!=null){
-            Image img = p.getImageList().get(i);
-            int width = img.getWidth();
-            int height = img.getHeight();
-            if(img.getX()+img.getWidth()>p.getWidth()){
-                return false;
-            }
-            if(img.getY()+img.getHeight()>p.getHeight()){
-                return false;
-            }
-            total += width*height;
-        }
-        if(p.getArea()<=total){
-            return true;
-        }else{
-            return false;
-        }
-    }
     
     public void addFreeSpace(Pattern pattern){
     	boolean fusionSuccess = false;
@@ -273,12 +250,14 @@ public class Pattern extends Rectangle {
     
     public boolean addImageInFreeSpace(Image img)
     {
+    	Packing packing = new Packing();
+    	
     	for(Pattern space : this.getFreeSpace())
 		{
 			if(img.getArea() < space.getArea() && img.getWidth() < space.getWidth() && img.getHeight() < space.getHeight())
 			{
 				this.addImage(img);
-				List<Pattern> splitpatterns = Packing.splitPattern(space, img);
+				List<Pattern> splitpatterns = packing.splitPattern(space, img);
 				img.setX(space.getDecoupX());
 				img.setY(space.getDecoupY());
 				this.getFreeSpace().remove(space);

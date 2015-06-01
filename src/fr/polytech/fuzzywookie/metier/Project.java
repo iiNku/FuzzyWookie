@@ -157,8 +157,10 @@ public class Project {
 		initialPrint = new Print(this);
 		Packing packing = new Packing();
 		packing.packing(initialPrint);
+		
+		Voisinnage voisinnage = new Voisinnage();
 
-		this.listPrint.addAll(Voisinnage.generate(initialPrint));
+		this.listPrint.addAll(voisinnage.generate(initialPrint));
 
 		System.out.println("Voisin cree");
 
