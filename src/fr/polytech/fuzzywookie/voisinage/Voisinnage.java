@@ -22,7 +22,7 @@ public class Voisinnage {
 		neighbors.add(neighbor);
 		Print tmp = neighbor;
 		
-		while (neighbors.size() < 1000) {
+		while (neighbors.size() < 10000) {
 			int rng = (int)(Math.random()*100)%3;
 			if (rng == 0)
 				tmp = addPattern(neighbor);

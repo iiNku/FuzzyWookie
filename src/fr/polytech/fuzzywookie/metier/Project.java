@@ -10,6 +10,7 @@ import fr.polytech.fuzzywookie.reproduction.Reproduction;
 import fr.polytech.fuzzywookie.voisinage.Voisinnage;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
+import fr.polyteck.fuzzywookie.utils.TriBulle;
 
 public class Project {
 	private List<Print> listPrint;
@@ -92,7 +93,7 @@ public class Project {
 		this.initialPrint = initialPrint;
 	}
 
-	public List<Print> getReproduction() {
+	public List<Print> launchReproduction() {
 
 		List<Print> solutions = getBestSolution();
 		Reproduction repro = new Reproduction();
@@ -116,7 +117,7 @@ public class Project {
 		int max = (int) Math.round(this.getListPrint().size() * 20 / 100);
 		
 		List<Print> toReturn = new ArrayList<Print>();
-		List<Print> sorted = QSort.triFitnessDecroissant(this.getListPrint());
+		List<Print> sorted = TriBulle.sortByFitness(this.getListPrint());
 		
 		for(int i =0; i < max; i++){
 			if(sorted.get(i) != null) toReturn.add(sorted.get(i));
@@ -133,20 +134,26 @@ public class Project {
 		Packing packing = new Packing();
 		packing.packing(initialPrint);
 		
+		generateNeighborhood();
+
+		long beginMs = Calendar.getInstance().getTimeInMillis();
+		
+		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
+			
+			System.out.println("Boucle");
+			listPrint = this.launchReproduction();
+
+			System.out.println(bestPrint(listPrint));
+
+		}
+	}
+
+	private void generateNeighborhood() {
 		Voisinnage voisinnage = new Voisinnage();
 
 		this.listPrint.addAll(voisinnage.generate(initialPrint));
 
 		System.out.println("Voisin cree");
-
-		long beginMs = Calendar.getInstance().getTimeInMillis();
-		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
-			System.out.println("Boucle");
-			List<Print> reproduction = this.getReproduction();
-			listPrint = reproduction;
-			System.out.println(bestPrint(reproduction));
-
-		}
 	}
 
 	public Print bestPrint(List<Print> tableau) {
