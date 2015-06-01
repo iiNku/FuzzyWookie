@@ -96,7 +96,7 @@ public class Project {
 		List<Print> solutions = getBestSolution();
 		Reproduction repro = new Reproduction();
 		List<Print> toReturn = new ArrayList<Print>();
-
+		
 		for (Print print : solutions) {
 			int rng = (int) Math.random() * solutions.size();
 			Print child = repro.ReproductionPattern(print, solutions.get(rng));
@@ -158,6 +158,7 @@ public class Project {
 		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
 			System.out.println("Boucle");
 			List<Print> reproduction = this.getReproduction();
+			
 			System.out.println(bestPrint(reproduction));
 
 		}
