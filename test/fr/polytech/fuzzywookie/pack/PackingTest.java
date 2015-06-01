@@ -88,7 +88,7 @@ public class PackingTest {
 	public void testOnRealData(){
 		
 		Project project = new Project("/Users/iiNku/Documents/workspace/FuzzyWookie/test/data_50Salpha.txt");
-		project.init();
+		project.parseFileAndSortImages();
 		
 		Print print = new Print(project);
 		

@@ -31,10 +31,8 @@ public class Voisinnage {
 				Print tmp2 = addImage(neighbor);
 				if(tmp2 != null) tmp = tmp2;
 			}
-			else if (rng == 2)
-				tmp = removeImage(neighbor);
-			
-			//System.out.println(tmp);
+			//else if (rng == 2)
+				//tmp = removeImage(neighbor);
 			if (tmp.isValid()){
 				neighbor = tmp;
 				neighbors.add(neighbor);
@@ -60,9 +58,9 @@ public class Voisinnage {
 		}
 		else
 		{
-		Image removeImg = images.get(rng);
-		if(print.getNbImage(removeImg)>1)
-			images.remove(rng);
+			Image removeImg = images.get(rng);
+			if(print.getNbImage(removeImg)>1)
+				images.remove(rng);
 		}
 		return print;
 	}
