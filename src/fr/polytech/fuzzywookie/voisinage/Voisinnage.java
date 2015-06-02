@@ -51,7 +51,11 @@ public class Voisinnage {
 
 	private Print removeImage(Print print) {
 		System.out.println("removeImage");
-		List<Pattern> patterns = print.getListPattern();
+		
+		Print removePrint = new Print(print.getProject());
+		removePrint.setPrint(print);
+		
+		List<Pattern> patterns = removePrint.getListPattern();
 		
 		int rng = (int) (Math.random() * patterns.size());
 		
@@ -61,12 +65,14 @@ public class Voisinnage {
 		rng = (int) (Math.random() * images.size());
 		
 		Image removeImg = images.get(rng);
-		if(print.getNbImage(removeImg)>1)
+		if(removePrint.getNbImage(removeImg)>1)
 		{
 			images.remove(rng);
 			if(neo.getImageList().isEmpty())
-				print.getListPattern().remove(neo);
+				removePrint.getListPattern().remove(neo);
 		}
+		if(removePrint.isValid())
+			print.setPrint(removePrint);
 		
 		return print;
 	}
