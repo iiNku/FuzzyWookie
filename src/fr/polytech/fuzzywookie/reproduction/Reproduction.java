@@ -20,7 +20,7 @@ public class Reproduction {
     	ArrayList<Pattern> father = (ArrayList<Pattern>) p1.getListPattern();
     	ArrayList<Pattern> mother = (ArrayList<Pattern>) p2.getListPattern();
     	int nbPattern =(int) (Math.random()*100)%3;
-    	int max = Math.max(1,Math.min(mean-mother.size(), mean-father.size()));
+    	int max = Math.max(1,Math.min(Math.abs(mean-mother.size()), Math.abs(mean-father.size())));
     	int val = (int)((Math.random()*100) % (mean-max));
     	if(nbPattern==0){
     		meanPattern = mean;
