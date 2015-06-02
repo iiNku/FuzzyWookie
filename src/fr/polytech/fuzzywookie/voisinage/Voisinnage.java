@@ -25,24 +25,24 @@ public class Voisinnage {
 		tmp.setPrint(neighbor);
 		
 		while (neighbors.size() < 10000) {
-			Print tmp2 = new Print(tmp.getProject());
-			tmp2.setPrint(tmp);
 			tmp = new Print(neighbor.getProject());
-			tmp.setPrint(tmp2);
+			tmp.setPrint(neighbor);
+			neighbor = new Print(neighbor.getProject());
+			neighbor.setPrint(tmp);
 			int rng = (int)(Math.random()*100)%3;
 			if (rng == 0)
-				tmp = addPattern(tmp);
+				neighbor = addPattern(neighbor);
 			else if (rng == 1)
 			{
-				Print tmp3 = addImage(tmp);
-				if(tmp3 != null) tmp = tmp3;
+				Print tmp3 = addImage(neighbor);
+				if(tmp3 != null) neighbor = tmp3;
 			}
 			else if (rng == 2)
-				tmp = removeImage(tmp);
+				neighbor = removeImage(neighbor);
 			
-			if (tmp.isValid()){
+			if (neighbor.isValid()){
 				//neighbor = tmp;
-				neighbors.add(tmp);
+				neighbors.add(neighbor);
 			}
 			System.out.println(neighbors.size());
 		}
@@ -50,7 +50,7 @@ public class Voisinnage {
 	}
 
 	private Print removeImage(Print print) {
-		System.out.println("remove");
+		System.out.println("removeImage");
 		List<Pattern> patterns = print.getListPattern();
 		
 		int rng = (int) (Math.random() * patterns.size());
