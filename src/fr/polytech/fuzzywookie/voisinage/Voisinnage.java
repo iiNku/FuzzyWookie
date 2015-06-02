@@ -13,8 +13,15 @@ import fr.polytech.fuzzywookie.pack.Packing;
 import fr.polyteck.fuzzywookie.utils.Configuration;
 
 public class Voisinnage {
+	
+	
 
 	private Packing packing;
+	
+	public Voisinnage()
+	{
+		packing = new Packing();
+	}
 	
 	public List<Print> generate(Print initialPrint) {
 		
