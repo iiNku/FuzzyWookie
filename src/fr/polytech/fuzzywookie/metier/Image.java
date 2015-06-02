@@ -99,9 +99,9 @@ public class Image extends Rectangle implements Cloneable {
 		
 		String toReturn = "";
 		
-		toReturn += "Image " + this.name + "\n";
-		toReturn += "X=" + this.x + " et Y=" + this.y + "\n";
-		toReturn += "Width=" + this.width + " et Height=" + this.height + "\n";
+		toReturn += "\t\t\tImage " + this.name + "\n";
+		toReturn += "\t\t\t\tX=" + this.x + " et Y=" + this.y + "\n";
+		toReturn += "\t\t\t\tWidth=" + this.width + " et Height=" + this.height + "\n";
 		
 		return toReturn;
 	}
