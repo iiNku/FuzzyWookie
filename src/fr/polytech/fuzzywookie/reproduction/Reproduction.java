@@ -33,6 +33,9 @@ public class Reproduction {
     	int minSize = (father.size() /2) > (mother.size() / 2) ? mother.size() / 2 : father.size() /2;
     	int pat = 1 + (int) (Math.random() * ((minSize - 1) + 1));
 
+    	boolean bFather = true;
+    	boolean bMother = true;
+    	
     	while(child.getListPattern().size() < meanPattern){
 //    		if(child.getListPattern().size()>=mother.size() || child.getListPattern().size()>=father.size())
 //    		{
@@ -44,21 +47,23 @@ public class Reproduction {
 	    			for(int i = 0; i < pat; i++){
 	    				if(father.size() <= offsetFather + i){
 	    					occurence++;
+	    					bFather = false;
 	    					break;
 	    				}
 	    				addPattern(child, meanPattern, father.get(offsetFather + i));
 	    			}
-	    			offsetFather+=pat;
+	    			if(bFather) offsetFather+=pat;
 	    		}
 	    		else{
 	    			for(int i = 0; i < pat; i++){
 	    				if(mother.size() <= offsetMother + i){
 	    					occurence++;
+	    					bMother = false;
 	    					break;
 	    				}
 	    				addPattern(child, meanPattern, mother.get(offsetMother + i));
 	    			}
-	    			offsetMother+=pat;
+	    			if(bMother) offsetMother+=pat;
 	    		}
 	    		occurence++;
 	    		//}
