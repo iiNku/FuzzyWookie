@@ -46,7 +46,6 @@ public class Reproduction {
 	    		if(occurence % 2 == 0){
 	    			for(int i = 0; i < pat; i++){
 	    				if(father.size() <= offsetFather + i){
-	    					occurence++;
 	    					bFather = false;
 	    					break;
 	    				}
@@ -57,7 +56,6 @@ public class Reproduction {
 	    		else{
 	    			for(int i = 0; i < pat; i++){
 	    				if(mother.size() <= offsetMother + i){
-	    					occurence++;
 	    					bMother = false;
 	    					break;
 	    				}
