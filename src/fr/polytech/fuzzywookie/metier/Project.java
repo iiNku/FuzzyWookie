@@ -25,11 +25,12 @@ public class Project {
 		this.file = file;
 		listPrint = new ArrayList<Print>();
 		listImage = new ArrayList<Image>();
-		
+
 		String[] tmp = file.split("/");
 		String name = tmp[1].substring(0, tmp[1].length() - 4);
-		
-		if(logging) logger = new Logger(name);
+
+		if (logging)
+			logger = new Logger(name);
 	}
 
 	public Project() {
@@ -107,41 +108,42 @@ public class Project {
 
 		toReturn.addAll(solutions);
 		while (toReturn.size() < this.listPrint.size()) {
-
 			for (Print print : solutions) {
 				int rng = (int) (Math.random() * solutions.size());
-				Print child = repro.ReproductionPattern(print,solutions.get(rng));
+				Print child = repro.ReproductionPattern(print,
+						solutions.get(rng));
 				if (child.isValid())
 					toReturn.add(child);
 			}
+			// System.out.println("Enfant crée : " + toReturn.size());
 		}
 		System.out.println("Reproduction terminé");
 		return toReturn;
 	}
 
 	public List<Print> getBestSolution() {
-		
+
 		int max = (int) Math.round(this.getListPrint().size() * 20 / 100);
 		List<Print> toReturn = new ArrayList<Print>();
 		List<Print> listPrintClone = new ArrayList<Print>();
-		for(Print p : this.listPrint){
+		for (Print p : this.listPrint) {
 			listPrintClone.add(p.clone());
 		}
-		
-		
-		while(toReturn.size() < max){
-			
+
+		while (toReturn.size() < max) {
+
 			int min = Integer.MAX_VALUE;
 			int save = 0;
 			Print minimum = null;
-			for(int i = 0; i < listPrintClone.size(); i++){
-				if(listPrintClone.get(i).getFitness() < min && listPrintClone.get(i).getFitness()>0){
+			for (int i = 0; i < listPrintClone.size(); i++) {
+				if (listPrintClone.get(i).getFitness() < min
+						&& listPrintClone.get(i).getFitness() > 0) {
 					min = listPrintClone.get(i).getFitness();
 					minimum = listPrintClone.get(i);
 					save = i;
 				}
 			}
-			if(minimum != null){
+			if (minimum != null) {
 				toReturn.add(minimum);
 				listPrintClone.remove(save);
 			}
@@ -150,54 +152,66 @@ public class Project {
 	}
 
 	public void launch() {
-		
+
 		parseFileAndSortImages();
-		
-		if(logger != null) logger.logConfiguration();
-		
+
+		if (logger != null)
+			logger.logConfiguration();
+
 		initialPrint = new Print(this);
 		Packing packing = new Packing();
 		packing.packing(initialPrint);
-		
+
 		generateNeighborhood();
 
 		long beginMs = Calendar.getInstance().getTimeInMillis();
-		
-		while (Calendar.getInstance().getTimeInMillis() < beginMs + Configuration.timesInMs) {
-			
+
+		while (Calendar.getInstance().getTimeInMillis() < beginMs
+				+ Configuration.timesInMs) {
+
 			calculSimplex();
 			Print best = bestPrint(listPrint);
-			if(logger != null) logger.log(best.toString() + "\n____________\n");
+			if (logger != null)
+				logger.log(best.toString() + "\n____________\n");
 			System.out.println(best);
 			listPrint = this.launchReproduction();
 
 			System.out.println(bestPrint(listPrint));
 
 		}
-		
-		if(logger != null) logger.close();
+
+		if (logger != null)
+			logger.close();
 	}
 
 	private void calculSimplex() {
 		int i = 0;
-		for(Print print : listPrint){
-			print.simplexSolution();
-			i++;
+		
+		List<Print> toRemove = new ArrayList<Print>();
+		for (Print print : listPrint) {
+			try {
+				print.simplexSolution();
+				i++;
+			} catch (ArithmeticException e) {
+				toRemove.add(print);
+			}
+
 		}
+		
+		for(Print print : toRemove)
+			listPrint.remove(print);
 	}
-	
-	public Image getImageByName(String name)
-	{
-		for(Image i : listImage)
-		{
-			if(i.getName().equals(name))
+
+	public Image getImageByName(String name) {
+		for (Image i : listImage) {
+			if (i.getName().equals(name))
 				return i.clone();
 		}
 		return null;
 	}
 
 	private void generateNeighborhood() {
-		
+
 		Voisinnage voisinnage = new Voisinnage();
 		this.listPrint.addAll(voisinnage.generate(initialPrint));
 	}

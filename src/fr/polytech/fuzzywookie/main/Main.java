@@ -1,6 +1,7 @@
 package fr.polytech.fuzzywookie.main;
 
 import fr.polytech.fuzzywookie.metier.Project;
+import fr.polytech.fuzzywookie.simplex.Simplex;
 import fr.polyteck.fuzzywookie.utils.Configuration;
 
 public class Main {
@@ -12,6 +13,7 @@ public class Main {
 
 		Project project = new Project("test/data_20Lalpha.txt", false);
 		project.launch();
+		
 	}
 
 }
