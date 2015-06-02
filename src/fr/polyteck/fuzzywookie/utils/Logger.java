@@ -22,7 +22,7 @@ public class Logger {
 		if(!dir.exists())
 			dir.mkdir();
 		
-		File file = new File("logs/" + dataName + "-" + sdf.format(new Date()));
+		File file = new File("logs/" + dataName + "-" + sdf.format(new Date()) + ".txt");
 		try {
 			file.createNewFile();
 			fw = new FileWriter(file, false);
