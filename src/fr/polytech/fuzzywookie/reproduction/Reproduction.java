@@ -11,14 +11,24 @@ public class Reproduction {
     public Print ReproductionPattern(Print p1,Print p2){
     	
     	Print child = p1.clone();
-    	int meanPattern = Math.round((p1.getListPattern().size()+p2.getListPattern().size())/2);
     	
+    	int meanPattern =0;
     	int offsetFather = 0;
     	int offsetMother = 0;
     	int occurence = 0;
-    	
+		int mean = Math.round((p1.getListPattern().size()+p2.getListPattern().size())/2);
+		
     	ArrayList<Pattern> father = (ArrayList<Pattern>) p1.getListPattern();
     	ArrayList<Pattern> mother = (ArrayList<Pattern>) p2.getListPattern();
+    	int nbPattern =(int) (Math.random())%3;
+    	
+    	if(nbPattern==0){
+    		meanPattern = mean;
+    	}else if(nbPattern==1){
+    		meanPattern = mean- (int)((Math.random()) % (Math.min(mother.size() ,  father.size())));
+    	}else if(nbPattern==2){
+    		meanPattern = mean- (int)((Math.random()) % (Math.max(mother.size() ,  father.size())));
+    	}
     	
     	int minSize = (father.size() /2) > (mother.size() / 2) ? mother.size() / 2 : father.size() /2;
     	int pat = 1 + (int) (Math.random() * ((minSize - 1) + 1));
