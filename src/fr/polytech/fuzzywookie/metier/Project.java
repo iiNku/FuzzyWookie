@@ -111,7 +111,7 @@ public class Project {
 			}
 			System.out.println("nb d'efants" + toReturn.size());
 		}
-		System.out.println("Reproduction terminé");
+		System.out.println("Reproduction terminÃ©");
 		return toReturn;
 	}
 
@@ -132,7 +132,6 @@ public class Project {
 			Print minimum = null;
 			for(int i = 0; i < listPrintClone.size(); i++){
 				if(listPrintClone.get(i).getFitness() < min && listPrintClone.get(i).getFitness()>0){
-					System.out.println("find minimum");
 					min = listPrintClone.get(i).getFitness();
 					minimum = listPrintClone.get(i);
 					save = i;

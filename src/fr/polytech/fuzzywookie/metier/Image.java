@@ -116,7 +116,6 @@ public class Image extends Rectangle implements Cloneable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return image;
 	}
 }
