@@ -23,7 +23,7 @@ public class Voisinnage {
 		List<Print> neighbors = new ArrayList<Print>();
 		neighbors.add(initialPrint);
 		
-		Print neighbor = new Print(initialPrint);
+		Print neighbor = initialPrint.clone();
 		
 		while (neighbors.size() < 1000) {
 			
@@ -31,39 +31,15 @@ public class Voisinnage {
 			
 			int rng = (int)(Math.random()*100)%4;
 			if (rng == 0 && neighbor.getListPattern().size()<neighbor.getProject().getListImage().size()){
-				System.out.println("addipattern");
 				tmp = addPattern(neighbor);
-				if(!neighbor.isValid()){
-					System.out.println("stop");
-				}
 			}
-			else 
-			if (rng == 1)
+			else if (rng == 1)
 			{
-				System.out.println("addimage");
 				tmp = addImage(neighbor);
-				if(tmp!=null && !tmp.isValid()){
-					System.out.println("ueueueu");
-				}
-				if(!neighbor.isValid()){
-					if(tmp == null)
-						System.out.println("addimagerienrenvoyé");
-					System.out.println("stop");
-				}
-				//if(tmpModif != null) neighbor = tmpModif;
 			}
 			else if (rng == 2)
 			{
-				if(!neighbor.isValid()){
-					System.out.println("pas normal du tout");
-				}
-				Print old_neighbor = new Print(neighbor);
-				System.out.println("removeimg");
 				tmp = removeImage(neighbor);
-				if(!neighbor.isValid()){
-					System.out.println("stop");
-				}
-				//if(tmpModif != null) neighbor = tmpModif;
 			}
 //			else if (rng == 3)
 //			{
@@ -72,11 +48,8 @@ public class Voisinnage {
 //			}
 				
 			if (tmp != null && tmp.isValid()){
-				neighbor = new Print(tmp);
+				neighbor = tmp.clone();
 				neighbors.add(neighbor);
-				if(!neighbor.isValid()){
-					System.out.println("nat fais gaffe!");
-				}
 			}
 			System.out.println(neighbors.size());
 		}
@@ -85,7 +58,7 @@ public class Voisinnage {
 
 	private Print removeImage(Print print) {
 		
-		Print tmp_removeImage = new Print(print);
+		Print tmp_removeImage = print.clone();
 		System.out.println("removeImage");
 		
 		List<Image> imagesDouble = new ArrayList<Image>();
@@ -110,25 +83,25 @@ public class Voisinnage {
 		int rngPattern = (int) (Math.random() * patternDouble.size());
 		Pattern patternToRemove = tmp_removeImage.getListPattern().get(rngPattern);
 		
-		Pattern save = new Pattern(patternToRemove);
-		
 		tmp_removeImage.getListPattern().get(rngPattern).remove(imageToRemove.getName());
 		if(tmp_removeImage.getListPattern().get(rngPattern).getImageList().size()==0){
 			tmp_removeImage.getListPattern().remove(rngPattern);
 		}
 		
+		return tmp_removeImage.isValid() ? tmp_removeImage : null;
+		/*
 		if(tmp_removeImage.isValid()){
 			return tmp_removeImage;
 		}
 		else{
 			patternToRemove = new Pattern(save);
 			return null;
-		}
+		}*/
 	}
 
 	private Print changeImage(Print print) {
 		
-		Print tmp_changeImage = new Print(print);
+		Print tmp_changeImage = print.clone();
 		List<Pattern> patterns = tmp_changeImage.getListPattern();
 		
 		int rng = (int) (Math.random() * patterns.size());
@@ -159,7 +132,7 @@ public class Voisinnage {
 	
 	private Print removePattern(Print neighbor)
 	{
-		Print print = new Print(neighbor);
+		Print print = neighbor.clone();
 		Map<String, Integer> nbImageMap = new HashMap<String, Integer>();
 		List<Pattern> deletePatterns = new ArrayList<Pattern>();
 		for(Image i : print.getProject().getListImage())
@@ -192,7 +165,7 @@ public class Voisinnage {
 
 	private Print addImage(Print neighbor)
 	{
-		Print print = new Print(neighbor);
+		Print print = neighbor.clone();
 		
 		for(Pattern p : print.getListPattern())
 		{
@@ -209,13 +182,14 @@ public class Voisinnage {
 						p.addFreeSpace(splitpatterns.get(0));
 						p.addFreeSpace(splitpatterns.get(1));
 						
-						if(print.isValid()){
+						return print.isValid() ? print : null;
+						/*if(print.isValid()){
 							return print;
 						}
 						else{
 							p = new Pattern(save);
 							return null;
-						}
+						}*/
 					}
 				}
 				
@@ -226,7 +200,7 @@ public class Voisinnage {
 	
 	private Print addPattern(Print print) {
 
-		Print tmp = new Print(print);
+		Print tmp = print.clone();
 		
 		Packing packing = new Packing();
 		packing.packNewPattern(tmp);
