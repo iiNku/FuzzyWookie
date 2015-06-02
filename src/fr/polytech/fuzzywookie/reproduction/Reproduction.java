@@ -74,6 +74,7 @@ public class Reproduction {
     	{
     		Voisinnage v= new Voisinnage();
     		boolean MutaOk = false;
+    		int cptMuta = 0;
     		while(!MutaOk)
     		{
 	    		Print tmp = null;
@@ -95,7 +96,9 @@ public class Reproduction {
 				}
 	    		if(tmp != null)
 	    		{
-	    			MutaOk = true;
+	    			cptMuta++;
+	    			if(cptMuta==5)
+	    				MutaOk = true;
 	    			child = tmp.clone();
 	    		}
     		}
