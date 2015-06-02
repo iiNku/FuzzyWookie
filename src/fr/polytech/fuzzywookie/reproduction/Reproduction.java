@@ -11,6 +11,7 @@ public class Reproduction {
     public Print ReproductionPattern(Print p1,Print p2){
     	
     	Print child = p1.clone();
+    	child.getListPattern().clear();
     	
     	int meanPattern =0;
     	int offsetFather = 0;
@@ -34,13 +35,12 @@ public class Reproduction {
     	int pat = 1 + (int) (Math.random() * ((minSize - 1) + 1));
 
     	while(child.getListPattern().size() < meanPattern){
-    		if(child.getListPattern().size()>=mother.size() || child.getListPattern().size() >= father.size())
+    		if(child.getListPattern().size()>=mother.size() || child.getListPattern().size()>=father.size())
     		{
     			fusionImage(father, mother, child);
     		}
     		else
     		{
-	    		System.out.println("Creation child : " + child.getListPattern().size());
 	    		if(occurence % 2 == 0){
 	    			for(int i = 0; i < pat; i++){
 	    				if(father.size() <= offsetFather + i){
