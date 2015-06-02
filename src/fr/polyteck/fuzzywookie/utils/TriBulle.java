@@ -15,10 +15,11 @@ public class TriBulle {
 		int i = toReturn.size();
 		boolean swap = true;
 		while(i > 0 && swap){
-			System.out.println(i);
+			System.out.println("Bulle : " + i);
 			swap = false;
 			for(int j = 1; j < i-1; j++){
-				if(toReturn.get(j).simplexSolution() > toReturn.get(j + 1).simplexSolution()){
+				System.out.println("j=" + j);
+				if(toReturn.get(j).getFitness() > toReturn.get(j + 1).getFitness()){
 					Print tmp = toReturn.get(j);
 					toReturn.add(j, prints.get(j + 1));
 					toReturn.add(j + 1, tmp);

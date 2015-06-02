@@ -15,6 +15,8 @@ public class Print {
 	private List<Pattern> listPattern;
 	private Project project;
 	
+	private int fitness;
+	
 	public Print(Project p)
 	{
 		listPattern = new ArrayList<Pattern>();
@@ -48,7 +50,7 @@ public class Print {
 		this.listPattern = listPattern;
 	}
 	
-	public int simplexSolution()
+	public void simplexSolution()
 	{
 		int value = 0;
 		int i = 0;
@@ -81,10 +83,10 @@ public class Print {
 		double[] x = fitness.primal();
         for (int k = 0; k < x.length; k++)
         {
-        	listPattern.get(k).setNbPrint(Math.abs((int)Math.round(x[k])+1));
+        	listPattern.get(k).setNbPrint(-(int)Math.round(x[k])+1);
         }
-        System.out.println(value);
-		return Math.abs(value);
+        
+		this.fitness = -value;
 	}
 	
 	public boolean isValid(){
@@ -127,6 +129,11 @@ public class Print {
 //			toReturn += "Pattern " + i + " : \n" + pattern;
 //		}
 		return toReturn;
+	}
+	
+	public int getFitness(){
+		
+		return fitness;
 	}
 
 }

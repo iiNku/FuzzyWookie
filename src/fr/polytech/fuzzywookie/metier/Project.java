@@ -10,7 +10,9 @@ import fr.polytech.fuzzywookie.reproduction.Reproduction;
 import fr.polytech.fuzzywookie.voisinage.Voisinnage;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
+import fr.polyteck.fuzzywookie.utils.QSortSimplex;
 import fr.polyteck.fuzzywookie.utils.TriBulle;
+import fr.polyteck.fuzzywookie.utils.TriFusion;
 
 public class Project {
 	private List<Print> listPrint;
@@ -115,13 +117,25 @@ public class Project {
 	public List<Print> getBestSolution() {
 		
 		int max = (int) Math.round(this.getListPrint().size() * 20 / 100);
-		
 		List<Print> toReturn = new ArrayList<Print>();
-		List<Print> sorted = TriBulle.sortByFitness(this.getListPrint());
 		
-		for(int i =0; i < max; i++){
-			if(sorted.get(i) != null) toReturn.add(sorted.get(i));
+		while(toReturn.size() < max){
+			
+			int min = Integer.MAX_VALUE;
+			Print minimum = null;
+			for(int i = 0; i < listPrint.size(); i++){
+				if(listPrint.get(i).getFitness() < min){
+					System.out.println("find minimum");
+					min = listPrint.get(i).getFitness();
+					minimum = listPrint.get(i);
+					listPrint.remove(i);
+				}
+			}
+			toReturn.add(minimum);
 		}
+		
+		
+		System.out.println("Minimum : " + bestPrint(toReturn).getFitness());
 		
 		return toReturn;
 	}
@@ -141,11 +155,24 @@ public class Project {
 		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
 			
 			System.out.println("Boucle");
+			calculSimplex();
 			listPrint = this.launchReproduction();
 
 			System.out.println(bestPrint(listPrint));
 
 		}
+	}
+
+	private void calculSimplex() {
+		System.out.println("calcule simplex");
+		int i = 0;
+		for(Print print : listPrint){
+			print.simplexSolution();
+			System.out.println("Simplex : " + i);
+			i++;
+		}
+			
+		System.out.println("fin simplex");
 	}
 
 	private void generateNeighborhood() {
@@ -160,7 +187,7 @@ public class Project {
 
 		Print best = tableau.get(0);
 		for (Print print : tableau) {
-			if (print.simplexSolution() < best.simplexSolution()) {
+			if (print.getFitness() < best.getFitness()) {
 				best = print;
 			}
 		}
