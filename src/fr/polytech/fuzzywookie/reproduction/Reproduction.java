@@ -34,12 +34,12 @@ public class Reproduction {
     	int pat = 1 + (int) (Math.random() * ((minSize - 1) + 1));
 
     	while(child.getListPattern().size() < meanPattern){
-//    		if(child.getListPattern().size()>=mother.size() || child.getListPattern().size()>=father.size())
-//    		{
-//    			fusionImage(father, mother, child);
-//    		}
-//    		else
-  		//{
+    		if(child.getListPattern().size()>=mother.size() || child.getListPattern().size()>=father.size())
+    		{
+    			fusionImage(father, mother, child);
+    		}
+    		else
+    		{
 	    		if(occurence % 2 == 0){
 	    			for(int i = 0; i < pat; i++){
 	    				if(father.size() <= offsetFather + i){
@@ -61,8 +61,8 @@ public class Reproduction {
 	    			offsetMother+=pat;
 	    		}
 	    		occurence++;
-	    		//}
-	    	}
+	    		}
+    	}
 	    return child;
     }
 
@@ -79,7 +79,7 @@ public class Reproduction {
 		Pattern motherFus = mother.get((int)(Math.random()*100)%mother.size());
 		for(int i = 0; i<fatherFus.getImageList().size()&& i < motherFus.getImageList().size() ; i++)
 		{
-			p.addFreeSpace(new Pattern(p.getWidth(), p.getHeight()));
+			p.addFreeSpace(new Pattern(child.getProject().getPatternX(), child.getProject().getPatternY()));
 			if(i%2==0)
 			{
 				p.addImageInFreeSpace(child.getProject().getImageByName(fatherFus.getImageList().get(i).getName()));

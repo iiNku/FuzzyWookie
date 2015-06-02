@@ -129,7 +129,7 @@ public class Print implements Cloneable {
 		double[] x = fitness.dual();
         for (int k = 0; k < x.length; k++)
         {
-        	listPattern.get(k).setNbPrint(Math.abs((int)Math.round(x[k])+1));
+        	listPattern.get(k).setNbPrint(Math.abs((int)Math.round(x[k])));
         }
         
 		this.fitness = Math.abs(value) + listPattern.size()*20;
