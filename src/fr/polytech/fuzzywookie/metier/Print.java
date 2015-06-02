@@ -23,6 +23,13 @@ public class Print {
 		project = p;
 	}
 	
+	public Print(Print initialPrint) {
+		project = new Project();
+		project = initialPrint.getProject();
+		listPattern = new ArrayList<Pattern>();
+		listPattern.addAll(initialPrint.getListPattern());
+	}
+
 	public Project getProject() {
 		return project;
 	}

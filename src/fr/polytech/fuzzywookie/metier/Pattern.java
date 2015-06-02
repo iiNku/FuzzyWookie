@@ -283,4 +283,18 @@ public class Pattern extends Rectangle {
     	return toReturn;
     	
     }
+
+	public void remove(String name2) {
+
+		for(int i = 0; i < imageList.size(); i++){
+			if(imageList.get(i).getName().equals(name2)){
+				Image image = imageList.get(i);
+				Pattern freeSpace = new Pattern(image.getWidth(), image.getHeight());
+				freeSpace.setDecoupX(image.getX());
+				freeSpace.setDecoupY(image.getY());
+				addFreeSpace(freeSpace);
+				imageList.remove(i);
+			}
+		}
+	}
 }
