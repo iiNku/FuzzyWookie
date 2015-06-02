@@ -20,6 +20,7 @@ public class Project {
 	private String file;
 	private Print initialPrint;
 	private Logger logger;
+	private int moyenneFitness;
 
 	public Project(String file, boolean logging) {
 		this.file = file;
@@ -186,11 +187,12 @@ public class Project {
 
 	private void calculSimplex() {
 		int i = 0;
-		
+		moyenneFitness = 0;
 		List<Print> toRemove = new ArrayList<Print>();
 		for (Print print : listPrint) {
 			try {
 				print.simplexSolution();
+				moyenneFitness += print.getFitness();
 				i++;
 			} catch (ArithmeticException e) {
 				toRemove.add(print);
@@ -200,6 +202,8 @@ public class Project {
 		
 		for(Print print : toRemove)
 			listPrint.remove(print);
+		
+		moyenneFitness = moyenneFitness/listPrint.size();
 	}
 
 	public Image getImageByName(String name) {
@@ -224,7 +228,7 @@ public class Project {
 				best = print;
 			}
 		}
-		System.out.println("Best solution : " + best);
+		System.out.println("Best solution : " + best + "Moyenne : " + moyenneFitness);
 		return best;
 	}
 
