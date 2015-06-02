@@ -90,14 +90,14 @@ public class Reproduction {
 				{
 					tmp = v.removeImage(child);
 				}
-				else if (rng == 3)
+				else if (rng == 3 && cptMuta>5)
 				{
 					tmp = v.removePattern(child);
 				}
 	    		if(tmp != null)
 	    		{
 	    			cptMuta++;
-	    			if(cptMuta==5)
+	    			if(cptMuta==10)
 	    				MutaOk = true;
 	    			child = tmp.clone();
 	    		}
