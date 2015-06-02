@@ -75,7 +75,7 @@ public class Reproduction {
     		while(!MutaOk)
     		{
 	    		Print tmp = null;
-	    		int rng = (int)Math.random()*100%4;
+	    		int rng = (int)(Math.random()*100)%4;
 	    		if (rng == 0){
 					tmp = v.addPattern(child);
 				}
@@ -91,10 +91,11 @@ public class Reproduction {
 				{
 					tmp = v.removePattern(child);
 				}
-	    		if(tmp.isValid())
+	    		if(tmp != null)
 	    		{
 	    			MutaOk = true;
 	    			child = tmp.clone();
+	    			System.out.println("Mutation");
 	    		}
     		}
     	}
