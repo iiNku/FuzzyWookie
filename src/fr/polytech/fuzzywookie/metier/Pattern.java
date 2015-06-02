@@ -208,13 +208,16 @@ public class Pattern extends Rectangle implements Cloneable {
 	    		}
 	    		if(fusion != null && fusion.getArea()>pattern.getArea() && fusion.getArea() > space.getArea())
 	    		{
-	    			freeSpace.remove(space);
-	    			freeSpace.add(fusion);
-	    			fusionSuccess = true;
+	    			if(fusion.width <= this.getWidth() && fusion.height <= this.getHeight())
+	    			{
+		    			freeSpace.remove(space);
+		    			freeSpace.add(fusion);
+		    			fusionSuccess = true;
+	    			}
 	    			break;
 	    		}	
     		}
-    		if(!fusionSuccess)
+    		if(!fusionSuccess && pattern.width <= this.getWidth() && pattern.height <= this.getHeight())
     			freeSpace.add(pattern);
     	}
     }
@@ -263,17 +266,19 @@ public class Pattern extends Rectangle implements Cloneable {
     
     public boolean addImageInFreeSpace(Image img)
     {
+    	Image addImage = img.clone();
     	Packing packing = new Packing();
     	
-    	for(Pattern space : this.getFreeSpace())
+    	for(Pattern space : this.freeSpace)
 		{
-			if(img.getArea() < space.getArea() && img.getWidth() < space.getWidth() && img.getHeight() < space.getHeight())
+			if(addImage.getArea() < space.getArea() && addImage.getWidth() < space.getWidth() && addImage.getHeight() < space.getHeight())
 			{
-				this.addImage(img.clone());
-				List<Pattern> splitpatterns = packing.splitPattern(space, img);
-				img.setX(space.getDecoupX());
-				img.setY(space.getDecoupY());
-				this.getFreeSpace().remove(space);
+				
+				this.addImage(addImage);
+				List<Pattern> splitpatterns = packing.splitPattern(space, addImage);
+				addImage.setX(space.getDecoupX());
+				addImage.setY(space.getDecoupY());
+				this.freeSpace.remove(space);
 				this.addFreeSpace(splitpatterns.get(0));
 				this.addFreeSpace(splitpatterns.get(1));
 				return true;
@@ -289,9 +294,9 @@ public class Pattern extends Rectangle implements Cloneable {
     	toReturn += "\t\tNombre d'image : " + imageList.size() + "\n";
     	toReturn += "\t\tNombre d'impression : " + nbPrint + "\n";
     	toReturn += "\t\tImages :" + "" + "\n";
-    	for(Image image : imageList){
-    		toReturn += image;
-    	}
+//    	for(Image image : imageList){
+//    		toReturn += image;
+//    	}
     	
     	return toReturn;
     	
