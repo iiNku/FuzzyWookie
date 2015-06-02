@@ -3,6 +3,7 @@ package fr.polytech.fuzzywookie.reproduction;
 import java.util.ArrayList;
 
 import fr.polytech.fuzzywookie.metier.*;
+import fr.polytech.fuzzywookie.voisinage.Voisinnage;
 
 public class Reproduction {
     
@@ -66,6 +67,38 @@ public class Reproduction {
 	    		occurence++;
 	    		}
     	}
+    	int randomMutation = (int)(Math.random()*100)%child.getListPattern().size();
+    	if(randomMutation == child.getListPattern().size()-1)
+    	{
+    		Voisinnage v= new Voisinnage();
+    		boolean MutaOk = false;
+    		while(!MutaOk)
+    		{
+	    		Print tmp = null;
+	    		int rng = (int)Math.random()*100%4;
+	    		if (rng == 0){
+					tmp = v.addPattern(child);
+				}
+				else if (rng == 1)
+				{
+					tmp = v.addImage(child);
+				}
+				else if (rng == 2)
+				{
+					tmp = v.removeImage(child);
+				}
+				else if (rng == 3)
+				{
+					tmp = v.removePattern(child);
+				}
+	    		if(tmp.isValid())
+	    		{
+	    			MutaOk = true;
+	    			child = tmp.clone();
+	    		}
+    		}
+    	}
+    	
 	    return child;
     }
 

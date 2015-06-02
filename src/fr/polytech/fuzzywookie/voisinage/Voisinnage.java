@@ -55,7 +55,7 @@ public class Voisinnage {
 		return neighbors;
 	}
 
-	private Print removeImage(Print print) {
+	public Print removeImage(Print print) {
 		
 		Print tmp_removeImage = print.clone();
 		
@@ -120,7 +120,7 @@ public class Voisinnage {
 		return tmp_changeImage.isValid() ? tmp_changeImage : null;
 	}
 	
-	private Print removePattern(Print neighbor)
+	public Print removePattern(Print neighbor)
 	{
 		Print print = neighbor.clone();
 		Map<String, Integer> nbImageMap = new HashMap<String, Integer>();
@@ -153,7 +153,7 @@ public class Voisinnage {
 		return null;
 	}
 
-	private Print addImage(Print neighbor)
+	public Print addImage(Print neighbor)
 	{
 		Print print = neighbor.clone();
 		
@@ -181,7 +181,7 @@ public class Voisinnage {
 		return null;
 	}
 	
-	private Print addPattern(Print print) {
+	public Print addPattern(Print print) {
 
 		Print tmp = print.clone();
 		
