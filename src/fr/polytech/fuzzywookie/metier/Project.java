@@ -168,7 +168,7 @@ public class Project {
 		int i = 0;
 		for(Print print : listPrint){
 			print.simplexSolution();
-			System.out.println("Simplex : " + i);
+			System.out.println("Simplex : " + print.getFitness());
 			i++;
 		}
 			

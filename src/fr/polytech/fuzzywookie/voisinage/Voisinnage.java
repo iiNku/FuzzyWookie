@@ -3,6 +3,7 @@ package fr.polytech.fuzzywookie.voisinage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fr.polytech.fuzzywookie.metier.Image;
 import fr.polytech.fuzzywookie.metier.Pattern;
@@ -28,7 +29,7 @@ public class Voisinnage {
 			
 			Print tmp = null;
 			
-			int rng = (int)(Math.random()*100)%3;
+			int rng = (int)(Math.random()*100)%4;
 			if (rng == 0 && neighbor.getListPattern().size()<neighbor.getProject().getListImage().size()){
 				if(!neighbor.isValid()){
 					System.out.println("hahahaha");
@@ -53,6 +54,11 @@ public class Voisinnage {
 				System.out.println("removeimage");
 				tmp = removeImage(neighbor);
 				//if(tmpModif != null) neighbor = tmpModif;
+			}
+			else if (rng == 3)
+			{
+				Print tmpModif = removePattern(neighbor);
+				if(tmpModif != null) neighbor = tmpModif;
 			}
 				
 			if (tmp != null){
@@ -135,13 +141,38 @@ public class Voisinnage {
 		return tmp.isValid() ? tmp : null;
 	}
 	
-//	private Print removePattern(Print neighbor)
-//	{
-//		for(Pattern p : neighbor.getListPattern())
-//		{
-//			for(Image)
-//		}
-//	}
+	private Print removePattern(Print neighbor)
+	{
+		Print print = new Print(neighbor);
+		Map<String, Integer> nbImageMap = new HashMap<String, Integer>();
+		List<Pattern> deletePatterns = new ArrayList<Pattern>();
+		for(Image i : print.getProject().getListImage())
+		{
+				nbImageMap.put(i.getName(), Integer.valueOf(print.getNbImage(i)));
+		}
+		for(Pattern p : print.getListPattern())
+		{
+			boolean retirePattern = false;
+			for(Image i : p.getImageList())
+			{
+				if(nbImageMap.get(i.getName())-p.getNbImage(i)<=0)
+				{
+					break;
+				}
+				retirePattern = true;
+			}
+			if(retirePattern = true)
+				deletePatterns.add(p);	
+		}
+		if(!deletePatterns.isEmpty())
+		{
+			int rdn = (int)(Math.random()*100)%deletePatterns.size();
+			print.getListPattern().remove(rdn);
+			if(print.isValid())
+				return print;
+		}
+		return null;
+	}
 
 	private Print addImage(Print neighbor)
 	{
