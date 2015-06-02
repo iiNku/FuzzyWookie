@@ -1,6 +1,6 @@
 package fr.polytech.fuzzywookie.metier;
 
-public class Image extends Rectangle {
+public class Image extends Rectangle implements Cloneable {
 
 	private int x, y;
 	private String name;
@@ -104,5 +104,19 @@ public class Image extends Rectangle {
 		toReturn += "Width=" + this.width + " et Height=" + this.height + "\n";
 		
 		return toReturn;
+	}
+	
+	public Image clone(){
+		
+		Image image = null;
+		
+		try {
+			image = (Image) super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return image;
 	}
 }
