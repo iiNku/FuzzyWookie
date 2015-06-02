@@ -127,20 +127,29 @@ public class Project {
 		
 		int max = (int) Math.round(this.getListPrint().size() * 20 / 100);
 		List<Print> toReturn = new ArrayList<Print>();
+		List<Print> listPrintClone = new ArrayList<Print>();
+		for(Print p : this.listPrint){
+			listPrintClone.add(p.clone());
+		}
+		
 		
 		while(toReturn.size() < max){
 			
 			int min = Integer.MAX_VALUE;
+			int save = 0;
 			Print minimum = null;
-			for(int i = 0; i < listPrint.size(); i++){
-				if(listPrint.get(i).getFitness() < min){
+			for(int i = 0; i < listPrintClone.size(); i++){
+				if(listPrintClone.get(i).getFitness() < min && listPrintClone.get(i).getFitness()>0){
 					System.out.println("find minimum");
-					min = listPrint.get(i).getFitness();
-					minimum = listPrint.get(i);
-					listPrint.remove(i);
+					min = listPrintClone.get(i).getFitness();
+					minimum = listPrintClone.get(i);
+					save = i;
 				}
 			}
-			toReturn.add(minimum);
+			if(minimum != null){
+				toReturn.add(minimum);
+				listPrintClone.remove(save);
+			}
 		}
 		return toReturn;
 	}
@@ -180,6 +189,16 @@ public class Project {
 			print.simplexSolution();
 			i++;
 		}
+	}
+	
+	public Image getImageByName(String name)
+	{
+		for(Image i : listImage)
+		{
+			if(i.getName().equals(name))
+				return i.clone();
+		}
+		return null;
 	}
 
 	private void generateNeighborhood() {

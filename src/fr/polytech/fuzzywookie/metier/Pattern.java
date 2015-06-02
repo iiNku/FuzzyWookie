@@ -269,7 +269,7 @@ public class Pattern extends Rectangle implements Cloneable {
 		{
 			if(img.getArea() < space.getArea() && img.getWidth() < space.getWidth() && img.getHeight() < space.getHeight())
 			{
-				this.addImage(img);
+				this.addImage(img.clone());
 				List<Pattern> splitpatterns = packing.splitPattern(space, img);
 				img.setX(space.getDecoupX());
 				img.setY(space.getDecoupY());
