@@ -20,15 +20,16 @@ public class Voisinnage {
 		List<Print> neighbors = new ArrayList<Print>();
 		Print neighbor = initialPrint;
 		neighbors.add(neighbor);
-		Print tmp = new Print(neighbor.getProject());
 		
-		tmp.setPrint(neighbor);
+		Print tmp = null;
 		
 		while (neighbors.size() < 10000) {
+			
 			Print tmp2 = new Print(tmp.getProject());
 			tmp2.setPrint(tmp);
 			tmp = new Print(neighbor.getProject());
 			tmp.setPrint(tmp2);
+			
 			int rng = (int)(Math.random()*100)%3;
 			if (rng == 0)
 				tmp = addPattern(tmp);
@@ -40,8 +41,7 @@ public class Voisinnage {
 			else if (rng == 2)
 				tmp = removeImage(tmp);
 			
-			if (tmp.isValid()){
-				//neighbor = tmp;
+			if (tmp != null){
 				neighbors.add(tmp);
 			}
 			System.out.println(neighbors.size());
@@ -68,7 +68,7 @@ public class Voisinnage {
 				print.getListPattern().remove(neo);
 		}
 		
-		return print;
+		return print.isValid() ? print : null;
 	}
 
 	private Print changeImage(Print print) {
@@ -97,7 +97,8 @@ public class Voisinnage {
 				return print;
 		}	
 		}
-		return print;
+		
+		return print.isValid() ? print : null;
 	}
 
 	private Print addImage(Print print)
@@ -116,7 +117,7 @@ public class Voisinnage {
 						p.addFreeSpace(splitpatterns.get(0));
 						p.addFreeSpace(splitpatterns.get(1));
 						
-						return print;
+						return print.isValid() ? print : null;
 					}
 				}
 				
@@ -129,7 +130,8 @@ public class Voisinnage {
 
 		Packing packing = new Packing();
 		packing.packNewPattern(print);
-		return print;
+		
+		return print.isValid() ? print : null;
 	}
 
 }
