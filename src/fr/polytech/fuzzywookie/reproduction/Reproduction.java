@@ -34,12 +34,12 @@ public class Reproduction {
     	int pat = 1 + (int) (Math.random() * ((minSize - 1) + 1));
 
     	while(child.getListPattern().size() < meanPattern){
-    		if(child.getListPattern().size()>=mother.size() || child.getListPattern().size()>=father.size())
-    		{
-    			fusionImage(father, mother, child);
-    		}
-    		else
-    		{
+//    		if(child.getListPattern().size()>=mother.size() || child.getListPattern().size()>=father.size())
+//    		{
+//    			fusionImage(father, mother, child);
+//    		}
+//    		else
+  		//{
 	    		if(occurence % 2 == 0){
 	    			for(int i = 0; i < pat; i++){
 	    				if(father.size() <= offsetFather + i){
@@ -61,7 +61,7 @@ public class Reproduction {
 	    			offsetMother+=pat;
 	    		}
 	    		occurence++;
-	    		}
+	    		//}
 	    	}
 	    return child;
     }
