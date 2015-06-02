@@ -81,9 +81,9 @@ public class Print {
 		double[] x = fitness.primal();
         for (int k = 0; k < x.length; k++)
         {
-        	listPattern.get(k).setNbPrint((int)Math.round(x[k])+1);
+        	listPattern.get(k).setNbPrint(-(int)Math.round(x[k])+1);
         }
-		return value;
+		return -value;
 	}
 	
 	public boolean isValid(){
