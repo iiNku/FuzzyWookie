@@ -111,7 +111,7 @@ public class Project {
 			}
 			System.out.println("nb d'efants" + toReturn.size());
 		}
-		System.out.println("Reproduction terminé");
+		System.out.println("Reproduction terminÃ©");
 		return toReturn;
 	}
 
