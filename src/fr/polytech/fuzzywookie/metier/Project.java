@@ -137,7 +137,6 @@ public class Project {
 					minimum = listPrintClone.get(i);
 					save = i;
 				}
-				System.out.println(toReturn.size());
 			}
 			if(minimum != null){
 				toReturn.add(minimum);
