@@ -1,10 +1,8 @@
 package fr.polytech.fuzzywookie.reproduction;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fr.polytech.fuzzywookie.metier.*;
-import fr.polytech.fuzzywookie.pack.PackingTest;
 
 public class Reproduction {
     

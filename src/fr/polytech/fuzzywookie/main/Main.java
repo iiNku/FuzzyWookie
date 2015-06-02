@@ -7,10 +7,10 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Configuration.timesInMs = 200;
-		//Configuration.timesInMs = 720000;
+		//Configuration.timesInMs = 200;
+		Configuration.timesInMs = 720000;
 
-		Project project = new Project("test/data_20Lalpha.txt", true);
+		Project project = new Project("test/data_20Lalpha.txt", false);
 		project.launch();
 	}
 

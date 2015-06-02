@@ -1,6 +1,5 @@
 package fr.polytech.fuzzywookie.metier;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -12,9 +11,6 @@ import fr.polyteck.fuzzywookie.utils.Configuration;
 import fr.polyteck.fuzzywookie.utils.Logger;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
-import fr.polyteck.fuzzywookie.utils.QSortSimplex;
-import fr.polyteck.fuzzywookie.utils.TriBulle;
-import fr.polyteck.fuzzywookie.utils.TriFusion;
 
 public class Project {
 	private List<Print> listPrint;
