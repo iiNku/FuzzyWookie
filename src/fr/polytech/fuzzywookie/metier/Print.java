@@ -171,6 +171,7 @@ public class Print implements Cloneable {
 		
 		toReturn += "\tNombre pattern : " + listPattern.size() + "\n";
 		toReturn += "\tFitness = " + this.fitness + "\n";
+		toReturn += "\tMoyenne= " + this.project.getMoyenne() + "\n";
 		int i = 0;
 		for(Pattern pattern : listPattern){
 			toReturn += "\tPattern " + i + " : \n" + pattern;

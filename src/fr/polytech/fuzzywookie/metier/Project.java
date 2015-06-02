@@ -100,6 +100,11 @@ public class Project {
 	public void setInitialPrint(Print initialPrint) {
 		this.initialPrint = initialPrint;
 	}
+	
+	public int getMoyenne(){
+		
+		return this.moyenneFitness;
+	}
 
 	public List<Print> launchReproduction() {
 
