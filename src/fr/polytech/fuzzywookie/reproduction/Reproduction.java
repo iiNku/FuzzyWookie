@@ -34,36 +34,48 @@ public class Reproduction {
     	int pat = 1 + (int) (Math.random() * ((minSize - 1) + 1));
 
     	while(child.getListPattern().size() < meanPattern){
-    		System.out.println("Creation child : " + child.getListPattern().size());
-    		if(occurence % 2 == 0){
-    			for(int i = 0; i < pat; i++){
-    				if(father.size() <= offsetFather + i){
-    					occurence++;
-    					break;
-    				}
-    				addPattern(child, meanPattern, father.get(offsetFather + i));
-    			}
-    			offsetFather+=pat;
+    		if(child.getListPattern().size()>=mother.size() || child.getListPattern().size() >= father.size())
+    		{
+    			fusionImage(father, mother, child);
     		}
-    		else{
-    			for(int i = 0; i < pat; i++){
-    				if(mother.size() <= offsetMother + i){
-    					occurence++;
-    					break;
-    				}
-    				addPattern(child, meanPattern, mother.get(offsetMother + i));
-    			}
-    			offsetMother+=pat;
-    		}
-    		occurence++;
-    	}
-    	return child;
+    		else
+    		{
+	    		System.out.println("Creation child : " + child.getListPattern().size());
+	    		if(occurence % 2 == 0){
+	    			for(int i = 0; i < pat; i++){
+	    				if(father.size() <= offsetFather + i){
+	    					occurence++;
+	    					break;
+	    				}
+	    				addPattern(child, meanPattern, father.get(offsetFather + i));
+	    			}
+	    			offsetFather+=pat;
+	    		}
+	    		else{
+	    			for(int i = 0; i < pat; i++){
+	    				if(mother.size() <= offsetMother + i){
+	    					occurence++;
+	    					break;
+	    				}
+	    				addPattern(child, meanPattern, mother.get(offsetMother + i));
+	    			}
+	    			offsetMother+=pat;
+	    		}
+	    		occurence++;
+	    		}
+	    	}
+	    return child;
     }
 
 	private void addPattern(Print child, int meanPattern, Pattern pattern) {
 		
 		if(child.getListPattern().size() < meanPattern)
 			child.getListPattern().add(pattern);
+	}
+	
+	private void fusionImage(ArrayList<Pattern> father,ArrayList<Pattern> mother, Print child)
+	{
+		
 	}
     
 }
