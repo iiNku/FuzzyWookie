@@ -20,12 +20,12 @@ public class QSortSimplex {
 
 	private void quicksort(int low, int high) {
 
-		System.out.println("low="+low+" high=" + high);
+		//System.out.println("low="+low+" high=" + high);
 		int i = low, j = high;
 		Print pivot = list.get(low + (high - low) / 2);
 
 		while (i <= j) {
-			System.out.println("i="+low+" j=" + high);
+			//System.out.println("i="+i+" j=" + j);
 			while (list.get(i).simplexSolution() > pivot.simplexSolution())
 				i++;
 

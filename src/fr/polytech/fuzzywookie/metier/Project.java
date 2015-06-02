@@ -124,7 +124,7 @@ public class Project {
 		
 		QSortSimplex qsortSimplex = new QSortSimplex();
 		qsortSimplex.sort(sorted);
-		
+		System.out.println(sorted.get(0).simplexSolution());
 		for(int i =0; i < max; i++){
 			if(sorted.get(i) != null) toReturn.add(sorted.get(i));
 		}

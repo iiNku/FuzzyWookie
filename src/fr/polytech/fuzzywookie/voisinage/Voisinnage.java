@@ -37,8 +37,8 @@ public class Voisinnage {
 				Print tmp3 = addImage(neighbor);
 				if(tmp3 != null) neighbor = tmp3;
 			}
-			else if (rng == 2)
-				neighbor = removeImage(neighbor);
+			//else if (rng == 2)
+				//neighbor = removeImage(neighbor);
 			
 			if (neighbor.isValid()){
 				//neighbor = tmp;
