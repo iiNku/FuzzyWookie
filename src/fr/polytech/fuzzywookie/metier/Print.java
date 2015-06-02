@@ -57,37 +57,76 @@ public class Print implements Cloneable {
 		this.listPattern = listPattern;
 	}
 	
+//	public void simplexSolution()
+//	{
+//		int value = 0;
+//		int i = 0;
+//		double d = listPattern.size();
+//		double[][] matrice = new double[project.getListImage().size()][listPattern.size()];
+//		double[] contrainte = new double[project.getListImage().size()];
+//		double[] minimisation = new double[listPattern.size()];
+//		for(Pattern p : listPattern)
+//		{
+//			double[] vecteur = p.getVecteur();
+//			int j = 0;
+//			for(double vecteurValue : vecteur)
+//			{
+//				matrice[j][i] = vecteurValue;
+//				j++;
+//			}
+//			i++;
+//		}
+//		for(int indiceContrainte =0 ; indiceContrainte<contrainte.length; indiceContrainte++)
+//		{
+//			contrainte[indiceContrainte] = -project.getListImage().get(indiceContrainte).getNbItem();
+//		}
+//		for(int indiceMin = 0 ; indiceMin<minimisation.length; indiceMin++)
+//		{
+//			minimisation[indiceMin] = 1;
+//		}
+//		
+//		Simplex fitness = new Simplex(matrice, contrainte, minimisation);
+//		value = (int) fitness.value();
+//		double[] x = fitness.primal();
+//        for (int k = 0; k < x.length; k++)
+//        {
+//        	listPattern.get(k).setNbPrint(Math.abs((int)Math.round(x[k])+1));
+//        }
+//        
+//		this.fitness = Math.abs(value) + listPattern.size()*20;
+//	}
+	
 	public void simplexSolution()
 	{
 		int value = 0;
 		int i = 0;
 		double d = listPattern.size();
-		double[][] matrice = new double[project.getListImage().size()][listPattern.size()];
-		double[] contrainte = new double[project.getListImage().size()];
-		double[] minimisation = new double[listPattern.size()];
+		double[][] matrice = new double[listPattern.size()][project.getListImage().size()];
+		double[] contrainte = new double[listPattern.size()];
+		double[] minimisation = new double[project.getListImage().size()];
 		for(Pattern p : listPattern)
 		{
 			double[] vecteur = p.getVecteur();
 			int j = 0;
 			for(double vecteurValue : vecteur)
 			{
-				matrice[j][i] = vecteurValue;
+				matrice[i][j] = vecteurValue;
 				j++;
 			}
 			i++;
 		}
-		for(int indiceContrainte =0 ; indiceContrainte<contrainte.length; indiceContrainte++)
+		for(int indiceContrainte =0 ; indiceContrainte<minimisation.length; indiceContrainte++)
 		{
-			contrainte[indiceContrainte] = -project.getListImage().get(indiceContrainte).getNbItem();
+			minimisation[indiceContrainte] = project.getListImage().get(indiceContrainte).getNbItem();
 		}
-		for(int indiceMin = 0 ; indiceMin<minimisation.length; indiceMin++)
+		for(int indiceMin = 0 ; indiceMin<contrainte.length; indiceMin++)
 		{
-			minimisation[indiceMin] = 1;
+			contrainte[indiceMin] = 1;
 		}
 		
 		Simplex fitness = new Simplex(matrice, contrainte, minimisation);
 		value = (int) fitness.value();
-		double[] x = fitness.primal();
+		double[] x = fitness.dual();
         for (int k = 0; k < x.length; k++)
         {
         	listPattern.get(k).setNbPrint(Math.abs((int)Math.round(x[k])+1));
