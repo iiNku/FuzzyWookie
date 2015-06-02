@@ -41,11 +41,11 @@ public class Voisinnage {
 			{
 				tmp = removeImage(neighbor);
 			}
-//			else if (rng == 3)
-//			{
-//				System.out.println("removepattern");
-//				tmp = removePattern(neighbor);
-//			}
+			else if (rng == 3)
+			{
+				System.out.println("removepattern");
+				tmp = removePattern(neighbor);
+			}
 				
 			if (tmp != null && tmp.isValid()){
 				neighbor = tmp.clone();
