@@ -10,7 +10,7 @@ public class Reproduction {
     
     public Print ReproductionPattern(Print p1,Print p2){
     	
-    	Print child = new Print(p1.getProject());
+    	Print child = p1.clone();
     	int meanPattern = Math.round((p1.getListPattern().size()+p2.getListPattern().size())/2);
     	
     	int offsetFather = 0;
