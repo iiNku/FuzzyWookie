@@ -287,8 +287,9 @@ public class Pattern extends Rectangle implements Cloneable {
     	
     	String toReturn = "";
     	
-    	toReturn += "Nombre d'image : " + imageList.size() + "\n";
-    	toReturn += "Nombre d'impression :" + "" + "\n";
+    	toReturn += "\t\tNombre d'image : " + imageList.size() + "\n";
+    	toReturn += "\t\tNombre d'impression : " + nbPrint + "\n";
+    	toReturn += "\t\tImages :" + "" + "\n";
     	for(Image image : imageList){
     		toReturn += image;
     	}

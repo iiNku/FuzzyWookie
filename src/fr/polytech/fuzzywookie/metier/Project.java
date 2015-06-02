@@ -1,6 +1,5 @@
 package fr.polytech.fuzzywookie.metier;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -8,11 +7,10 @@ import java.util.List;
 import fr.polytech.fuzzywookie.pack.Packing;
 import fr.polytech.fuzzywookie.reproduction.Reproduction;
 import fr.polytech.fuzzywookie.voisinage.Voisinnage;
+import fr.polyteck.fuzzywookie.utils.Configuration;
+import fr.polyteck.fuzzywookie.utils.Logger;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
-import fr.polyteck.fuzzywookie.utils.QSortSimplex;
-import fr.polyteck.fuzzywookie.utils.TriBulle;
-import fr.polyteck.fuzzywookie.utils.TriFusion;
 
 public class Project {
 	private List<Print> listPrint;
@@ -21,11 +19,17 @@ public class Project {
 	private int pricePattern;
 	private String file;
 	private Print initialPrint;
+	private Logger logger;
 
-	public Project(String file) {
+	public Project(String file, boolean logging) {
 		this.file = file;
 		listPrint = new ArrayList<Print>();
 		listImage = new ArrayList<Image>();
+		
+		String[] tmp = file.split("/");
+		String name = tmp[1].substring(0, tmp[1].length() - 4);
+		
+		if(logging) logger = new Logger(name);
 	}
 
 	public Project() {
@@ -111,6 +115,7 @@ public class Project {
 					toReturn.add(child);
 			}
 		}
+		System.out.println("Reproduction terminé");
 		return toReturn;
 	}
 
@@ -141,16 +146,14 @@ public class Project {
 				listPrintClone.remove(save);
 			}
 		}
-		
-		
-		System.out.println("Minimum : " + bestPrint(toReturn).getFitness());
-		
 		return toReturn;
 	}
 
 	public void launch() {
 		
 		parseFileAndSortImages();
+		
+		if(logger != null) logger.logConfiguration();
 		
 		initialPrint = new Print(this);
 		Packing packing = new Packing();
@@ -160,27 +163,27 @@ public class Project {
 
 		long beginMs = Calendar.getInstance().getTimeInMillis();
 		
-		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
+		while (Calendar.getInstance().getTimeInMillis() < beginMs + Configuration.timesInMs) {
 			
-			System.out.println("Boucle");
 			calculSimplex();
+			Print best = bestPrint(listPrint);
+			if(logger != null) logger.log(best.toString() + "\n____________\n");
+			System.out.println(best);
 			listPrint = this.launchReproduction();
 
 			System.out.println(bestPrint(listPrint));
 
 		}
+		
+		if(logger != null) logger.close();
 	}
 
 	private void calculSimplex() {
-		System.out.println("calcule simplex");
 		int i = 0;
 		for(Print print : listPrint){
 			print.simplexSolution();
-			System.out.println("Simplex : " + print.getFitness());
 			i++;
 		}
-			
-		System.out.println("fin simplex");
 	}
 	
 	public Image getImageByName(String name)
@@ -194,11 +197,9 @@ public class Project {
 	}
 
 	private void generateNeighborhood() {
+		
 		Voisinnage voisinnage = new Voisinnage();
-
 		this.listPrint.addAll(voisinnage.generate(initialPrint));
-
-		System.out.println("Voisin cree");
 	}
 
 	public Print bestPrint(List<Print> tableau) {
@@ -209,6 +210,7 @@ public class Project {
 				best = print;
 			}
 		}
+		System.out.println("Best solution : " + best);
 		return best;
 	}
 

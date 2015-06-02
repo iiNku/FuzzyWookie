@@ -10,6 +10,7 @@ import fr.polytech.fuzzywookie.metier.Pattern;
 import fr.polytech.fuzzywookie.metier.Print;
 import fr.polytech.fuzzywookie.metier.Project;
 import fr.polytech.fuzzywookie.pack.Packing;
+import fr.polyteck.fuzzywookie.utils.Configuration;
 
 public class Voisinnage {
 
@@ -25,7 +26,7 @@ public class Voisinnage {
 		
 		Print neighbor = initialPrint.clone();
 		
-		while (neighbors.size() < 20000) {
+		while (neighbors.size() < Configuration.nbNeighbors) {
 			
 			Print tmp = null;
 			
@@ -43,7 +44,6 @@ public class Voisinnage {
 			}
 			else if (rng == 3)
 			{
-				System.out.println("removepattern");
 				tmp = removePattern(neighbor);
 			}
 				
@@ -51,7 +51,6 @@ public class Voisinnage {
 				neighbor = tmp.clone();
 				neighbors.add(neighbor);
 			}
-			System.out.println(neighbors.size());
 		}
 		return neighbors;
 	}
@@ -59,7 +58,6 @@ public class Voisinnage {
 	private Print removeImage(Print print) {
 		
 		Print tmp_removeImage = print.clone();
-		System.out.println("removeImage");
 		
 		List<Image> imagesDouble = new ArrayList<Image>();
 		for(Image image : tmp_removeImage.getProject().getListImage()){
@@ -89,14 +87,6 @@ public class Voisinnage {
 		}
 		
 		return tmp_removeImage.isValid() ? tmp_removeImage : null;
-		/*
-		if(tmp_removeImage.isValid()){
-			return tmp_removeImage;
-		}
-		else{
-			patternToRemove = new Pattern(save);
-			return null;
-		}*/
 	}
 
 	private Print changeImage(Print print) {
@@ -183,13 +173,6 @@ public class Voisinnage {
 						p.addFreeSpace(splitpatterns.get(1));
 						
 						return print.isValid() ? print : null;
-						/*if(print.isValid()){
-							return print;
-						}
-						else{
-							p = new Pattern(save);
-							return null;
-						}*/
 					}
 				}
 				
@@ -206,5 +189,4 @@ public class Voisinnage {
 		packing.packNewPattern(tmp);
 		return tmp.isValid() ? tmp : null;
 	}
-
 }

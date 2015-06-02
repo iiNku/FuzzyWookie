@@ -1,10 +1,8 @@
 package fr.polytech.fuzzywookie.reproduction;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fr.polytech.fuzzywookie.metier.*;
-import fr.polytech.fuzzywookie.pack.PackingTest;
 
 public class Reproduction {
     
@@ -22,7 +20,8 @@ public class Reproduction {
     	ArrayList<Pattern> father = (ArrayList<Pattern>) p1.getListPattern();
     	ArrayList<Pattern> mother = (ArrayList<Pattern>) p2.getListPattern();
     	int nbPattern =(int) (Math.random()*100)%3;
-    	int val = (int)((Math.random()*100) % (mean-Math.min(mother.size(), father.size())));
+    	int max = Math.max(1,Math.min(mean-mother.size(), mean-father.size()));
+    	int val = (int)((Math.random()*100) % (mean-max));
     	if(nbPattern==0){
     		meanPattern = mean;
     	}else if(nbPattern==1){

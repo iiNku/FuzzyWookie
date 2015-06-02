@@ -128,13 +128,15 @@ public class Print implements Cloneable {
 	public String toString(){
 		
 		String toReturn = "";
-		toReturn += "Print : ";
+		toReturn += "Print : \n";
 		
-		toReturn += "Nombre pattern : " + listPattern.size() + "\n";
-//		int i = 0;
-//		for(Pattern pattern : listPattern){
-//			toReturn += "Pattern " + i + " : \n" + pattern;
-//		}
+		toReturn += "\tNombre pattern : " + listPattern.size() + "\n";
+		toReturn += "\tFitness = " + this.fitness + "\n";
+		int i = 0;
+		for(Pattern pattern : listPattern){
+			toReturn += "\tPattern " + i + " : \n" + pattern;
+			i++;
+		}
 		return toReturn;
 	}
 	

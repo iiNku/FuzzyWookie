@@ -12,7 +12,7 @@ public class ParserTest {
 	@Test
 	public void ParserTest(){
 		
-		Project projectTest = new Project("/Users/jocelyn/Downloads/data/data_30Salpha.txt");
+		Project projectTest = new Project("/Users/jocelyn/Downloads/data/data_30Salpha.txt", false);
 		projectTest.parseFileAndSortImages();
 		
 		System.out.println("Prix : " + projectTest.getPricePattern()+ " X : "+projectTest.getPatternX()+" Y : "+projectTest.getPatternY());
