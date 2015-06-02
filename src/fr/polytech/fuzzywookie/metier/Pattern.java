@@ -284,7 +284,6 @@ public class Pattern extends Rectangle implements Cloneable {
     
     @Override
     public String toString(){
-    	
     	String toReturn = "";
     	
     	toReturn += "\t\tNombre d'image : " + imageList.size() + "\n";
