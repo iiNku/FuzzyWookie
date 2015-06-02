@@ -18,7 +18,11 @@ public class Logger {
 
 	public Logger(String dataName) {
 
-		File file = new File(dataName + "-" + sdf.format(new Date()));
+		File dir = new File("logs");
+		if(!dir.exists())
+			dir.mkdir();
+		
+		File file = new File("logs/" + dataName + "-" + sdf.format(new Date()));
 		try {
 			file.createNewFile();
 			fw = new FileWriter(file, false);
@@ -46,5 +50,14 @@ public class Logger {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void logConfiguration() {
+
+		log("Configuration : \n");
+		log("\tNombre de voisins initial : " + Configuration.nbNeighbors + "\n");
+		log("\tTemps d'éxécution : " + Configuration.timesInMs + "\n");
+		log("\n");
+		
 	}
 }

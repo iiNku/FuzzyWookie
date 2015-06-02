@@ -25,7 +25,7 @@ public class Project {
 	private Print initialPrint;
 	private Logger logger;
 
-	public Project(String file) {
+	public Project(String file, boolean logging) {
 		this.file = file;
 		listPrint = new ArrayList<Print>();
 		listImage = new ArrayList<Image>();
@@ -33,7 +33,7 @@ public class Project {
 		String[] tmp = file.split("/");
 		String name = tmp[1].substring(0, tmp[1].length() - 4);
 		
-		logger = new Logger(name);
+		if(logging) logger = new Logger(name);
 	}
 
 	public Project() {
@@ -149,10 +149,7 @@ public class Project {
 		
 		parseFileAndSortImages();
 		
-		logger.log("Configuration : \n");
-		logger.log("\tNombre de voisins initial : " + Configuration.nbNeighbors + "\n");
-		logger.log("\tTemps d'éxécution : " + Configuration.timesInMs + "\n");
-		logger.log("\n");
+		if(logger != null) logger.logConfiguration();
 		
 		initialPrint = new Print(this);
 		Packing packing = new Packing();
@@ -166,7 +163,7 @@ public class Project {
 			
 			calculSimplex();
 			Print best = bestPrint(listPrint);
-			logger.log(best.toString() + "\n____________\n");
+			if(logger != null) logger.log(best.toString() + "\n____________\n");
 			System.out.println(best);
 			listPrint = this.launchReproduction();
 
@@ -174,7 +171,7 @@ public class Project {
 
 		}
 		
-		logger.close();
+		if(logger != null) logger.close();
 	}
 
 	private void calculSimplex() {

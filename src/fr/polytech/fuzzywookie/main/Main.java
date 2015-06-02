@@ -9,7 +9,7 @@ public class Main {
 
 		Configuration.timesInMs = 200;
 
-		Project project = new Project("test/data_20Lalpha.txt");
+		Project project = new Project("test/data_20Lalpha.txt", false);
 		project.launch();
 	}
 
