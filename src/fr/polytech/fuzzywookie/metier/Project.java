@@ -118,6 +118,7 @@ public class Project {
 					toReturn.add(child);
 			}
 		}
+		System.out.println("Reproduction terminé");
 		return toReturn;
 	}
 

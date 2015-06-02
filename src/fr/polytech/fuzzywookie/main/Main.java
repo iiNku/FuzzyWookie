@@ -8,8 +8,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		Configuration.timesInMs = 200;
-		
-		Project project = new Project("test/data_20Salpha.txt");
+
+		Project project = new Project("test/data_20Lalpha.txt");
 		project.launch();
 	}
 
