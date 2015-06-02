@@ -186,15 +186,20 @@ public class Project {
 
 	private void calculSimplex() {
 		int i = 0;
+		
+		List<Print> toRemove = new ArrayList<Print>();
 		for (Print print : listPrint) {
 			try {
 				print.simplexSolution();
 				i++;
 			} catch (ArithmeticException e) {
-				listPrint.remove(print);
+				toRemove.add(print);
 			}
 
 		}
+		
+		for(Print print : toRemove)
+			listPrint.remove(print);
 	}
 
 	public Image getImageByName(String name) {
