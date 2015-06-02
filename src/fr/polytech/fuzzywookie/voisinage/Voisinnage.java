@@ -24,7 +24,7 @@ public class Voisinnage {
 		
 		tmp.setPrint(neighbor);
 		
-		while (neighbors.size() < 10000) {
+		while (neighbors.size() < 1000) {
 			tmp = new Print(neighbor.getProject());
 			tmp.setPrint(neighbor);
 			neighbor = new Print(neighbor.getProject());

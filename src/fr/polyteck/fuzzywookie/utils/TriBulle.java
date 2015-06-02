@@ -19,7 +19,7 @@ public class TriBulle {
 			swap = false;
 			for(int j = 1; j < i-1; j++){
 				System.out.println("j=" + j);
-				if(toReturn.get(j).simplexSolution() > toReturn.get(j + 1).simplexSolution()){
+				if(toReturn.get(j).getFitness() > toReturn.get(j + 1).getFitness()){
 					Print tmp = toReturn.get(j);
 					toReturn.add(j, prints.get(j + 1));
 					toReturn.add(j + 1, tmp);

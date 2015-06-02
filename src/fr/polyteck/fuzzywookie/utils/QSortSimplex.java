@@ -9,7 +9,7 @@ public class QSortSimplex {
 
 	private List<Print> list;
 
-	public void sort(List<Print> list) {
+	/*public void sort(List<Print> list) {
 
 		if (list == null || list.size() == 0)
 			return;
@@ -19,19 +19,26 @@ public class QSortSimplex {
 	}
 
 	private void quicksort(int low, int high) {
-
-		//System.out.println("low="+low+" high=" + high);
+		
+		//if(low%100==0)
+			System.out.println("low="+low+" high=" + high);
 		int i = low, j = high;
 		Print pivot = list.get(low + (high - low) / 2);
 
 		while (i <= j) {
-			//System.out.println("i="+i+" j=" + j);
-			while (list.get(i).simplexSolution() > pivot.simplexSolution())
+			//if(i%100 == 0)
+				System.out.println("i="+i+" j=" + j);
+			while (list.get(i).simplexSolution() >= pivot.simplexSolution()){
+				System.out.println("i++");
 				i++;
-
-			while (list.get(j).simplexSolution() < pivot.simplexSolution())
+			}
+				
+			System.out.println("ccaca");
+			while (list.get(j).simplexSolution() <= pivot.simplexSolution()){
+				System.out.println("j--");
 				j--;
-
+			}
+			System.out.println("cucu");
 			if (i <= j) {
 				exchange(i, j);
 				i++;
@@ -48,5 +55,5 @@ public class QSortSimplex {
 	    Print temp = list.get(i);
 	    list.set(i, list.get(j));
 	    list.set(j, temp);
-	  }
+	  }*/
 }

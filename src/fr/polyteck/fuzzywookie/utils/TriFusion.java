@@ -7,7 +7,7 @@ import fr.polytech.fuzzywookie.metier.Print;
 
 public class TriFusion {
 
-	public static void triFusion(List<Print> tableau) {
+	/*public static void triFusion(List<Print> tableau) {
 		
 		int longueur = tableau.size();
 		if (longueur > 0) {
@@ -52,5 +52,5 @@ public class TriFusion {
 				compt2++;
 			}
 		}
-	}
+	}*/
 }

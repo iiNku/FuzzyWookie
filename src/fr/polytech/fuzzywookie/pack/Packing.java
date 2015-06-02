@@ -68,10 +68,13 @@ public class Packing {
 		boolean imageAdded = true;
 
 		while (imageAdded && !stack.empty()) {
-
 			imageAdded = false;
 			Pattern pattern = stack.pop();
-			for (Image image : images) {
+			int times = 0;
+			while(times < images.size() / 4){
+				int rng = (int) (Math.random() * images.size());
+				Image image = images.get(rng);
+				times++;
 				if (imageFits(pattern, image)) {
 					imageAdded = true;
 					placeImage(main, image, pattern);
