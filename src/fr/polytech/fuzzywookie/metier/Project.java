@@ -180,6 +180,16 @@ public class Project {
 			
 		System.out.println("fin simplex");
 	}
+	
+	public Image getImageByName(String name)
+	{
+		for(Image i : listImage)
+		{
+			if(i.getName().equals(name))
+				return i.clone();
+		}
+		return null;
+	}
 
 	private void generateNeighborhood() {
 		Voisinnage voisinnage = new Voisinnage();

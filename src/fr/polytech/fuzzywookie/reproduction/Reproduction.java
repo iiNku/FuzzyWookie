@@ -75,7 +75,21 @@ public class Reproduction {
 	
 	private void fusionImage(ArrayList<Pattern> father,ArrayList<Pattern> mother, Print child)
 	{
-		
+		Pattern p = child.createPattern();
+		Pattern fatherFus = father.get((int)(Math.random()*100)%father.size());
+		Pattern motherFus = mother.get((int)(Math.random()*100)%mother.size());
+		for(int i = 0; i<fatherFus.getImageList().size()&& i < motherFus.getImageList().size() ; i++)
+		{
+			p.addFreeSpace(new Pattern(p.getWidth(), p.getHeight()));
+			if(i%2==0)
+			{
+				p.addImageInFreeSpace(child.getProject().getImageByName(fatherFus.getImageList().get(i).getName()));
+			}
+			else
+			{
+				p.addImageInFreeSpace(child.getProject().getImageByName(motherFus.getImageList().get(i).getName()));
+			}
+		}
 	}
     
 }
