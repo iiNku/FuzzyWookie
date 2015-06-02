@@ -8,6 +8,8 @@ import java.util.List;
 import fr.polytech.fuzzywookie.pack.Packing;
 import fr.polytech.fuzzywookie.reproduction.Reproduction;
 import fr.polytech.fuzzywookie.voisinage.Voisinnage;
+import fr.polyteck.fuzzywookie.utils.Configuration;
+import fr.polyteck.fuzzywookie.utils.Logger;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
 import fr.polyteck.fuzzywookie.utils.QSortSimplex;
@@ -21,11 +23,17 @@ public class Project {
 	private int pricePattern;
 	private String file;
 	private Print initialPrint;
+	private Logger logger;
 
 	public Project(String file) {
 		this.file = file;
 		listPrint = new ArrayList<Print>();
 		listImage = new ArrayList<Image>();
+		
+		String[] tmp = file.split("/");
+		String name = tmp[1].substring(0, tmp[1].length() - 4);
+		
+		logger = new Logger(name);
 	}
 
 	public Project() {
@@ -109,9 +117,7 @@ public class Project {
 				if (child.isValid())
 					toReturn.add(child);
 			}
-			System.out.println("nb d'efants" + toReturn.size());
 		}
-		System.out.println("Reproduction termin�");
 		return toReturn;
 	}
 
@@ -132,28 +138,27 @@ public class Project {
 			Print minimum = null;
 			for(int i = 0; i < listPrintClone.size(); i++){
 				if(listPrintClone.get(i).getFitness() < min && listPrintClone.get(i).getFitness()>0){
-					System.out.println("find minimum");
 					min = listPrintClone.get(i).getFitness();
 					minimum = listPrintClone.get(i);
 					save = i;
 				}
-				System.out.println(toReturn.size());
 			}
 			if(minimum != null){
 				toReturn.add(minimum);
 				listPrintClone.remove(save);
 			}
 		}
-		
-		
-		System.out.println("Minimum : " + bestPrint(toReturn).getFitness());
-		
 		return toReturn;
 	}
 
 	public void launch() {
 		
 		parseFileAndSortImages();
+		
+		logger.log("Configuration : \n");
+		logger.log("\tNombre de voisins initial : " + Configuration.nbNeighbors + "\n");
+		logger.log("\tTemps d'éxécution : " + Configuration.timesInMs + "\n");
+		logger.log("\n");
 		
 		initialPrint = new Print(this);
 		Packing packing = new Packing();
@@ -163,46 +168,41 @@ public class Project {
 
 		long beginMs = Calendar.getInstance().getTimeInMillis();
 		
-		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
+		while (Calendar.getInstance().getTimeInMillis() < beginMs + Configuration.timesInMs) {
 			
-			System.out.println("Boucle");
 			calculSimplex();
+			Print best = bestPrint(listPrint);
+			logger.log(best.toString() + "\n____________\n");
+			System.out.println(best);
 			listPrint = this.launchReproduction();
 		}
+		
+		logger.close();
 	}
 
 	private void calculSimplex() {
-		System.out.println("calcule simplex");
 		int i = 0;
 		for(Print print : listPrint){
 			print.simplexSolution();
-			System.out.println("Simplex : " + print.getFitness());
 			i++;
 		}
-			
-		System.out.println("fin simplex");
 	}
 
 	private void generateNeighborhood() {
+		
 		Voisinnage voisinnage = new Voisinnage();
-
 		this.listPrint.addAll(voisinnage.generate(initialPrint));
-
-		System.out.println("Voisin cree");
 	}
 
 	public Print bestPrint(List<Print> tableau) {
 
 		Print best = tableau.get(0);
 		for (Print print : tableau) {
-			if(print == null)
-				System.out.println("lol");
-			if(best == null)
-				System.out.println("lel");
 			if (print.getFitness() < best.getFitness()) {
 				best = print;
 			}
 		}
+		System.out.println("Best solution : " + best);
 		return best;
 	}
 
