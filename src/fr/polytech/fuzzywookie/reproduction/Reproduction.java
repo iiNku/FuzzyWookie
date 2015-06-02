@@ -67,6 +67,8 @@ public class Reproduction {
 	    		occurence++;
 	    		}
     	}
+    	if(child.isValid())
+    	{
     	int randomMutation = (int)(Math.random()*100)%child.getListPattern().size();
     	if(randomMutation == child.getListPattern().size()-1)
     	{
@@ -95,11 +97,10 @@ public class Reproduction {
 	    		{
 	    			MutaOk = true;
 	    			child = tmp.clone();
-	    			System.out.println("Mutation");
 	    		}
     		}
     	}
-    	
+    }
 	    return child;
     }
 
