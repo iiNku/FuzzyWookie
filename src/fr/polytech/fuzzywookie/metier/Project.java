@@ -111,6 +111,7 @@ public class Project {
 
 		toReturn.addAll(solutions);
 		while (toReturn.size() < this.listPrint.size()) {
+
 			for (Print print : solutions) {
 				int rng = (int) Math.random() * solutions.size();
 				Print child = repro.ReproductionPattern(print,solutions.get(rng));
@@ -126,28 +127,20 @@ public class Project {
 		
 		int max = (int) Math.round(this.getListPrint().size() * 20 / 100);
 		List<Print> toReturn = new ArrayList<Print>();
-		List<Print> listPrintClone = new ArrayList<Print>();
-		for(Print p : this.listPrint){
-			listPrintClone.add(p.clone());
-		}
-		
 		
 		while(toReturn.size() < max){
 			
 			int min = Integer.MAX_VALUE;
-			int save = 0;
 			Print minimum = null;
-			for(int i = 0; i < listPrintClone.size(); i++){
-				if(listPrintClone.get(i).getFitness() < min && listPrintClone.get(i).getFitness()>0){
-					min = listPrintClone.get(i).getFitness();
-					minimum = listPrintClone.get(i);
-					save = i;
+			for(int i = 0; i < listPrint.size(); i++){
+				if(listPrint.get(i).getFitness() < min){
+					System.out.println("find minimum");
+					min = listPrint.get(i).getFitness();
+					minimum = listPrint.get(i);
+					listPrint.remove(i);
 				}
 			}
-			if(minimum != null){
-				toReturn.add(minimum);
-				listPrintClone.remove(save);
-			}
+			toReturn.add(minimum);
 		}
 		return toReturn;
 	}
@@ -176,6 +169,9 @@ public class Project {
 			logger.log(best.toString() + "\n____________\n");
 			System.out.println(best);
 			listPrint = this.launchReproduction();
+
+			System.out.println(bestPrint(listPrint));
+
 		}
 		
 		logger.close();
