@@ -23,7 +23,7 @@ public class Voisinnage {
 		List<Print> neighbors = new ArrayList<Print>();
 		neighbors.add(initialPrint);
 		
-		Print neighbor = new Print(initialPrint);
+		Print neighbor = initialPrint.clone();
 		
 		while (neighbors.size() < 1000) {
 			
@@ -31,41 +31,24 @@ public class Voisinnage {
 			
 			int rng = (int)(Math.random()*100)%4;
 			if (rng == 0 && neighbor.getListPattern().size()<neighbor.getProject().getListImage().size()){
-				if(!neighbor.isValid()){
-					System.out.println("hahahaha");
-				}				
-				System.out.println("addpattern");
 				tmp = addPattern(neighbor);
 			}
 			else if (rng == 1)
 			{
-				if(!neighbor.isValid()){
-					System.out.println("hahahaha");
-				}
-				System.out.println("addimage");
 				tmp = addImage(neighbor);
-				//if(tmpModif != null) neighbor = tmpModif;
 			}
 			else if (rng == 2)
 			{
-				if(!neighbor.isValid()){
-					System.out.println("hahahaha");
-				}
-				System.out.println("removeimage");
 				tmp = removeImage(neighbor);
-				//if(tmpModif != null) neighbor = tmpModif;
 			}
-			else if (rng == 3)
-			{
-				Print tmpModif = removePattern(neighbor);
-				if(tmpModif != null) neighbor = tmpModif;
-			}
+//			else if (rng == 3)
+//			{
+//				System.out.println("removepattern");
+//				tmp = removePattern(neighbor);
+//			}
 				
-			if (tmp != null){
-				neighbor = new Print(tmp);
-				if(neighbor.isValid()){
-					System.out.println("OUI");
-				}
+			if (tmp != null && tmp.isValid()){
+				neighbor = tmp.clone();
 				neighbors.add(neighbor);
 			}
 			System.out.println(neighbors.size());
@@ -75,15 +58,12 @@ public class Voisinnage {
 
 	private Print removeImage(Print print) {
 		
-		Print tmp = new Print(print);
-		if(!tmp.isValid()){
-			System.out.println("fuck shit");
-		}
+		Print tmp_removeImage = print.clone();
 		System.out.println("removeImage");
 		
 		List<Image> imagesDouble = new ArrayList<Image>();
-		for(Image image : tmp.getProject().getListImage()){
-			if(tmp.getNbImage(image) > 1){
+		for(Image image : tmp_removeImage.getProject().getListImage()){
+			if(tmp_removeImage.getNbImage(image) > 1){
 				imagesDouble.add(image);
 			}
 		}
@@ -94,26 +74,35 @@ public class Voisinnage {
 		Image imageToRemove = imagesDouble.get(rng);
 		
 		List<Pattern> patternDouble = new ArrayList<Pattern>();
-		for(Pattern pattern : tmp.getListPattern()){
+		for(Pattern pattern : tmp_removeImage.getListPattern()){
 			if(pattern.getNbImage(imageToRemove) > 0){
 				patternDouble.add(pattern);
 			}
 		}
 		
 		int rngPattern = (int) (Math.random() * patternDouble.size());
-		Pattern patternToRemove = tmp.getListPattern().get(rngPattern);
+		Pattern patternToRemove = tmp_removeImage.getListPattern().get(rngPattern);
 		
-		patternToRemove.remove(imageToRemove.getName());
-		if(!tmp.isValid()){
-			System.out.println("shit");
+		tmp_removeImage.getListPattern().get(rngPattern).remove(imageToRemove.getName());
+		if(tmp_removeImage.getListPattern().get(rngPattern).getImageList().size()==0){
+			tmp_removeImage.getListPattern().remove(rngPattern);
 		}
-		return tmp.isValid() ? tmp : null;
+		
+		return tmp_removeImage.isValid() ? tmp_removeImage : null;
+		/*
+		if(tmp_removeImage.isValid()){
+			return tmp_removeImage;
+		}
+		else{
+			patternToRemove = new Pattern(save);
+			return null;
+		}*/
 	}
 
 	private Print changeImage(Print print) {
 		
-		Print tmp = new Print(print);
-		List<Pattern> patterns = tmp.getListPattern();
+		Print tmp_changeImage = print.clone();
+		List<Pattern> patterns = tmp_changeImage.getListPattern();
 		
 		int rng = (int) (Math.random() * patterns.size());
 		
@@ -124,7 +113,7 @@ public class Voisinnage {
 		{
 		rng = (int) (Math.random() * images.size());
 		Image removeImg = images.get(rng);
-		if(tmp.getNbImage(removeImg)>1)
+		if(tmp_changeImage.getNbImage(removeImg)>1)
 		{
 			Pattern freeSpace = new Pattern(removeImg.getWidth(), removeImg.getHeight());
 			freeSpace.setDecoupX(removeImg.getX());
@@ -132,18 +121,18 @@ public class Voisinnage {
 			images.remove(rng);
 			neo.addFreeSpace(freeSpace);
 		}
-		for(Image i : tmp.getProject().getListImage())
+		for(Image i : tmp_changeImage.getProject().getListImage())
 		{
 			if(neo.addImageInFreeSpace(i))
-				return tmp.isValid() ? tmp : null;
+				return tmp_changeImage.isValid() ? tmp_changeImage : null;
 		}	
 		}
-		return tmp.isValid() ? tmp : null;
+		return tmp_changeImage.isValid() ? tmp_changeImage : null;
 	}
 	
 	private Print removePattern(Print neighbor)
 	{
-		Print print = new Print(neighbor);
+		Print print = neighbor.clone();
 		Map<String, Integer> nbImageMap = new HashMap<String, Integer>();
 		List<Pattern> deletePatterns = new ArrayList<Pattern>();
 		for(Image i : print.getProject().getListImage())
@@ -176,7 +165,7 @@ public class Voisinnage {
 
 	private Print addImage(Print neighbor)
 	{
-		Print print = new Print(neighbor);
+		Print print = neighbor.clone();
 		
 		for(Pattern p : print.getListPattern())
 		{
@@ -186,6 +175,7 @@ public class Voisinnage {
 				{
 					if(i.getArea() < space.getArea() && i.getWidth() < space.getWidth() && i.getHeight() < space.getHeight())
 					{
+						Pattern save = new Pattern(p);
 						packing.placeImage(p, i, space);
 						List<Pattern> splitpatterns = packing.splitPattern(space, i);
 						p.getFreeSpace().remove(space);
@@ -193,6 +183,13 @@ public class Voisinnage {
 						p.addFreeSpace(splitpatterns.get(1));
 						
 						return print.isValid() ? print : null;
+						/*if(print.isValid()){
+							return print;
+						}
+						else{
+							p = new Pattern(save);
+							return null;
+						}*/
 					}
 				}
 				
@@ -203,7 +200,7 @@ public class Voisinnage {
 	
 	private Print addPattern(Print print) {
 
-		Print tmp = new Print(print);
+		Print tmp = print.clone();
 		
 		Packing packing = new Packing();
 		packing.packNewPattern(tmp);

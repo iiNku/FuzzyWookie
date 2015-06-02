@@ -11,7 +11,7 @@ import fr.polytech.fuzzywookie.simplex.StdOut;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
 
-public class Print {
+public class Print implements Cloneable {
 	private List<Pattern> listPattern;
 	private Project project;
 	
@@ -141,6 +141,24 @@ public class Print {
 	public int getFitness(){
 		
 		return fitness;
+	}
+	
+	public Print clone(){
+		
+		Print print = null;
+		
+		try {
+			print = (Print) super.clone();
+			List<Pattern> pattern = new ArrayList<Pattern>();
+			for(Pattern p : this.listPattern)
+				pattern.add(p.clone());
+			print.listPattern = pattern;
+			print.project = this.project;
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return print;
 	}
 
 }

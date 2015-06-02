@@ -5,7 +5,7 @@ import java.util.List;
 
 import fr.polytech.fuzzywookie.pack.Packing;
 
-public class Pattern extends Rectangle {
+public class Pattern extends Rectangle implements Cloneable {
 
 	private List<Image> imageList;
 	private int nbPrint;
@@ -21,6 +21,19 @@ public class Pattern extends Rectangle {
 		this.decoupX = 0;
 		this.decoupY = 0;
 		nbImage = 0;
+	}
+	
+	public Pattern(Pattern p) {
+		super(p.width, p.height);
+		this.imageList = new ArrayList<Image>();
+		this.imageList.addAll(p.getImageList());
+		this.nbPrint = p.nbPrint;
+		this.name = p.name;
+		this.nbImage = p.nbImage;
+		this.decoupX = p.decoupX;
+		this.decoupY = p.decoupY;
+		this.freeSpace = new ArrayList<Pattern>();
+		this.freeSpace.addAll(p.getFreeSpace());
 	}
 
 	public Pattern(int width, int height, int nbImage) {
@@ -296,5 +309,29 @@ public class Pattern extends Rectangle {
 				imageList.remove(i);
 			}
 		}
+	}
+	
+	public Pattern clone(){
+		
+		Pattern pattern = null;
+		
+		try {
+			pattern = (Pattern) super.clone();
+			List<Pattern> freeSpace = new ArrayList<Pattern>();
+			for(Pattern p : this.freeSpace){
+				freeSpace.add(p.clone());
+			}
+			pattern.freeSpace = freeSpace;
+			
+			List<Image> imageList = new ArrayList<Image>();
+			for(Image i : this.imageList){
+				imageList.add(i.clone());
+			}
+			pattern.imageList = imageList;
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pattern;
 	}
 }
