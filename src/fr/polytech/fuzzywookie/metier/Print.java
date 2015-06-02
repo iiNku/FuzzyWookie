@@ -150,7 +150,7 @@ public class Print implements Cloneable {
 		try {
 			print = (Print) super.clone();
 			List<Pattern> pattern = new ArrayList<Pattern>();
-			for(Pattern p : listPattern)
+			for(Pattern p : this.listPattern)
 				pattern.add(p.clone());
 			print.listPattern = pattern;
 			print.project = this.project;

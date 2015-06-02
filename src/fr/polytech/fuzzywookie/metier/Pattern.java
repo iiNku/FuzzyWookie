@@ -324,7 +324,7 @@ public class Pattern extends Rectangle implements Cloneable {
 			pattern.freeSpace = freeSpace;
 			
 			List<Image> imageList = new ArrayList<Image>();
-			for(Image i : imageList){
+			for(Image i : this.imageList){
 				imageList.add(i.clone());
 			}
 			pattern.imageList = imageList;
