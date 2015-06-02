@@ -103,14 +103,15 @@ public class Project {
 
 		toReturn.addAll(solutions);
 		while (toReturn.size() < this.listPrint.size()) {
-
 			for (Print print : solutions) {
 				int rng = (int) Math.random() * solutions.size();
 				Print child = repro.ReproductionPattern(print,solutions.get(rng));
 				if (child.isValid())
 					toReturn.add(child);
 			}
+			System.out.println("nb d'efants" + toReturn.size());
 		}
+		System.out.println("Reproduction terminé");
 		return toReturn;
 	}
 
@@ -122,16 +123,21 @@ public class Project {
 		while(toReturn.size() < max){
 			
 			int min = Integer.MAX_VALUE;
+			int save = 0;
 			Print minimum = null;
 			for(int i = 0; i < listPrint.size(); i++){
-				if(listPrint.get(i).getFitness() < min){
+				if(listPrint.get(i).getFitness() < min && listPrint.get(i).getFitness()>0){
 					System.out.println("find minimum");
 					min = listPrint.get(i).getFitness();
 					minimum = listPrint.get(i);
-					listPrint.remove(i);
+					save = i;
 				}
+				System.out.println(toReturn.size());
 			}
-			toReturn.add(minimum);
+			if(minimum != null){
+				toReturn.add(minimum);
+				listPrint.remove(save);
+			}
 		}
 		
 		
@@ -157,9 +163,6 @@ public class Project {
 			System.out.println("Boucle");
 			calculSimplex();
 			listPrint = this.launchReproduction();
-
-			System.out.println(bestPrint(listPrint));
-
 		}
 	}
 
@@ -187,6 +190,10 @@ public class Project {
 
 		Print best = tableau.get(0);
 		for (Print print : tableau) {
+			if(print == null)
+				System.out.println("lol");
+			if(best == null)
+				System.out.println("lel");
 			if (print.getFitness() < best.getFitness()) {
 				best = print;
 			}

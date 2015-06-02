@@ -93,7 +93,7 @@ public class Print {
         	listPattern.get(k).setNbPrint(Math.abs((int)Math.round(x[k])+1));
         }
         
-		this.fitness = Math.abs(value);
+		this.fitness = Math.abs(value) + listPattern.size()*20;
 	}
 	
 	public boolean isValid(){
