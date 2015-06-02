@@ -1,16 +1,15 @@
 package fr.polyteck.fuzzywookie.utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.polytech.fuzzywookie.metier.Image;
 import fr.polytech.fuzzywookie.metier.Print;
 
-public class QSort {
+public class QSortSimplex {
 
-	private List<Image> list;
+	private List<Print> list;
 
-	public void sort(List<Image> list) {
+	/*public void sort(List<Print> list) {
 
 		if (list == null || list.size() == 0)
 			return;
@@ -20,18 +19,26 @@ public class QSort {
 	}
 
 	private void quicksort(int low, int high) {
-
+		
+		//if(low%100==0)
+			System.out.println("low="+low+" high=" + high);
 		int i = low, j = high;
-		Image pivot = list.get(low + (high - low) / 2);
+		Print pivot = list.get(low + (high - low) / 2);
 
 		while (i <= j) {
-
-			while (list.get(i).getArea() > pivot.getArea())
+			//if(i%100 == 0)
+				System.out.println("i="+i+" j=" + j);
+			while (list.get(i).simplexSolution() >= pivot.simplexSolution()){
+				System.out.println("i++");
 				i++;
-
-			while (list.get(j).getArea() < pivot.getArea())
+			}
+				
+			System.out.println("ccaca");
+			while (list.get(j).simplexSolution() <= pivot.simplexSolution()){
+				System.out.println("j--");
 				j--;
-
+			}
+			System.out.println("cucu");
 			if (i <= j) {
 				exchange(i, j);
 				i++;
@@ -45,8 +52,8 @@ public class QSort {
 	}
 	
 	private void exchange(int i, int j) {
-	    Image temp = list.get(i);
+	    Print temp = list.get(i);
 	    list.set(i, list.get(j));
 	    list.set(j, temp);
-	  }
+	  }*/
 }

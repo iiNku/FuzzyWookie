@@ -11,9 +11,11 @@ import fr.polytech.fuzzywookie.simplex.StdOut;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
 
-public class Print {
+public class Print implements Cloneable {
 	private List<Pattern> listPattern;
 	private Project project;
+	
+	private int fitness;
 	
 	public Print(Project p)
 	{
@@ -21,6 +23,13 @@ public class Print {
 		project = p;
 	}
 	
+	public Print(Print initialPrint) {
+		project = new Project();
+		project = initialPrint.getProject();
+		listPattern = new ArrayList<Pattern>();
+		listPattern.addAll(initialPrint.getListPattern());
+	}
+
 	public Project getProject() {
 		return project;
 	}
@@ -48,7 +57,7 @@ public class Print {
 		this.listPattern = listPattern;
 	}
 	
-	public int simplexSolution()
+	public void simplexSolution()
 	{
 		int value = 0;
 		int i = 0;
@@ -81,9 +90,10 @@ public class Print {
 		double[] x = fitness.primal();
         for (int k = 0; k < x.length; k++)
         {
-        	listPattern.get(k).setNbPrint((int)Math.round(x[k])+1);
+        	listPattern.get(k).setNbPrint(Math.abs((int)Math.round(x[k])+1));
         }
-		return value;
+        
+		this.fitness = Math.abs(value);
 	}
 	
 	public boolean isValid(){
@@ -108,6 +118,12 @@ public class Print {
 		return counterImg;
 	}
 	
+	public void setPrint(Print p)
+	{
+		this.listPattern.addAll(p.listPattern);
+		this.project = p.project;
+	}
+	
 	@Override
 	public String toString(){
 		
@@ -115,11 +131,34 @@ public class Print {
 		toReturn += "Print : ";
 		
 		toReturn += "Nombre pattern : " + listPattern.size() + "\n";
-		int i = 0;
-		for(Pattern pattern : listPattern){
-			toReturn += "Pattern " + i + " : \n" + pattern;
-		}
+//		int i = 0;
+//		for(Pattern pattern : listPattern){
+//			toReturn += "Pattern " + i + " : \n" + pattern;
+//		}
 		return toReturn;
+	}
+	
+	public int getFitness(){
+		
+		return fitness;
+	}
+	
+	public Print clone(){
+		
+		Print print = null;
+		
+		try {
+			print = (Print) super.clone();
+			List<Pattern> pattern = new ArrayList<Pattern>();
+			for(Pattern p : this.listPattern)
+				pattern.add(p.clone());
+			print.listPattern = pattern;
+			print.project = this.project;
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return print;
 	}
 
 }

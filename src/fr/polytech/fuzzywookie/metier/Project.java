@@ -10,6 +10,9 @@ import fr.polytech.fuzzywookie.reproduction.Reproduction;
 import fr.polytech.fuzzywookie.voisinage.Voisinnage;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
+import fr.polyteck.fuzzywookie.utils.QSortSimplex;
+import fr.polyteck.fuzzywookie.utils.TriBulle;
+import fr.polyteck.fuzzywookie.utils.TriFusion;
 
 public class Project {
 	private List<Print> listPrint;
@@ -30,7 +33,7 @@ public class Project {
 		listImage = new ArrayList<Image>();
 	}
 
-	public void init() {
+	public void parseFileAndSortImages() {
 		Parser.parserFile(file, this);
 		QSort qs = new QSort();
 		qs.sort(listImage);
@@ -92,7 +95,7 @@ public class Project {
 		this.initialPrint = initialPrint;
 	}
 
-	public List<Print> getReproduction() {
+	public List<Print> launchReproduction() {
 
 		List<Print> solutions = getBestSolution();
 		Reproduction repro = new Reproduction();
@@ -113,70 +116,78 @@ public class Project {
 
 	public List<Print> getBestSolution() {
 		
-		List<Print> Solutions = this.getListPrint();
-		int i = 0;
-		List<Print> fitness = new ArrayList<Print>();
-		List<Print> SolutionsFinal = new ArrayList<Print>();
-		for (Print print : Solutions) {
-			fitness.add(print);
-		}
-		fitness = triFitnessDecroissant(fitness);
-		i = 0;
-		int max = (int) Math.round((fitness.size() * 20 / 100));
-		while (fitness.get(i) != null && i < max) {
-			SolutionsFinal.add(fitness.get(i));
-			i++;
-		}
-		return SolutionsFinal;
-	}
-
-	private static List<Print> triFitnessDecroissant(List<Print> tableau) {
-		int longueur = tableau.size();
-		Print tampon;
-		boolean permut;
-		do {
-			// hypothèse : le tableau est trié
-			permut = false;
-			for (int i = 0; i < longueur - 1; i++) {
-				// Teste si 2 éléments successifs sont dans le bon ordre ou non
-				if (tableau.get(i).simplexSolution() > tableau.get(i + 1)
-						.simplexSolution()) {
-					// s'ils ne le sont pas, on échange leurs positions
-					tampon = tableau.get(i);
-					tableau.add((i), tableau.get(i + 1));
-					tableau.add((i + 1), tampon);
-					permut = true;
+		int max = (int) Math.round(this.getListPrint().size() * 20 / 100);
+		List<Print> toReturn = new ArrayList<Print>();
+		
+		while(toReturn.size() < max){
+			
+			int min = Integer.MAX_VALUE;
+			Print minimum = null;
+			for(int i = 0; i < listPrint.size(); i++){
+				if(listPrint.get(i).getFitness() < min){
+					System.out.println("find minimum");
+					min = listPrint.get(i).getFitness();
+					minimum = listPrint.get(i);
+					listPrint.remove(i);
 				}
 			}
-		} while (permut);
-		return tableau;
+			toReturn.add(minimum);
+		}
+		
+		
+		System.out.println("Minimum : " + bestPrint(toReturn).getFitness());
+		
+		return toReturn;
 	}
 
 	public void launch() {
-		init();
+		
+		parseFileAndSortImages();
+		
 		initialPrint = new Print(this);
 		Packing packing = new Packing();
 		packing.packing(initialPrint);
-
-		this.listPrint.addAll(Voisinnage.generate(initialPrint));
-
-		System.out.println("Voisin cree");
+		
+		generateNeighborhood();
 
 		long beginMs = Calendar.getInstance().getTimeInMillis();
+		
 		while (Calendar.getInstance().getTimeInMillis() < beginMs + 7200000) {
+			
 			System.out.println("Boucle");
-			List<Print> reproduction = this.getReproduction();
-			listPrint = reproduction;
-			System.out.println(bestPrint(reproduction));
+			calculSimplex();
+			listPrint = this.launchReproduction();
+
+			System.out.println(bestPrint(listPrint));
 
 		}
+	}
+
+	private void calculSimplex() {
+		System.out.println("calcule simplex");
+		int i = 0;
+		for(Print print : listPrint){
+			print.simplexSolution();
+			System.out.println("Simplex : " + print.getFitness());
+			i++;
+		}
+			
+		System.out.println("fin simplex");
+	}
+
+	private void generateNeighborhood() {
+		Voisinnage voisinnage = new Voisinnage();
+
+		this.listPrint.addAll(voisinnage.generate(initialPrint));
+
+		System.out.println("Voisin cree");
 	}
 
 	public Print bestPrint(List<Print> tableau) {
 
 		Print best = tableau.get(0);
 		for (Print print : tableau) {
-			if (print.simplexSolution() < best.simplexSolution()) {
+			if (print.getFitness() < best.getFitness()) {
 				best = print;
 			}
 		}

@@ -5,7 +5,7 @@ import java.util.List;
 
 import fr.polytech.fuzzywookie.pack.Packing;
 
-public class Pattern extends Rectangle {
+public class Pattern extends Rectangle implements Cloneable {
 
 	private List<Image> imageList;
 	private int nbPrint;
@@ -21,6 +21,19 @@ public class Pattern extends Rectangle {
 		this.decoupX = 0;
 		this.decoupY = 0;
 		nbImage = 0;
+	}
+	
+	public Pattern(Pattern p) {
+		super(p.width, p.height);
+		this.imageList = new ArrayList<Image>();
+		this.imageList.addAll(p.getImageList());
+		this.nbPrint = p.nbPrint;
+		this.name = p.name;
+		this.nbImage = p.nbImage;
+		this.decoupX = p.decoupX;
+		this.decoupY = p.decoupY;
+		this.freeSpace = new ArrayList<Pattern>();
+		this.freeSpace.addAll(p.getFreeSpace());
 	}
 
 	public Pattern(int width, int height, int nbImage) {
@@ -97,28 +110,19 @@ public class Pattern extends Rectangle {
 		return width > height ? width : height;
 	}
     
-    public boolean patternTest(Pattern p){
-        p.getImageList();
-        int i=0;
-        int total=0;
-        while(p.getImageList().get(i)!=null){
-            Image img = p.getImageList().get(i);
-            int width = img.getWidth();
-            int height = img.getHeight();
-            if(img.getX()+img.getWidth()>p.getWidth()){
-                return false;
-            }
-            if(img.getY()+img.getHeight()>p.getHeight()){
-                return false;
-            }
-            total += width*height;
-        }
-        if(p.getArea()<=total){
-            return true;
-        }else{
-            return false;
-        }
-    }
+	public void setPattern(Pattern p)
+	{
+		this.decoupX = p.decoupX;
+		this.decoupY = p.decoupY;
+		this.freeSpace.addAll(p.getFreeSpace());
+		this.height = p.getHeight();
+		this.imageList.addAll(p.getImageList());
+		this.name = p.name;
+		this.nbImage = p.nbImage;
+		this.nbPrint = p.nbPrint;
+		this.width = p.getWidth();
+		
+	}
     
     public void addFreeSpace(Pattern pattern){
     	boolean fusionSuccess = false;
@@ -197,7 +201,8 @@ public class Pattern extends Rectangle {
 	    				{
 	    					fusion = new Pattern(pattern.width + space.width, pattern.getDecoupY()+pattern.height - space.decoupY);
 	    					fusion.setDecoupX(pattern.decoupX);
-	    					fusion.setDecoupY(pattern.decoupY);
+	    					//TODO : DEBUG HERE AVEC JOCE MAUVAIS DECOUP X Y
+	    					fusion.setDecoupY(space.decoupY);
 	    				}
 	    			}	
 	    		}
@@ -224,14 +229,16 @@ public class Pattern extends Rectangle {
     	List<Image> images = this.getImageList();
 		for(int i = 0; i < images.size(); i++){
 			for(int j = i + 1; j < images.size(); j++){
-				if(images.get(i).intersect(images.get(j)) || !images.get(i).isInside(this)) return false;
+				if(images.get(i).intersect(images.get(j)) || !images.get(i).isInside(this)) 
+					{
+						return false;
+					}
 			}
 		}
 		return true;
     }
  
     public Pattern changeImage(Pattern p, Image imgold,Image imgnew){
-    	java.awt.Rectangle rectangle;
     	Pattern newp = p;
     	newp.getImageList().remove(imgold);
     	newp.addImage(imgnew);
@@ -256,12 +263,14 @@ public class Pattern extends Rectangle {
     
     public boolean addImageInFreeSpace(Image img)
     {
+    	Packing packing = new Packing();
+    	
     	for(Pattern space : this.getFreeSpace())
 		{
 			if(img.getArea() < space.getArea() && img.getWidth() < space.getWidth() && img.getHeight() < space.getHeight())
 			{
 				this.addImage(img);
-				List<Pattern> splitpatterns = Packing.splitPattern(space, img);
+				List<Pattern> splitpatterns = packing.splitPattern(space, img);
 				img.setX(space.getDecoupX());
 				img.setY(space.getDecoupY());
 				this.getFreeSpace().remove(space);
@@ -287,4 +296,42 @@ public class Pattern extends Rectangle {
     	return toReturn;
     	
     }
+
+	public void remove(String name2) {
+
+		for(int i = 0; i < imageList.size(); i++){
+			if(imageList.get(i).getName().equals(name2)){
+				Image image = imageList.get(i);
+				Pattern freeSpace = new Pattern(image.getWidth(), image.getHeight());
+				freeSpace.setDecoupX(image.getX());
+				freeSpace.setDecoupY(image.getY());
+				addFreeSpace(freeSpace);
+				imageList.remove(i);
+			}
+		}
+	}
+	
+	public Pattern clone(){
+		
+		Pattern pattern = null;
+		
+		try {
+			pattern = (Pattern) super.clone();
+			List<Pattern> freeSpace = new ArrayList<Pattern>();
+			for(Pattern p : this.freeSpace){
+				freeSpace.add(p.clone());
+			}
+			pattern.freeSpace = freeSpace;
+			
+			List<Image> imageList = new ArrayList<Image>();
+			for(Image i : this.imageList){
+				imageList.add(i.clone());
+			}
+			pattern.imageList = imageList;
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return pattern;
+	}
 }
