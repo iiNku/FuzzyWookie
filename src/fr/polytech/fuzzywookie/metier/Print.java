@@ -108,6 +108,12 @@ public class Print {
 		return counterImg;
 	}
 	
+	public void setPrint(Print p)
+	{
+		this.listPattern.addAll(p.listPattern);
+		this.project = p.project;
+	}
+	
 	@Override
 	public String toString(){
 		

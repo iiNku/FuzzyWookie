@@ -20,23 +20,29 @@ public class Voisinnage {
 		List<Print> neighbors = new ArrayList<Print>();
 		Print neighbor = initialPrint;
 		neighbors.add(neighbor);
-		Print tmp = neighbor;
+		Print tmp = new Print(neighbor.getProject());
+		
+		tmp.setPrint(neighbor);
 		
 		while (neighbors.size() < 10000) {
+			Print tmp2 = new Print(tmp.getProject());
+			tmp2.setPrint(tmp);
+			tmp = new Print(neighbor.getProject());
+			tmp.setPrint(tmp2);
 			int rng = (int)(Math.random()*100)%3;
 			if (rng == 0)
-				tmp = addPattern(neighbor);
+				tmp = addPattern(tmp);
 			else if (rng == 1)
 			{
-				Print tmp2 = addImage(neighbor);
-				if(tmp2 != null) tmp = tmp2;
+				Print tmp3 = addImage(tmp);
+				if(tmp3 != null) tmp = tmp3;
 			}
 			else if (rng == 2)
-				tmp = removeImage(neighbor);
+				tmp = removeImage(tmp);
 			
 			if (tmp.isValid()){
-				neighbor = tmp;
-				neighbors.add(neighbor);
+				//neighbor = tmp;
+				neighbors.add(tmp);
 			}
 			System.out.println(neighbors.size());
 		}
