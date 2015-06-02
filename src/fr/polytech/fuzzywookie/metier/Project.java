@@ -10,7 +10,9 @@ import fr.polytech.fuzzywookie.reproduction.Reproduction;
 import fr.polytech.fuzzywookie.voisinage.Voisinnage;
 import fr.polyteck.fuzzywookie.utils.Parser;
 import fr.polyteck.fuzzywookie.utils.QSort;
+import fr.polyteck.fuzzywookie.utils.QSortSimplex;
 import fr.polyteck.fuzzywookie.utils.TriBulle;
+import fr.polyteck.fuzzywookie.utils.TriFusion;
 
 public class Project {
 	private List<Print> listPrint;
@@ -117,12 +119,15 @@ public class Project {
 		int max = (int) Math.round(this.getListPrint().size() * 20 / 100);
 		
 		List<Print> toReturn = new ArrayList<Print>();
-		List<Print> sorted = TriBulle.sortByFitness(this.getListPrint());
+		List<Print> sorted = new ArrayList<Print>();
+		sorted.addAll(this.getListPrint());
+		
+		QSortSimplex qsortSimplex = new QSortSimplex();
+		qsortSimplex.sort(sorted);
 		
 		for(int i =0; i < max; i++){
 			if(sorted.get(i) != null) toReturn.add(sorted.get(i));
 		}
-		
 		return toReturn;
 	}
 
