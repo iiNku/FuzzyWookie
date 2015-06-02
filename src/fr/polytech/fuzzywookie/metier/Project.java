@@ -132,12 +132,10 @@ public class Project {
 			Print minimum = null;
 			for(int i = 0; i < listPrintClone.size(); i++){
 				if(listPrintClone.get(i).getFitness() < min && listPrintClone.get(i).getFitness()>0){
-					System.out.println("find minimum");
 					min = listPrintClone.get(i).getFitness();
 					minimum = listPrintClone.get(i);
 					save = i;
 				}
-				System.out.println(toReturn.size());
 			}
 			if(minimum != null){
 				toReturn.add(minimum);

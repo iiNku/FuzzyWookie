@@ -25,7 +25,7 @@ public class Voisinnage {
 		
 		Print neighbor = initialPrint.clone();
 		
-		while (neighbors.size() < 1000) {
+		while (neighbors.size() < 10000) {
 			
 			Print tmp = null;
 			
