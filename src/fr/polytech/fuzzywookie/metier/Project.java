@@ -109,7 +109,7 @@ public class Project {
 		while (toReturn.size() < this.listPrint.size()) {
 
 			for (Print print : solutions) {
-				int rng = (int) Math.random() * solutions.size();
+				int rng = (int) (Math.random() * solutions.size());
 				Print child = repro.ReproductionPattern(print,solutions.get(rng));
 				if (child.isValid())
 					toReturn.add(child);
