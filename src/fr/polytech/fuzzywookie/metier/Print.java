@@ -137,7 +137,7 @@ public class Print implements Cloneable {
         for(Integer removeIndice : removePattern)
         	listPattern.remove(removeIndice);
         
-		this.fitness = Math.abs(value) + listPattern.size()*20;
+		this.fitness = Math.abs(value) + listPattern.size()*this.getProject().getPricePattern();
 	}
 	
 	public boolean isValid(){
@@ -173,6 +173,7 @@ public class Print implements Cloneable {
 		
 		String toReturn = "";
 		toReturn += "Print : \n";
+		toReturn += "Prix pattern :"+this.getProject().getPricePattern()+"\n";
 		
 		toReturn += "\tNombre pattern : " + listPattern.size() + "\n";
 		toReturn += "\tFitness = " + this.fitness + "\n";

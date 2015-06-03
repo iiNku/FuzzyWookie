@@ -69,7 +69,7 @@ public class Reproduction {
     	}
     	if(child.isValid())
     	{
-    	int randomMutation = (int)Math.random()*100;
+    	int randomMutation = (int)(Math.random()*100);
     	if(randomMutation>75)
     	{
     		Voisinnage v= new Voisinnage();

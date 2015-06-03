@@ -165,10 +165,8 @@ public class Project {
 		initialPrint = new Print(this);
 		Packing packing = new Packing();
 		packing.packing(initialPrint);
-
 		generateNeighborhood();
 
-		long beginMs = Calendar.getInstance().getTimeInMillis();
 
 		while (i< Configuration.occurence) {
 
@@ -176,10 +174,9 @@ public class Project {
 			Print best = bestPrint(listPrint);
 			if (logger != null)
 				logger.log(best.toString() + "\n____________\n");
-			System.out.println(best);
 			listPrint = this.launchReproduction();
-
-			System.out.println(bestPrint(listPrint));
+			if(i==0||i==Configuration.occurence-1)
+				System.out.println(best);
 			i++;
 		}
 
