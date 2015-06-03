@@ -69,8 +69,8 @@ public class Reproduction {
     	}
     	if(child.isValid())
     	{
-    	int randomMutation = (int)(Math.random()*100)%child.getListPattern().size();
-    	if(randomMutation == child.getListPattern().size()-1)
+    	int randomMutation = (int)Math.random()*100;
+    	if(randomMutation>75)
     	{
     		Voisinnage v= new Voisinnage();
     		boolean MutaOk = false;
@@ -97,7 +97,7 @@ public class Reproduction {
 	    		if(tmp != null)
 	    		{
 	    			cptMuta++;
-	    			if(cptMuta==10)
+	    			if(cptMuta==35)
 	    				MutaOk = true;
 	    			child = tmp.clone();
 	    		}

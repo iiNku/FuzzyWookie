@@ -56,7 +56,7 @@ public class Logger {
 
 		log("Configuration : \n");
 		log("\tNombre de voisins initial : " + Configuration.nbNeighbors + "\n");
-		log("\tTemps d'éxécution : " + Configuration.timesInMs + "\n");
+		log("\tOccurence : " + Configuration.occurence + "\n");
 		log("\n");
 		
 	}

@@ -127,10 +127,15 @@ public class Print implements Cloneable {
 		Simplex fitness = new Simplex(matrice, contrainte, minimisation);
 		value = (int) fitness.value();
 		double[] x = fitness.dual();
+		List<Integer> removePattern = new ArrayList<Integer>();
         for (int k = 0; k < x.length; k++)
         {
         	listPattern.get(k).setNbPrint(Math.abs((int)Math.round(x[k])));
+        	if(listPattern.get(k).getNbPrint()==0)
+        		removePattern.add(k);
         }
+        for(Integer removeIndice : removePattern)
+        	listPattern.remove(removeIndice);
         
 		this.fitness = Math.abs(value) + listPattern.size()*20;
 	}

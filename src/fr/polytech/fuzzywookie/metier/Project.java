@@ -156,7 +156,7 @@ public class Project {
 	}
 
 	public void launch() {
-
+		int i = 0;
 		parseFileAndSortImages();
 
 		if (logger != null)
@@ -170,8 +170,7 @@ public class Project {
 
 		long beginMs = Calendar.getInstance().getTimeInMillis();
 
-		while (Calendar.getInstance().getTimeInMillis() < beginMs
-				+ Configuration.timesInMs) {
+		while (i< Configuration.occurence) {
 
 			calculSimplex();
 			Print best = bestPrint(listPrint);
@@ -181,7 +180,7 @@ public class Project {
 			listPrint = this.launchReproduction();
 
 			System.out.println(bestPrint(listPrint));
-
+			i++;
 		}
 
 		if (logger != null)
@@ -195,7 +194,8 @@ public class Project {
 		for (Print print : listPrint) {
 			try {
 				print.simplexSolution();
-				moyenneFitness += print.getFitness();
+				if(print.getFitness()>0)
+					moyenneFitness += print.getFitness();
 				i++;
 			} catch (ArithmeticException e) 
 			{
