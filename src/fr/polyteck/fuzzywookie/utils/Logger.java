@@ -1,9 +1,14 @@
 package fr.polyteck.fuzzywookie.utils;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,7 +27,7 @@ public class Logger {
 		if(!dir.exists())
 			dir.mkdir();
 		
-		File file = new File("logs/" + dataName + "-" + sdf.format(new Date()) + ".txt");
+		file = new File("logs/" + dataName + "-" + sdf.format(new Date()) + ".txt");
 		try {
 			file.createNewFile();
 			fw = new FileWriter(file, false);
@@ -50,6 +55,29 @@ public class Logger {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public String recupLog()
+	{
+		String log = "";
+		try {
+			InputStream ips = new FileInputStream(file);
+			InputStreamReader ipsr = new InputStreamReader(ips);
+			BufferedReader br=new BufferedReader(ipsr);
+			String ligne;
+			while ((ligne=br.readLine())!=null){
+				log+=ligne+"\n";
+			}
+			br.close(); 
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return log;
 	}
 
 	public void logConfiguration() {

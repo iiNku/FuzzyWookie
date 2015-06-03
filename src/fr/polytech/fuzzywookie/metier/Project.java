@@ -155,7 +155,8 @@ public class Project {
 		return toReturn;
 	}
 
-	public void launch() {
+	public List<String> launch() {
+		List<String> infoLog = new ArrayList<String>();
 		int i = 0;
 		parseFileAndSortImages();
 
@@ -175,13 +176,22 @@ public class Project {
 			if (logger != null)
 				logger.log(best.toString() + "\n____________\n");
 			listPrint = this.launchReproduction();
-			if(i==0||i==Configuration.occurence-1)
-				System.out.println(best);
 			i++;
 		}
 
+		String recuplog = "Désolé le log n'est pas disponible";
 		if (logger != null)
-			logger.close();
+		{
+			recuplog = logger.recupLog();
+			logger.close();	
+		}
+		
+		Print best = bestPrint(listPrint);
+		infoLog.add(best.toString());
+		infoLog.add(""+best.getFitness());
+		infoLog.add(""+best.getListPattern().size());
+		
+		return infoLog;
 	}
 
 	private void calculSimplex() {

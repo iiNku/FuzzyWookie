@@ -173,11 +173,11 @@ public class Print implements Cloneable {
 		
 		String toReturn = "";
 		toReturn += "Print : \n";
-		toReturn += "Prix pattern :"+this.getProject().getPricePattern()+"\n";
+		toReturn += "Prix unitaire du pattern :"+this.getProject().getPricePattern()+"\n";
 		
 		toReturn += "\tNombre pattern : " + listPattern.size() + "\n";
 		toReturn += "\tFitness = " + this.fitness + "\n";
-		toReturn += "\tMoyenne= " + this.project.getMoyenne() + "\n";
+		toReturn += "\tMoyenne de la fitness pour la génération = " + this.project.getMoyenne() + "\n";
 		int i = 0;
 		for(Pattern pattern : listPattern){
 			toReturn += "\tPattern " + i + " : \n" + pattern;
