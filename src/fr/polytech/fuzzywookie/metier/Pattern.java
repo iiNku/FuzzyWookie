@@ -264,27 +264,33 @@ public class Pattern extends Rectangle implements Cloneable {
     	return counter;
     }
     
-    public boolean addImageInFreeSpace(Image img)
+    public Pattern addImageInFreeSpace(Image img)
     {
+    	Pattern addImagePattern = this.clone();
     	Image addImage = img.clone();
     	Packing packing = new Packing();
     	
-    	for(Pattern space : this.freeSpace)
+    	for(Pattern space : addImagePattern.freeSpace)
 		{
 			if(addImage.getArea() < space.getArea() && addImage.getWidth() < space.getWidth() && addImage.getHeight() < space.getHeight())
 			{
 				
-				this.addImage(addImage);
+				addImagePattern.addImage(addImage);
 				List<Pattern> splitpatterns = packing.splitPattern(space, addImage);
 				addImage.setX(space.getDecoupX());
 				addImage.setY(space.getDecoupY());
-				this.freeSpace.remove(space);
-				this.addFreeSpace(splitpatterns.get(0));
-				this.addFreeSpace(splitpatterns.get(1));
-				return true;
+				addImagePattern.freeSpace.remove(space);
+				addImagePattern.addFreeSpace(splitpatterns.get(0));
+				addImagePattern.addFreeSpace(splitpatterns.get(1));
+				if(addImagePattern.isValid())
+					return addImagePattern;
+				else
+				{
+					return null;
+				}
 			}
 		}
-    	return false;
+    	return null;
     }
     
     @Override

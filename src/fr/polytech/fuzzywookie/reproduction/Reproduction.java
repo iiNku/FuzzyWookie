@@ -116,19 +116,25 @@ public class Reproduction {
 	private void fusionImage(ArrayList<Pattern> father,ArrayList<Pattern> mother, Print child)
 	{
 		Pattern p = child.createPattern();
+		p.addFreeSpace(new Pattern(child.getProject().getPatternX(), child.getProject().getPatternY()));
 		Pattern fatherFus = father.get((int)(Math.random()*100)%father.size());
 		Pattern motherFus = mother.get((int)(Math.random()*100)%mother.size());
 		for(int i = 0; i<fatherFus.getImageList().size()&& i < motherFus.getImageList().size() ; i++)
-		{
-			p.addFreeSpace(new Pattern(child.getProject().getPatternX(), child.getProject().getPatternY()));
+		{		
 			if(i%2==0)
 			{
-				p.addImageInFreeSpace(child.getProject().getImageByName(fatherFus.getImageList().get(i).getName()));
+				Pattern addPattern = p.addImageInFreeSpace(child.getProject().getImageByName(fatherFus.getImageList().get(i).getName()));
+				if(addPattern != null)
+					p = addPattern.clone();
 			}
 			else
 			{
-				p.addImageInFreeSpace(child.getProject().getImageByName(motherFus.getImageList().get(i).getName()));
-			}
+				Pattern addPattern = p.addImageInFreeSpace(child.getProject().getImageByName(motherFus.getImageList().get(i).getName()));
+				if(addPattern!=null)
+					p = addPattern.clone();
+			}		
 		}
+		if(!p.isValid() || p.getImageList().size() == 0)
+			child.getListPattern().remove(p);
 	}
 }

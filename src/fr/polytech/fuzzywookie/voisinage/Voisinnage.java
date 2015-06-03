@@ -96,36 +96,7 @@ public class Voisinnage {
 		return tmp_removeImage.isValid() ? tmp_removeImage : null;
 	}
 
-	private Print changeImage(Print print) {
-		
-		Print tmp_changeImage = print.clone();
-		List<Pattern> patterns = tmp_changeImage.getListPattern();
-		
-		int rng = (int) (Math.random() * patterns.size());
-		
-		Pattern neo = patterns.get(rng);
-		
-		List<Image> images = neo.getImageList();
-		if(!images.isEmpty())
-		{
-		rng = (int) (Math.random() * images.size());
-		Image removeImg = images.get(rng);
-		if(tmp_changeImage.getNbImage(removeImg)>1)
-		{
-			Pattern freeSpace = new Pattern(removeImg.getWidth(), removeImg.getHeight());
-			freeSpace.setDecoupX(removeImg.getX());
-			freeSpace.setDecoupY(removeImg.getY());
-			images.remove(rng);
-			neo.addFreeSpace(freeSpace);
-		}
-		for(Image i : tmp_changeImage.getProject().getListImage())
-		{
-			if(neo.addImageInFreeSpace(i))
-				return tmp_changeImage.isValid() ? tmp_changeImage : null;
-		}	
-		}
-		return tmp_changeImage.isValid() ? tmp_changeImage : null;
-	}
+	
 	
 	public Print removePattern(Print neighbor)
 	{
