@@ -114,14 +114,12 @@ public class Project {
 
 		toReturn.addAll(solutions);
 		while (toReturn.size() < this.listPrint.size()) {
-			for (Print print : solutions) {
-				int rng = (int) (Math.random() * solutions.size());
-				Print child = repro.ReproductionPattern(print,
-						solutions.get(rng));
+				int rng = (int) (Math.random() * this.listPrint.size());
+				int rng2 = (int) (Math.random() * solutions.size());
+				Print child = repro.ReproductionPattern(solutions.get(rng2),
+						this.listPrint.get(rng));
 				if (child.isValid())
 					toReturn.add(child);
-			}
-			// System.out.println("Enfant crée : " + toReturn.size());
 		}
 		System.out.println("Reproduction terminé");
 		return toReturn;
@@ -199,11 +197,14 @@ public class Project {
 				print.simplexSolution();
 				moyenneFitness += print.getFitness();
 				i++;
-			} catch (ArithmeticException e) {
+			} catch (ArithmeticException e) 
+			{
+				e.printStackTrace();
 				toRemove.add(print);
 			}
 
 		}
+		System.out.println("sortiesimplex");
 		
 		for(Print print : toRemove)
 			listPrint.remove(print);
@@ -229,7 +230,7 @@ public class Project {
 
 		Print best = tableau.get(0);
 		for (Print print : tableau) {
-			if (print.getFitness() < best.getFitness()) {
+			if (print.getFitness() < best.getFitness() && print.getFitness()>0) {
 				best = print;
 			}
 		}
